@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Auri.Managers;
+using Auri.Services;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -8,57 +10,15 @@ namespace Auri
 {
     public partial class MainForm : Form
     {
-        //private DataGridViewTextBoxColumn colFileName;
-        //private DataGridViewTextBoxColumn colFormat;
-        //private DataGridViewTextBoxColumn colSize;
-        //private DataGridViewTextBoxColumn colDuration;
-        //private DataGridViewTextBoxColumn colStatus;
-
         public MainForm()
         {
             InitializeComponent();
-            //SetupDataGridView();
             LoadDefaults();
             StyleButtons();
-        }
 
-        private void SetupDataGridView()
-        {
-            // Создаем колонки
-            colFileName = new DataGridViewTextBoxColumn();
-            colFileName.HeaderText = "Имя файла";
-            colFileName.Name = "FileName";
-            colFileName.ReadOnly = true;
-            colFileName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colFileName.FillWeight = 50;
+            var convert = new ConverterManager();
 
-            colFormat = new DataGridViewTextBoxColumn();
-            colFormat.HeaderText = "Формат";
-            colFormat.Name = "Format";
-            colFormat.ReadOnly = true;
-            colFormat.Width = 80;
 
-            colSize = new DataGridViewTextBoxColumn();
-            colSize.HeaderText = "Размер";
-            colSize.Name = "Size";
-            colSize.ReadOnly = true;
-            colSize.Width = 80;
-
-            colDuration = new DataGridViewTextBoxColumn();
-            colDuration.HeaderText = "Длительность";
-            colDuration.Name = "Duration";
-            colDuration.ReadOnly = true;
-            colDuration.Width = 90;
-
-            colStatus = new DataGridViewTextBoxColumn();
-            colStatus.HeaderText = "Статус";
-            colStatus.Name = "Status";
-            colStatus.ReadOnly = true;
-            colStatus.Width = 100;
-
-            dataGridViewFiles.Columns.AddRange(new DataGridViewColumn[] {
-                colFileName, colFormat, colSize, colDuration, colStatus
-            });
         }
 
         private void LoadDefaults()
@@ -66,7 +26,7 @@ namespace Auri
             // Установка значений по умолчанию
             txtOutputPath.Text = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.MyMusic),
-                "Auri Converter");
+                "Auri");
 
             cmbOutputFormat.SelectedIndex = 0; // MP3
             cmbQuality.SelectedIndex = 2; // Высокое качество
