@@ -1,24 +1,30 @@
-﻿using Auri.Managers;
+﻿using Auri.Audio;
+using Auri.Audio.Encoder;
+using Auri.Managers;
 using Auri.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Auri
 {
     public partial class MainForm : Form
     {
+        private BassAudioService _bass;
+        private ConverterManager _converter;
+        private List<AudioFile> _audioFiles;
+
         public MainForm()
         {
             InitializeComponent();
+            Control.CheckForIllegalCrossThreadCalls = false;
             LoadDefaults();
-            StyleButtons();
-
-            var convert = new ConverterManager();
-
-
+            _bass = new BassAudioService();
         }
 
         private void LoadDefaults()
@@ -28,24 +34,8 @@ namespace Auri
                 Environment.GetFolderPath(Environment.SpecialFolder.MyMusic),
                 "Auri");
 
-            cmbOutputFormat.SelectedIndex = 0; // MP3
+            cmbOutputFormat.SelectedIndex = 1; // OPUS
             cmbQuality.SelectedIndex = 2; // Высокое качество
-
-            // Создаем папку вывода, если её нет
-            if (!Directory.Exists(txtOutputPath.Text))
-            {
-                Directory.CreateDirectory(txtOutputPath.Text);
-            }
-        }
-
-        private void StyleButtons()
-        {
-            // Стили для кнопок
-            btnConvert.FlatAppearance.BorderSize = 0;
-            btnAddFiles.FlatAppearance.BorderSize = 1;
-            btnRemoveSelected.FlatAppearance.BorderSize = 1;
-            btnClearAll.FlatAppearance.BorderSize = 1;
-            btnBrowse.FlatAppearance.BorderSize = 1;
         }
 
         private void BtnAddFiles_Click(object sender, EventArgs e)
@@ -53,43 +43,67 @@ namespace Auri
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.Multiselect = true;
-                ofd.Filter = "Аудио файлы|*.mp3;*.wav;*.flac;*.aac;*.ogg;*.m4a;*.wma;*.aiff|Все файлы|*.*";
+                ofd.Filter = "Аудио файлы|*.mp3;*.opus;*.wav;*.flac;*.aac;*.ogg;*.m4a;*.wma;*.aiff|Все файлы|*.*";
                 ofd.Title = "Выберите аудиофайлы для конвертации";
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    foreach (string file in ofd.FileNames)
-                    {
-                        AddFileToGrid(file);
-                    }
+                    _audioFiles = new List<AudioFile>();
+                    _audioFiles.AddRange(ofd.FileNames.Select((item, index) => new AudioFile(item, index)));
+                    AddFilesToGrid(ofd.FileNames);
                     UpdateStatus();
                 }
             }
         }
 
-        private void AddFileToGrid(string filePath)
+        private void AddFilesToGrid(string[] filePaths)
         {
-            // Проверяем, не добавлен ли уже этот файл
-            foreach (DataGridViewRow row1 in dataGridViewFiles.Rows)
+            // Отключаем обновление DataGridView для ускорения
+            dataGridViewFiles.SuspendLayout();
+
+            try
             {
-                if (row1.Tag?.ToString() == filePath)
-                    return;
+                int addedCount = 0;
+
+                foreach (string filePath in filePaths)
+                {
+                    // Проверяем, не добавлен ли уже этот файл
+                    bool fileExists = false;
+                    foreach (DataGridViewRow row1 in dataGridViewFiles.Rows)
+                    {
+                        if (row1.Tag?.ToString() == filePath)
+                        {
+                            fileExists = true;
+                            break;
+                        }
+                    }
+
+                    if (fileExists)
+                        continue;
+
+                    FileInfo fileInfo = new FileInfo(filePath);
+
+                    int rowIndex = dataGridViewFiles.Rows.Add();
+                    DataGridViewRow row = dataGridViewFiles.Rows[rowIndex];
+
+                    row.Cells[0].Value = Path.GetFileNameWithoutExtension(filePath);
+                    row.Cells[1].Value = Path.GetExtension(filePath).TrimStart('.').ToUpper();
+                    row.Cells[2].Value = FormatFileSize(fileInfo.Length);
+                    row.Cells[3].Value = _bass.GetDuration(filePath);
+                    row.Cells[4].Value = "Ожидание";
+                    row.Tag = filePath; // Сохраняем полный путь
+
+                    // Подсветка новой строки
+                    row.DefaultCellStyle.BackColor = Color.FromArgb(230, 255, 230);
+
+                    addedCount++;
+                }
             }
-
-            FileInfo fileInfo = new FileInfo(filePath);
-
-            int rowIndex = dataGridViewFiles.Rows.Add();
-            DataGridViewRow row = dataGridViewFiles.Rows[rowIndex];
-
-            row.Cells["FileName"].Value = Path.GetFileName(filePath);
-            row.Cells["Format"].Value = Path.GetExtension(filePath).TrimStart('.').ToUpper();
-            row.Cells["Size"].Value = FormatFileSize(fileInfo.Length);
-            row.Cells["Duration"].Value = "--:--";
-            row.Cells["Status"].Value = "Ожидание";
-            row.Tag = filePath; // Сохраняем полный путь
-
-            // Подсветка новой строки
-            row.DefaultCellStyle.BackColor = Color.FromArgb(230, 255, 230);
+            finally
+            {
+                // Возобновляем обновление DataGridView
+                dataGridViewFiles.ResumeLayout();
+            }
         }
 
         private string FormatFileSize(long bytes)
@@ -109,21 +123,12 @@ namespace Auri
         {
             if (dataGridViewFiles.SelectedRows.Count > 0)
             {
-                var result = MessageBox.Show(
-                    $"Удалить выбранные файлы ({dataGridViewFiles.SelectedRows.Count}) из списка?",
-                    "Подтверждение",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-
-                if (result == DialogResult.Yes)
+                foreach (DataGridViewRow row in dataGridViewFiles.SelectedRows)
                 {
-                    foreach (DataGridViewRow row in dataGridViewFiles.SelectedRows)
-                    {
-                        if (!row.IsNewRow)
-                            dataGridViewFiles.Rows.Remove(row);
-                    }
-                    UpdateStatus();
+                    if (!row.IsNewRow)
+                        dataGridViewFiles.Rows.Remove(row);
                 }
+                UpdateStatus();
             }
             else
             {
@@ -136,17 +141,8 @@ namespace Auri
         {
             if (dataGridViewFiles.Rows.Count > 0)
             {
-                var result = MessageBox.Show(
-                    "Очистить весь список файлов?",
-                    "Подтверждение",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-
-                if (result == DialogResult.Yes)
-                {
-                    dataGridViewFiles.Rows.Clear();
-                    UpdateStatus();
-                }
+                dataGridViewFiles.Rows.Clear();
+                UpdateStatus();
             }
         }
 
@@ -166,7 +162,48 @@ namespace Auri
             }
 
             string format = GetSelectedFormat();
-            string quality = cmbQuality.SelectedItem?.ToString() ?? "Среднее";
+            int quality = cmbQuality.SelectedIndex;
+            EncoderSettings encoderSettings = new EncoderSettings();
+            switch (quality)
+            {
+                case 0:
+                    // opus
+                    encoderSettings.Bitrate = 64;
+                    encoderSettings.CustomParams.Add("mode", "vbr");
+                    encoderSettings.CustomParams.Add("complexity", "10");
+                    encoderSettings.CustomParams.Add("framesize", "60");
+                    break;
+                case 1:
+                    // opus
+                    encoderSettings.Bitrate = 128;
+                    encoderSettings.CustomParams.Add("mode", "vbr");
+                    encoderSettings.CustomParams.Add("complexity", "10");
+                    encoderSettings.CustomParams.Add("framesize", "40");
+                    break;
+                case 2:
+                    // opus
+                    encoderSettings.Bitrate = 192;
+                    encoderSettings.CustomParams.Add("mode", "vbr");
+                    encoderSettings.CustomParams.Add("complexity", "10");
+                    encoderSettings.CustomParams.Add("framesize", "20");
+                    break;
+                case 3:
+                    // opus
+                    encoderSettings.Bitrate = 320;
+                    encoderSettings.CustomParams.Add("mode", "vbr");
+                    encoderSettings.CustomParams.Add("complexity", "10");
+                    encoderSettings.CustomParams.Add("framesize", "20");
+                    break;
+                default:
+                    // opus
+                    encoderSettings.Bitrate = 128;
+                    encoderSettings.CustomParams.Add("mode", "vbr");
+                    encoderSettings.CustomParams.Add("complexity", "10");
+                    encoderSettings.CustomParams.Add("framesize", "40");
+                    break;
+            }
+
+
             string outputPath = txtOutputPath.Text;
 
             // Проверка папки вывода
@@ -184,18 +221,17 @@ namespace Auri
                 }
             }
 
-            StartConversion(format, quality);
+            StartConversion(format, encoderSettings, outputPath);
         }
 
-        private void StartConversion(string format, string quality)
+        private void StartConversion(string format, EncoderSettings quality, string outputPath)
         {
             int totalFiles = dataGridViewFiles.Rows.Count;
-            int currentFile = 0;
 
             // Сбрасываем статусы
             foreach (DataGridViewRow row in dataGridViewFiles.Rows)
             {
-                row.Cells["Status"].Value = "Ожидание";
+                row.Cells[4].Value = "Ожидание";
                 row.DefaultCellStyle.BackColor = Color.White;
             }
 
@@ -203,44 +239,26 @@ namespace Auri
             progressBar.Value = 0;
             lblStatus.Text = $"Конвертация в {format}...";
 
-            // Имитация конвертации (в реальном проекте здесь будет вызов библиотеки)
-            Timer timer = new Timer { Interval = 300 };
-            timer.Tick += (s, ev) => {
-                if (currentFile < totalFiles)
-                {
-                    DataGridViewRow row = dataGridViewFiles.Rows[currentFile];
-                    row.Cells["Status"].Value = $"Конвертация...";
-                    row.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 200);
-
-                    currentFile++;
-                    progressBar.Value = currentFile;
-
-                    if (currentFile == totalFiles)
-                    {
-                        timer.Stop();
-                        timer.Dispose();
-
-                        // Отмечаем все как готовые
-                        foreach (DataGridViewRow r in dataGridViewFiles.Rows)
-                        {
-                            r.Cells["Status"].Value = "Готово ✓";
-                            r.DefaultCellStyle.BackColor = Color.FromArgb(230, 255, 230);
-                        }
-
-                        lblStatus.Text = "Конвертация завершена!";
-                        MessageBox.Show(
-                            $"Конвертация завершена!\n\n" +
-                            $"Формат: {format}\n" +
-                            $"Качество: {quality}\n" +
-                            $"Файлов: {totalFiles}\n" +
-                            $"Сохранено в:\n{txtOutputPath.Text}",
-                            "Успех",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
-                    }
-                }
+            _converter = new ConverterManager(_bass, _audioFiles.ToArray(), outputPath, format, quality);
+            _converter.OnProgress += (index, progress) =>
+            {
+                DataGridViewRow row = dataGridViewFiles.Rows[index];
+                row.Cells[4].Value = $"{progress}%";
             };
-            timer.Start();
+            _converter.OnOverallProgress += (overall) =>
+            {
+                progressBar.Invoke(new Action(() =>
+                {
+                    progressBar.Maximum = 100;
+                    progressBar.Value = (int)Math.Round(overall);
+                }));
+            };
+            _converter.OnComplete += (index, status) =>
+            {
+                DataGridViewRow row = dataGridViewFiles.Rows[index];
+                row.Cells[4].Value = $"Готово";
+            };
+            _converter.Convert();
         }
 
         private void BtnBrowse_Click(object sender, EventArgs e)

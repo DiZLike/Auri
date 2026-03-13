@@ -8,8 +8,8 @@ namespace Auri.Services
     public class BassAudioService
     {
         public event Action<string> OnError;
-
-        public EncodeService Encoder { get; set; }
+        //public event Action<float> OnProgress;
+        //public event Action<bool> OnComplete;
 
         private bool _isInitialized;
         private string _decPluginsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "decoders");
@@ -19,9 +19,8 @@ namespace Auri.Services
             if (!InitializeBass())
                 return;
             PluginsLoad();
-
-            Encoder = new EncodeService(this);
-            Encoder.OnError += (msg) => OnError?.Invoke(msg);
+            //Encoder.OnProgress += (progress) => OnProgress?.Invoke(progress);
+            //Encoder.OnComplete += (status) => OnComplete?.Invoke(status);
         }
         private bool InitializeBass()
         {
@@ -32,6 +31,12 @@ namespace Auri.Services
         }
         private bool PluginsLoad()
         {
+            if (!Directory.Exists(_decPluginsPath))
+            {
+                OnError?.Invoke("Отсутствуют плагины декодирования аудио. Поддержка только MP3");
+                return false;
+            }
+
             var dlls = Directory.GetFiles(_decPluginsPath, "*.dll", SearchOption.TopDirectoryOnly);
             if (dlls.Length < 1)
             {
@@ -45,6 +50,24 @@ namespace Auri.Services
                     OnError?.Invoke($"Ошибка загрузки плагина декодирования: {Bass.BASS_ErrorGetCode()}");
             }
             return true;
+        }
+        public string GetDuration(string audio)
+        {
+            int stream = Bass.BASS_StreamCreateFile(audio, 0, 0, BASSFlag.BASS_DEFAULT);
+            if (stream == 0)
+                return "00:00";
+            try
+            {
+                long durBytes = Bass.BASS_ChannelGetLength(stream);
+                double seconds = Bass.BASS_ChannelBytes2Seconds(stream, durBytes);
+                TimeSpan duration = TimeSpan.FromSeconds(seconds);
+                return $"{(int)duration.TotalMinutes:D2}:{duration.Seconds:D2}";
+            }
+            finally
+            {
+                // Важно освобождать ресурсы
+                Bass.BASS_StreamFree(stream);
+            }
         }
     }
 }
