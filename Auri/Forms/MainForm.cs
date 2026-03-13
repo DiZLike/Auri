@@ -170,6 +170,7 @@ namespace Auri
                     // opus
                     encoderSettings.Bitrate = 64;
                     encoderSettings.CustomParams.Add("mode", "vbr");
+                    encoderSettings.CustomParams.Add("content", "music");
                     encoderSettings.CustomParams.Add("complexity", "10");
                     encoderSettings.CustomParams.Add("framesize", "60");
                     break;
@@ -177,6 +178,7 @@ namespace Auri
                     // opus
                     encoderSettings.Bitrate = 128;
                     encoderSettings.CustomParams.Add("mode", "vbr");
+                    encoderSettings.CustomParams.Add("content", "music");
                     encoderSettings.CustomParams.Add("complexity", "10");
                     encoderSettings.CustomParams.Add("framesize", "40");
                     break;
@@ -184,6 +186,7 @@ namespace Auri
                     // opus
                     encoderSettings.Bitrate = 192;
                     encoderSettings.CustomParams.Add("mode", "vbr");
+                    encoderSettings.CustomParams.Add("content", "music");
                     encoderSettings.CustomParams.Add("complexity", "10");
                     encoderSettings.CustomParams.Add("framesize", "20");
                     break;
@@ -191,6 +194,7 @@ namespace Auri
                     // opus
                     encoderSettings.Bitrate = 320;
                     encoderSettings.CustomParams.Add("mode", "vbr");
+                    encoderSettings.CustomParams.Add("content", "music");
                     encoderSettings.CustomParams.Add("complexity", "10");
                     encoderSettings.CustomParams.Add("framesize", "20");
                     break;
@@ -198,6 +202,7 @@ namespace Auri
                     // opus
                     encoderSettings.Bitrate = 128;
                     encoderSettings.CustomParams.Add("mode", "vbr");
+                    encoderSettings.CustomParams.Add("content", "music");
                     encoderSettings.CustomParams.Add("complexity", "10");
                     encoderSettings.CustomParams.Add("framesize", "40");
                     break;
@@ -282,6 +287,13 @@ namespace Auri
             lblStatus.Text = count > 0
                 ? $"Загружено файлов: {count}"
                 : "Готов к работе";
+        }
+
+        private void cmbQuality_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbQuality.SelectedIndex == 4)
+                btnEncSet.Enabled = true;
+            else btnEncSet.Enabled = false;
         }
     }
 }

@@ -54,13 +54,15 @@ namespace Auri.Audio.Encoder
         private string BuildArguments(EncoderSettings settings, string outputAudio)
         {
             string mode = settings.CustomParams?["mode"] as string ?? "vbr";
+            string content = settings.CustomParams?["content"] as string ?? "music";
             int complexity = settings.CustomParams?["complexity"] as int? ?? 10;
-            int frameSize = settings.CustomParams?["framesize"] as int? ?? 20;
+            float frameSize = settings.CustomParams?["framesize"] as float? ?? 20;
 
             return $"--bitrate {settings.Bitrate} " +
                    $"--{mode} " +
+                   $"--{content}" +
                    $"--comp {complexity} " +
-                   $"--framesize {frameSize} " +
+                   $"--framesize {frameSize.ToString().Replace(",", ".")} " +
                    $"- \"{outputAudio}\"";
         }
 

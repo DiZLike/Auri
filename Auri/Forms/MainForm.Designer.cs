@@ -38,6 +38,7 @@
             this.panelControls = new System.Windows.Forms.Panel();
             this.panelFormats = new System.Windows.Forms.Panel();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.btnEncSet = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.panelControls.SuspendLayout();
@@ -94,7 +95,7 @@
             this.dataGridViewFiles.RowHeadersVisible = false;
             this.dataGridViewFiles.RowTemplate.Height = 25;
             this.dataGridViewFiles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewFiles.Size = new System.Drawing.Size(789, 305);
+            this.dataGridViewFiles.Size = new System.Drawing.Size(789, 280);
             this.dataGridViewFiles.TabIndex = 1;
             // 
             // colFileName
@@ -178,7 +179,7 @@
             // 
             this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBrowse.Location = new System.Drawing.Point(353, 67);
+            this.btnBrowse.Location = new System.Drawing.Point(353, 65);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(63, 25);
             this.btnBrowse.TabIndex = 6;
@@ -245,8 +246,9 @@
             "Пользовательский"});
             this.cmbQuality.Location = new System.Drawing.Point(124, 38);
             this.cmbQuality.Name = "cmbQuality";
-            this.cmbQuality.Size = new System.Drawing.Size(292, 23);
+            this.cmbQuality.Size = new System.Drawing.Size(223, 23);
             this.cmbQuality.TabIndex = 3;
+            this.cmbQuality.SelectedIndexChanged += new System.EventHandler(this.cmbQuality_SelectedIndexChanged);
             // 
             // panelControls
             // 
@@ -267,6 +269,8 @@
             this.panelFormats.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelFormats.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(250)))));
+            this.panelFormats.Controls.Add(this.btnEncSet);
+            this.panelFormats.Controls.Add(this.progressBar);
             this.panelFormats.Controls.Add(this.lblQuality);
             this.panelFormats.Controls.Add(this.cmbQuality);
             this.panelFormats.Controls.Add(this.lblOutputFormat);
@@ -274,27 +278,38 @@
             this.panelFormats.Controls.Add(this.lblOutputFolder);
             this.panelFormats.Controls.Add(this.txtOutputPath);
             this.panelFormats.Controls.Add(this.btnBrowse);
-            this.panelFormats.Location = new System.Drawing.Point(0, 384);
+            this.panelFormats.Location = new System.Drawing.Point(0, 376);
             this.panelFormats.Name = "panelFormats";
             this.panelFormats.Padding = new System.Windows.Forms.Padding(15);
-            this.panelFormats.Size = new System.Drawing.Size(815, 103);
+            this.panelFormats.Size = new System.Drawing.Size(815, 130);
             this.panelFormats.TabIndex = 2;
             // 
             // progressBar
             // 
             this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(9, 493);
+            this.progressBar.Location = new System.Drawing.Point(12, 99);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(798, 13);
             this.progressBar.TabIndex = 4;
+            // 
+            // btnEncSet
+            // 
+            this.btnEncSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEncSet.Enabled = false;
+            this.btnEncSet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEncSet.Location = new System.Drawing.Point(353, 36);
+            this.btnEncSet.Name = "btnEncSet";
+            this.btnEncSet.Size = new System.Drawing.Size(63, 25);
+            this.btnEncSet.TabIndex = 7;
+            this.btnEncSet.Text = "Настр.";
+            this.btnEncSet.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(815, 531);
-            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.dataGridViewFiles);
             this.Controls.Add(this.panelControls);
             this.Controls.Add(this.panelFormats);
@@ -338,5 +353,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Button btnEncSet;
     }
 }
