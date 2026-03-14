@@ -95,11 +95,12 @@
     <Compile Include="Audio\Encoder\EncoderFactory.cs" />
     <Compile Include="Audio\Encoder\IEncoder.cs" />
     <Compile Include="Audio\Encoder\OpusEncoder.cs" />
-    <Compile Include="Forms\EncForm.cs">
+    <Compile Include="Config\AppSettings.cs" />
+    <Compile Include="Forms\UserPresetForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\EncForm.Designer.cs">
-      <DependentUpon>EncForm.cs</DependentUpon>
+    <Compile Include="Forms\UserPresetForm.Designer.cs">
+      <DependentUpon>UserPresetForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -107,15 +108,15 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Managers\ConfigManager.cs" />
     <Compile Include="Managers\ConverterManager.cs" />
-    <Compile Include="Managers\JsonDataManager.cs" />
-    <Compile Include="Managers\UserEncSetManager.cs" />
+    <Compile Include="Managers\EncoderPresetManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BassAudioService.cs" />
     <Compile Include="Services\EncodeService.cs" />
-    <EmbeddedResource Include="Forms\EncForm.resx">
-      <DependentUpon>EncForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\UserPresetForm.resx">
+      <DependentUpon>UserPresetForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -152,6 +153,9 @@
     <Content Include="bassenc.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="bassmix.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="encoders\opus\libFLAC.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -171,6 +175,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="encoders\opus\version.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="encoder_presets\opus_presets.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

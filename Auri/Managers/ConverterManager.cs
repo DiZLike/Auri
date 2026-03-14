@@ -19,6 +19,7 @@ namespace Auri.Managers
         public event Action<int, float> OnProgress;
         public event Action<float> OnOverallProgress;
         public event Action<int, bool> OnComplete;
+        public event Action<bool> OnAllComplete;
 
         private readonly BassAudioService _bass;
         private readonly AudioFile[] _audioFiles;
@@ -28,6 +29,8 @@ namespace Auri.Managers
 
         private float[] _fileProgress;
         private int _totalFiles;
+        private int _completedFilesCount;
+        private bool _allCompleted;
 
         private int _currentAudio;
         private List<IEncoder> _encoders;
@@ -45,7 +48,7 @@ namespace Auri.Managers
             if (!Directory.Exists(outputPath))
                 Directory.CreateDirectory(outputPath);
         }
-        public void Convert()
+        public void Convert(int threads)
         {
             Task.Factory.StartNew(() =>
             {
@@ -55,7 +58,7 @@ namespace Auri.Managers
 
                 Parallel.For(0, _audioFiles.Length, new ParallelOptions
                 {
-                    MaxDegreeOfParallelism = Environment.ProcessorCount
+                    MaxDegreeOfParallelism = threads
                 }, index =>
                 {
                     var file = _audioFiles[index];
@@ -87,13 +90,14 @@ namespace Auri.Managers
 
                     encoder.OnComplete += (fileIndex, status) =>
                     {
+                        if (_allCompleted) return;
                         OnComplete?.Invoke(fileIndex, status);
 
                         // При завершении файла можно установить 100% прогресс для него
                         lock (lockObject)
                         {
                             _fileProgress[fileIndex] = 100;
-                            bool allCompleted = _fileProgress.All(progress => progress == 100);
+                            _completedFilesCount++;
 
                             // Пересчитываем общий прогресс
                             float total = 0;
@@ -102,6 +106,11 @@ namespace Auri.Managers
                                 total += _fileProgress[i];
                             }
                             overallProgress = total / _totalFiles;
+                            if (_completedFilesCount == _totalFiles)
+                            {
+                                _allCompleted = true;
+                                OnAllComplete?.Invoke(true);
+                            }
                         }
 
                         OnOverallProgress?.Invoke((int)overallProgress);

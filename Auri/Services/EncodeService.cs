@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Enc;
+using Un4seen.Bass.AddOn.Mix;
 
 namespace Auri.Services
 {
@@ -21,7 +22,7 @@ namespace Auri.Services
             _bass = bass;
         }
 
-        public int CreateStream(string audioFile)
+        public int CreateStream(string audioFile, int sampleRate, int chans)
         {
             if (!File.Exists(audioFile))
             {
@@ -32,7 +33,16 @@ namespace Auri.Services
                 BASSFlag.BASS_DEFAULT | BASSFlag.BASS_SAMPLE_FLOAT | BASSFlag.BASS_STREAM_DECODE);
             if (stream == 0)
                 OnError?.Invoke($"Ошибка создания потока аудио: {Bass.BASS_ErrorGetCode()}");
-            return stream;
+
+            BASS_CHANNELINFO info = Bass.BASS_ChannelGetInfo(stream);
+            int mixerHandel = BassMix.BASS_Mixer_StreamCreate(sampleRate, chans, BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_SAMPLE_FLOAT);
+            if (mixerHandel == 0)
+                OnError?.Invoke($"Ошибка создания микшера: {Bass.BASS_ErrorGetCode()}");
+            bool isError = !BassMix.BASS_Mixer_StreamAddChannel(mixerHandel, stream, BASSFlag.BASS_DEFAULT);
+            if (isError)
+                OnError?.Invoke($"Ошибка добавления потока в микшер: {Bass.BASS_ErrorGetCode()}");
+
+            return mixerHandel;
         }
         public void FreeStream(int stream)
         {

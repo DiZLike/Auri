@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,16 @@ namespace Auri.Audio.Encoder
         event Action<int, float> OnProgress;
         event Action<int, bool> OnComplete;
     }
-
+    [Serializable]
     public class EncoderSettings
     {
+        [JsonProperty("frequency")]
+        public int Frequency { get; set; } = 44100;
+        [JsonProperty("channels")]
+        public int Channels { get; set; } = 2;
+        [JsonProperty("bitrate")]
         public int Bitrate { get; set; } = 128;
+        [JsonProperty("params")]
         public Dictionary<string, object> CustomParams { get; set; } = new Dictionary<string, object>();
     }
 }

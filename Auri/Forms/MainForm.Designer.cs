@@ -28,7 +28,7 @@
             this.cmbOutputFormat = new System.Windows.Forms.ComboBox();
             this.lblOutputFolder = new System.Windows.Forms.Label();
             this.txtOutputPath = new System.Windows.Forms.TextBox();
-            this.btnBrowse = new System.Windows.Forms.Button();
+            this.btnOpenFolder = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnRemoveSelected = new System.Windows.Forms.Button();
@@ -37,8 +37,10 @@
             this.cmbQuality = new System.Windows.Forms.ComboBox();
             this.panelControls = new System.Windows.Forms.Panel();
             this.panelFormats = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cmbThreadCount = new System.Windows.Forms.ComboBox();
+            this.btnUserPreset = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.btnEncSet = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.panelControls.SuspendLayout();
@@ -88,14 +90,13 @@
             this.colSize,
             this.colDuration,
             this.colStatus});
-            this.dataGridViewFiles.Location = new System.Drawing.Point(13, 73);
-            this.dataGridViewFiles.MultiSelect = false;
+            this.dataGridViewFiles.Location = new System.Drawing.Point(13, 66);
             this.dataGridViewFiles.Name = "dataGridViewFiles";
             this.dataGridViewFiles.ReadOnly = true;
             this.dataGridViewFiles.RowHeadersVisible = false;
             this.dataGridViewFiles.RowTemplate.Height = 25;
             this.dataGridViewFiles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewFiles.Size = new System.Drawing.Size(789, 280);
+            this.dataGridViewFiles.Size = new System.Drawing.Size(789, 317);
             this.dataGridViewFiles.TabIndex = 1;
             // 
             // colFileName
@@ -155,6 +156,7 @@
             this.cmbOutputFormat.Name = "cmbOutputFormat";
             this.cmbOutputFormat.Size = new System.Drawing.Size(292, 23);
             this.cmbOutputFormat.TabIndex = 1;
+            this.cmbOutputFormat.SelectedIndexChanged += new System.EventHandler(this.cmbOutputFormat_SelectedIndexChanged);
             // 
             // lblOutputFolder
             // 
@@ -174,18 +176,19 @@
             this.txtOutputPath.ReadOnly = true;
             this.txtOutputPath.Size = new System.Drawing.Size(223, 23);
             this.txtOutputPath.TabIndex = 5;
+            this.txtOutputPath.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtOutputPath_MouseClick);
             // 
-            // btnBrowse
+            // btnOpenFolder
             // 
-            this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBrowse.Location = new System.Drawing.Point(353, 65);
-            this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(63, 25);
-            this.btnBrowse.TabIndex = 6;
-            this.btnBrowse.Text = "Обзор...";
-            this.btnBrowse.UseVisualStyleBackColor = true;
-            this.btnBrowse.Click += new System.EventHandler(this.BtnBrowse_Click);
+            this.btnOpenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOpenFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenFolder.Location = new System.Drawing.Point(353, 65);
+            this.btnOpenFolder.Name = "btnOpenFolder";
+            this.btnOpenFolder.Size = new System.Drawing.Size(63, 25);
+            this.btnOpenFolder.TabIndex = 6;
+            this.btnOpenFolder.Text = "Откр.";
+            this.btnOpenFolder.UseVisualStyleBackColor = true;
+            this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
             // 
             // statusStrip
             // 
@@ -238,12 +241,6 @@
             // 
             this.cmbQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbQuality.FormattingEnabled = true;
-            this.cmbQuality.Items.AddRange(new object[] {
-            "Низкое (64 kbps)",
-            "Среднее (128 kbps)",
-            "Высокое (192 kbps)",
-            "Очень высокое (320 kbps)",
-            "Пользовательский"});
             this.cmbQuality.Location = new System.Drawing.Point(124, 38);
             this.cmbQuality.Name = "cmbQuality";
             this.cmbQuality.Size = new System.Drawing.Size(223, 23);
@@ -269,7 +266,9 @@
             this.panelFormats.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelFormats.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(250)))));
-            this.panelFormats.Controls.Add(this.btnEncSet);
+            this.panelFormats.Controls.Add(this.label1);
+            this.panelFormats.Controls.Add(this.cmbThreadCount);
+            this.panelFormats.Controls.Add(this.btnUserPreset);
             this.panelFormats.Controls.Add(this.progressBar);
             this.panelFormats.Controls.Add(this.lblQuality);
             this.panelFormats.Controls.Add(this.cmbQuality);
@@ -277,33 +276,52 @@
             this.panelFormats.Controls.Add(this.cmbOutputFormat);
             this.panelFormats.Controls.Add(this.lblOutputFolder);
             this.panelFormats.Controls.Add(this.txtOutputPath);
-            this.panelFormats.Controls.Add(this.btnBrowse);
-            this.panelFormats.Location = new System.Drawing.Point(0, 376);
+            this.panelFormats.Controls.Add(this.btnOpenFolder);
+            this.panelFormats.Location = new System.Drawing.Point(0, 389);
             this.panelFormats.Name = "panelFormats";
             this.panelFormats.Padding = new System.Windows.Forms.Padding(15);
-            this.panelFormats.Size = new System.Drawing.Size(815, 130);
+            this.panelFormats.Size = new System.Drawing.Size(815, 117);
             this.panelFormats.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(422, 12);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(115, 15);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Использовать ядер:";
+            // 
+            // cmbThreadCount
+            // 
+            this.cmbThreadCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbThreadCount.FormattingEnabled = true;
+            this.cmbThreadCount.Location = new System.Drawing.Point(543, 9);
+            this.cmbThreadCount.Name = "cmbThreadCount";
+            this.cmbThreadCount.Size = new System.Drawing.Size(58, 23);
+            this.cmbThreadCount.TabIndex = 8;
+            // 
+            // btnUserPreset
+            // 
+            this.btnUserPreset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUserPreset.Enabled = false;
+            this.btnUserPreset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUserPreset.Location = new System.Drawing.Point(353, 36);
+            this.btnUserPreset.Name = "btnUserPreset";
+            this.btnUserPreset.Size = new System.Drawing.Size(63, 25);
+            this.btnUserPreset.TabIndex = 7;
+            this.btnUserPreset.Text = "Настр.";
+            this.btnUserPreset.UseVisualStyleBackColor = true;
+            this.btnUserPreset.Click += new System.EventHandler(this.btnUserPreset_Click);
             // 
             // progressBar
             // 
             this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(12, 99);
+            this.progressBar.Location = new System.Drawing.Point(12, 96);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(798, 13);
             this.progressBar.TabIndex = 4;
-            // 
-            // btnEncSet
-            // 
-            this.btnEncSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEncSet.Enabled = false;
-            this.btnEncSet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEncSet.Location = new System.Drawing.Point(353, 36);
-            this.btnEncSet.Name = "btnEncSet";
-            this.btnEncSet.Size = new System.Drawing.Size(63, 25);
-            this.btnEncSet.TabIndex = 7;
-            this.btnEncSet.Text = "Настр.";
-            this.btnEncSet.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -320,6 +338,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Auri";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
@@ -338,7 +357,7 @@
         private System.Windows.Forms.ComboBox cmbOutputFormat;
         private System.Windows.Forms.Label lblOutputFolder;
         private System.Windows.Forms.TextBox txtOutputPath;
-        private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.Button btnOpenFolder;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.Button btnRemoveSelected;
         private System.Windows.Forms.Button btnClearAll;
@@ -353,6 +372,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.ProgressBar progressBar;
-        private System.Windows.Forms.Button btnEncSet;
+        private System.Windows.Forms.Button btnUserPreset;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cmbThreadCount;
     }
 }

@@ -37,7 +37,7 @@ namespace Auri.Audio.Encoder
             {
                 _inputAudio.Working = true;
                 string args = BuildArguments(settings, outputAudio);
-                _streamHandle = _encoderService.CreateStream(_inputAudio.FilePath);
+                _streamHandle = _encoderService.CreateStream(_inputAudio.FilePath, settings.Frequency, settings.Channels);
                 _encoderHandle = _encoderService.CreateEncoder(_streamHandle, _encoderPath, args);
                 _encoderService.StartEncode(_streamHandle, _encoderHandle);
                 _inputAudio.Working = false;
@@ -57,12 +57,14 @@ namespace Auri.Audio.Encoder
             string content = settings.CustomParams?["content"] as string ?? "music";
             int complexity = settings.CustomParams?["complexity"] as int? ?? 10;
             float frameSize = settings.CustomParams?["framesize"] as float? ?? 20;
+            string downmix = settings.Channels > 1 ? "stereo" : "mono";
 
             return $"--bitrate {settings.Bitrate} " +
                    $"--{mode} " +
-                   $"--{content}" +
+                   $"--{content} " +
                    $"--comp {complexity} " +
                    $"--framesize {frameSize.ToString().Replace(",", ".")} " +
+                   $"--downmix-{downmix} " +
                    $"- \"{outputAudio}\"";
         }
 
