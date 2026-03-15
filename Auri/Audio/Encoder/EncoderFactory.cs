@@ -1,4 +1,5 @@
-﻿using Auri.Services;
+﻿using Auri.Audio.Encoder.Codec;
+using Auri.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace Auri.Audio.Encoder
             {
                 case "opus":
                     return new OpusEncoder(bass, inputAudio);
+                case "mp3":
+                    return new LameEncoder(bass, inputAudio);
                 default:
                     throw new NotSupportedException($"Format {format} not supported");
             }

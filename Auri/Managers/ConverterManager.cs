@@ -24,6 +24,7 @@ namespace Auri.Managers
         private readonly BassAudioService _bass;
         private readonly AudioFile[] _audioFiles;
         private readonly string _outputPath;
+        private readonly string _pattern;
         private readonly string _format;
         private readonly EncoderSettings _settings;
 
@@ -35,20 +36,21 @@ namespace Auri.Managers
         private int _currentAudio;
         private List<IEncoder> _encoders;
 
-        public ConverterManager(BassAudioService bass, AudioFile[] audioFiles, string outputPath, string format, EncoderSettings settings)
+        public ConverterManager(BassAudioService bass, AudioFile[] audioFiles, string outputPath, string pattern, string format, EncoderSettings settings)
         {
             _bass = bass;
             _audioFiles = audioFiles;
             _totalFiles = audioFiles.Length;
             _fileProgress = new float[_totalFiles];
             _outputPath = outputPath;
+            _pattern = pattern;
             _format = format.ToLower();
             _settings = settings;
 
             if (!Directory.Exists(outputPath))
                 Directory.CreateDirectory(outputPath);
         }
-        public void Convert(int threads)
+        public void Convert(int threads, MetaService _metaService)
         {
             Task.Factory.StartNew(() =>
             {
@@ -64,6 +66,12 @@ namespace Auri.Managers
                     var file = _audioFiles[index];
                     string fileName = Path.GetFileName(file.FilePath);
                     string outputAudio = Path.Combine(_outputPath, Path.ChangeExtension(fileName, $".{_format}"));
+
+                    if(_pattern != String.Empty)
+                    {
+                        var generator = new PathPatternService(_outputPath, outputAudio, _pattern);
+                        outputAudio = generator.GeneratePath(file.FilePath);
+                    }
                     IEncoder encoder = EncoderFactory.Create(_format, _bass, file);
 
                     encoder.OnProgress += (fileIndex, progress) =>
@@ -115,7 +123,9 @@ namespace Auri.Managers
 
                         OnOverallProgress?.Invoke((int)overallProgress);
                     };
-                    encoder.Encode(outputAudio, _settings);
+                    bool isOk = encoder.Encode(outputAudio, _settings);
+                    if (isOk)
+                        _metaService.CopyMetadata(file.FilePath, outputAudio);
                 });
             });
         }

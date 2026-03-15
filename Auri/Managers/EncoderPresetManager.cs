@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using static Un4seen.Bass.Misc.BaseEncoder;
 
 namespace Auri.Managers
 {
@@ -62,14 +63,6 @@ namespace Auri.Managers
         }
 
         /// <summary>
-        /// Получить список доступных форматов
-        /// </summary>
-        public string[] GetAvailableFormats()
-        {
-            return new string[] { "opus" };
-        }
-
-        /// <summary>
         /// Получить стандартный пресет для формата и индекса
         /// </summary>
         private EncoderSettings GetDefaultPreset(string format, int index)
@@ -78,32 +71,30 @@ namespace Auri.Managers
 
             if (lowerFormat == "opus")
                 return GetOpusPreset(index);
+            else if (lowerFormat == "mp3")
+                return GetMp3Preset(index);
             return null;
         }
 
         #region Opus presets
         private EncoderSettings GetOpusPreset(int index)
         {
-            // Корректируем индекс, если он вне диапазона
-            if (index < 0 || index > 3)
-                index = 1;
-
             switch (index)
             {
                 case 0:
-                    return CreateOpusSettings(32, "60", "vbr", "music");
+                    return CreateOpusSettings(32, 60, "vbr", "music");
                 case 1:
-                    return CreateOpusSettings(64, "60", "vbr", "music");
+                    return CreateOpusSettings(64, 60, "vbr", "music");
                 case 2:
-                    return CreateOpusSettings(128, "40", "vbr", "music");
+                    return CreateOpusSettings(128, 40, "vbr", "music");
                 case 3:
-                    return CreateOpusSettings(192, "20", "vbr", "music");
+                    return CreateOpusSettings(192, 20, "vbr", "music");
                 default:
-                    return CreateOpusSettings(128, "40", "vbr", "music");
+                    return CreateOpusSettings(128, 40, "vbr", "music");
             }
         }
 
-        private EncoderSettings CreateOpusSettings(int bitrate, string frameSize, string mode, string content)
+        private EncoderSettings CreateOpusSettings(int bitrate, float frameSize, string mode, string content)
         {
             EncoderSettings settings = new EncoderSettings
             {
@@ -119,6 +110,44 @@ namespace Auri.Managers
 
             return settings;
         }
+        #endregion
+
+        #region Mp3 presets
+        private EncoderSettings GetMp3Preset(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return CreateMp3Settings(32, "cbr", "j");
+                case 1:
+                    return CreateMp3Settings(64, "cbr", "j");
+                case 2:
+                    return CreateMp3Settings(128, "cbr", "j");
+                case 3:
+                    return CreateMp3Settings(192, "cbr", "j");
+                case 4:
+                    return CreateMp3Settings(256, "cbr", "j");
+                case 5:
+                    return CreateMp3Settings(320, "cbr", "j");
+                default:
+                    return CreateMp3Settings(128, "cbr", "j");
+            }
+        }
+        private EncoderSettings CreateMp3Settings(int bitrate, string mode, string channelMode)
+        {
+            EncoderSettings settings = new EncoderSettings
+            {
+                Frequency = 44100,
+                Channels = 2,
+                Bitrate = bitrate
+            };
+            settings.CustomParams["mode"] = mode;
+            settings.CustomParams["channelMode"] = channelMode;
+            settings.CustomParams["quality"] = 0;
+
+            return settings;
+        }
+
         #endregion
     }
 }

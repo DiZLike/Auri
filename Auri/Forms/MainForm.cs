@@ -19,23 +19,81 @@ namespace Auri
         private ConverterManager _converter;
         private List<AudioFile> _audioFiles;
         private ConfigManager _config;
+        private MetaService _metaService;
 
         public MainForm()
         {
             InitializeComponent();
-            LoadDefaults();
+            //LoadDefaults();
             _bass = new BassAudioService();
             _config = new ConfigManager();
             _audioFiles = new List<AudioFile>();
+            _metaService = new MetaService();
             InitializeThreadCountComboBox();
+            LoadSettings();
         }
         private void SaveSettings()
         {
+            // форма
             _config.Settings.FormSettings.FormY = this.Location.Y;
             _config.Settings.FormSettings.FormX = this.Location.X;
+            _config.Settings.FormSettings.FormWidth = this.Width;
+            _config.Settings.FormSettings.FormHeight = this.Height;
             _config.Settings.FormSettings.WindowState = this.WindowState;
 
+            // конвертер
+            _config.Settings.ConverterSettings.OutputFormatIndex = cmbOutputFormat.SelectedIndex;
+            _config.Settings.ConverterSettings.QualityIndex = cmbQuality.SelectedIndex;
+            _config.Settings.ConverterSettings.ThreadsCountIndex = cmbThreadCount.SelectedIndex;
+            _config.Settings.ConverterSettings.OutputPath = txtOutputPath.Text;
+            _config.Settings.ConverterSettings.PathPattern = txtPattern.Text;
+
+            // таблица треков
+            _config.Settings.ConverterSettings.SaveTrackList = cbSaveTracks.Checked;
+            if (dataGridViewFiles.Rows.Count == 0 )
+                _config.Settings.ConverterSettings.TrackList.Clear();
+
+            if (cbSaveTracks.Checked)
+            {
+                _config.Settings.ConverterSettings.TrackList.Clear();
+                foreach (DataGridViewRow row in dataGridViewFiles.Rows)
+                {
+                    if (row.Tag != null)
+                    {
+                        string filePath = row.Tag.ToString();
+                        _config.Settings.ConverterSettings.TrackList.Add(filePath);
+                    }
+                }
+            }
+
             _config.SaveSettings();
+        }
+        private void LoadSettings()
+        {
+            // форма
+            this.Location = new Point(_config.Settings.FormSettings.FormX, _config.Settings.FormSettings.FormY);
+            this.Size = new Size(_config.Settings.FormSettings.FormWidth, _config.Settings.FormSettings.FormHeight);
+            this.WindowState = _config.Settings.FormSettings.WindowState;
+
+            // конвертер
+            cmbOutputFormat.SelectedIndex = _config.Settings.ConverterSettings.OutputFormatIndex;
+            cmbQuality.SelectedIndex = _config.Settings.ConverterSettings.QualityIndex;
+
+            if (_config.Settings.ConverterSettings.ThreadsCountIndex < cmbThreadCount.Items.Count)
+                cmbThreadCount.SelectedIndex = _config.Settings.ConverterSettings.ThreadsCountIndex;
+            else
+                cmbThreadCount.SelectedIndex = cmbThreadCount.Items.Count - 1;
+
+            txtOutputPath.Text = _config.Settings.ConverterSettings.OutputPath;
+            if (txtOutputPath.Text == String.Empty)
+                txtOutputPath.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic),"Auri");
+            txtPattern.Text = _config.Settings.ConverterSettings.PathPattern;
+
+            // таблица треков
+            cbSaveTracks.Checked = _config.Settings.ConverterSettings.SaveTrackList;
+            if (cbSaveTracks.Checked)
+                AddFilesToGrid(_config.Settings.ConverterSettings.TrackList.ToArray());
+
         }
         private string[] LoadPresets(string format)
         {
@@ -53,16 +111,6 @@ namespace Auri
                 cmbThreadCount.Items.Add((i + 1).ToString());
             }
             cmbThreadCount.SelectedIndex = cmbThreadCount.Items.Count - 1;
-        }
-
-        private void LoadDefaults()
-        {
-            // Установка значений по умолчанию
-            txtOutputPath.Text = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyMusic),
-                "Auri");
-
-            cmbOutputFormat.SelectedIndex = 1; // OPUS
         }
 
         private void BtnAddFiles_Click(object sender, EventArgs e)
@@ -107,15 +155,16 @@ namespace Auri
                         continue;
 
                     FileInfo fileInfo = new FileInfo(filePath);
+                    var info = _metaService.GetTrackInfo(filePath);
+                    var chans = info.Channels > 1 ? "Stereo" : "Mono";
 
                     int rowIndex = dataGridViewFiles.Rows.Add();
                     DataGridViewRow row = dataGridViewFiles.Rows[rowIndex];
 
-                    row.Cells[0].Value = Path.GetFileNameWithoutExtension(filePath);
-                    row.Cells[1].Value = Path.GetExtension(filePath).TrimStart('.').ToUpper();
+                    row.Cells[0].Value = info.Name;
+                    row.Cells[1].Value = $"{info.Frequency} kHz, {info.Bitrate} kbps, {chans}, {info.Duration} ({info.Codec})";
                     row.Cells[2].Value = FormatFileSize(fileInfo.Length);
-                    row.Cells[3].Value = _bass.GetDuration(filePath);
-                    row.Cells[4].Value = "Ожидание";
+                    row.Cells[3].Value = "Ожидание";
                     row.Tag = filePath; // Сохраняем полный путь
 
                     // Подсветка новой строки
@@ -250,20 +299,20 @@ namespace Auri
             // Сбрасываем статусы
             foreach (DataGridViewRow row in dataGridViewFiles.Rows)
             {
-                row.Cells[4].Value = "Ожидание";
+                row.Cells[3].Value = "Ожидание";
                 row.DefaultCellStyle.BackColor = Color.White;
             }
 
             progressBar.Value = 0;
             lblStatus.Text = $"Конвертация в {format}...";
 
-            _converter = new ConverterManager(_bass, _audioFiles.ToArray(), outputPath, format, preset);
+            _converter = new ConverterManager(_bass, _audioFiles.ToArray(), outputPath, txtPattern.Text, format, preset);
             _converter.OnProgress += (index, progress) =>
             {
                 if (index < dataGridViewFiles.Rows.Count)
                 {
                     DataGridViewRow row = dataGridViewFiles.Rows[index];
-                    row.Cells[4].Value = $"{progress}%";
+                    row.Cells[3].Value = $"{progress}%";
                 }
             };
             _converter.OnOverallProgress += (overall) =>
@@ -279,7 +328,7 @@ namespace Auri
                 if (index < dataGridViewFiles.Rows.Count)
                 {
                     DataGridViewRow row = dataGridViewFiles.Rows[index];
-                    row.Cells[4].Value = $"Готово";
+                    row.Cells[3].Value = $"Готово";
                 }
             };
             _converter.OnAllComplete += (status) =>
@@ -298,7 +347,7 @@ namespace Auri
                     });
                 }));
             };
-            _converter.Convert(threads);
+            _converter.Convert(threads, _metaService);
         }
 
         private void UpdateStatus()
@@ -349,8 +398,8 @@ namespace Auri
         private void btnUserPreset_Click(object sender, EventArgs e)
         {
             string format = GetSelectedFormat();
-            EncoderSettings settings = _config.GetUserEncoderPreset(format);
-            var userPresetForm = new UserPresetForm(format, settings);
+            //EncoderSettings settings = _config.GetUserEncoderPreset(format);
+            var userPresetForm = new UserPresetForm(format, _config);
             userPresetForm.EncoderSettingsChanged += (preset) =>
             {
                 _config.SaveUserEncoderPreset(format, preset);
@@ -362,6 +411,16 @@ namespace Auri
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveSettings();
+        }
+
+        private void btnPattern_Click(object sender, EventArgs e)
+        {
+            var patternForm = new PatternForm();
+            patternForm.OnAddPattern += (tag) =>
+            {
+                txtPattern.Text += tag;
+            };
+            patternForm.Show();
         }
     }
 }
