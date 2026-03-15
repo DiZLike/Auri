@@ -1,11 +1,6 @@
 ﻿using Auri.Audio.Encoder.Codec;
 using Auri.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Auri.Audio.Encoder
 {
     public static class EncoderFactory
@@ -18,6 +13,8 @@ namespace Auri.Audio.Encoder
                     return new OpusEncoder(bass, inputAudio);
                 case "mp3":
                     return new LameEncoder(bass, inputAudio);
+                case "flac":
+                    return new FlacEncoder(bass, inputAudio);
                 default:
                     throw new NotSupportedException($"Format {format} not supported");
             }

@@ -30,12 +30,12 @@ namespace Auri.Services
                 return 0;
             }
             int stream = Bass.BASS_StreamCreateFile(audioFile, 0, 0,
-                BASSFlag.BASS_DEFAULT | BASSFlag.BASS_SAMPLE_FLOAT | BASSFlag.BASS_STREAM_DECODE);
+                BASSFlag.BASS_DEFAULT | BASSFlag.BASS_STREAM_DECODE);
             if (stream == 0)
                 OnError?.Invoke($"Ошибка создания потока аудио: {Bass.BASS_ErrorGetCode()}");
 
             BASS_CHANNELINFO info = Bass.BASS_ChannelGetInfo(stream);
-            int mixerHandel = BassMix.BASS_Mixer_StreamCreate(sampleRate, chans, BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_SAMPLE_FLOAT);
+            int mixerHandel = BassMix.BASS_Mixer_StreamCreate(sampleRate, chans, BASSFlag.BASS_STREAM_DECODE);
             if (mixerHandel == 0)
                 OnError?.Invoke($"Ошибка создания микшера: {Bass.BASS_ErrorGetCode()}");
             bool isError = !BassMix.BASS_Mixer_StreamAddChannel(mixerHandel, stream, BASSFlag.BASS_DEFAULT);

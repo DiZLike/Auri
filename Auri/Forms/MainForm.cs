@@ -1,6 +1,7 @@
 ﻿using Auri.Audio;
 using Auri.Audio.Encoder;
 using Auri.Forms;
+using Auri.Forms.Dialogs;
 using Auri.Managers;
 using Auri.Services;
 using System;
@@ -20,6 +21,8 @@ namespace Auri
         private List<AudioFile> _audioFiles;
         private ConfigManager _config;
         private MetaService _metaService;
+
+        private int _lastQualityIndex;
 
         public MainForm()
         {
@@ -360,9 +363,26 @@ namespace Auri
 
         private void cmbQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (cmbQuality.SelectedIndex == -1)
+                cmbQuality.SelectedIndex = 0;
             if (cmbQuality.Items[cmbQuality.SelectedIndex].ToString().ToLower().Contains("пользовательский"))
+            {
+                if (!_config.Settings.ConverterSettings.AdvancedMode)
+                {
+                    DialogResult dialogResult = AskDialog.ShowDialog("Предупреждение", "Данный режим предназначен для опытных пользователей.\n" +
+                        "Включить режим эксперта?");
+                    if (dialogResult == DialogResult.Yes)
+                        _config.Settings.ConverterSettings.AdvancedMode = true;
+                    else
+                    {
+                        cmbQuality.SelectedIndex = _lastQualityIndex;
+                        return;
+                    }
+                }
                 btnUserPreset.Enabled = true;
+            }
             else btnUserPreset.Enabled = false;
+            _lastQualityIndex = cmbQuality.SelectedIndex;
         }
 
         private void cmbOutputFormat_SelectedIndexChanged(object sender, EventArgs e)
@@ -372,6 +392,8 @@ namespace Auri
             string[] presets = LoadPresets(format);
             cmbQuality.Items.AddRange(presets);
             int index = cmbQuality.FindString("высокое");
+            if (index == -1)
+                index = cmbQuality.FindString("максимальное");
             cmbQuality.SelectedIndex = index;
         }
 

@@ -60,7 +60,7 @@
             this.txtHelp.ReadOnly = true;
             this.txtHelp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtHelp.Size = new System.Drawing.Size(448, 359);
-            this.txtHelp.TabIndex = 0;
+            this.txtHelp.TabIndex = 900;
             this.txtHelp.Text = resources.GetString("txtHelp.Text");
             // 
             // btn1

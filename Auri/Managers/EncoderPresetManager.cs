@@ -73,46 +73,10 @@ namespace Auri.Managers
                 return GetOpusPreset(index);
             else if (lowerFormat == "mp3")
                 return GetMp3Preset(index);
+            else if (lowerFormat == "flac")
+                return GetFlacPreset(index);
             return null;
         }
-
-        #region Opus presets
-        private EncoderSettings GetOpusPreset(int index)
-        {
-            switch (index)
-            {
-                case 0:
-                    return CreateOpusSettings(32, 60, "vbr", "music");
-                case 1:
-                    return CreateOpusSettings(64, 60, "vbr", "music");
-                case 2:
-                    return CreateOpusSettings(128, 40, "vbr", "music");
-                case 3:
-                    return CreateOpusSettings(192, 20, "vbr", "music");
-                default:
-                    return CreateOpusSettings(128, 40, "vbr", "music");
-            }
-        }
-
-        private EncoderSettings CreateOpusSettings(int bitrate, float frameSize, string mode, string content)
-        {
-            EncoderSettings settings = new EncoderSettings
-            {
-                Frequency = 48000,
-                Channels = 2,
-                Bitrate = bitrate
-            };
-
-            settings.CustomParams["mode"] = mode;
-            settings.CustomParams["content"] = content;
-            settings.CustomParams["complexity"] = "10";
-            settings.CustomParams["framesize"] = frameSize;
-
-            return settings;
-        }
-        #endregion
-
-        #region Mp3 presets
         private EncoderSettings GetMp3Preset(int index)
         {
             switch (index)
@@ -133,6 +97,36 @@ namespace Auri.Managers
                     return CreateMp3Settings(128, "cbr", "j");
             }
         }
+        private EncoderSettings GetOpusPreset(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return CreateOpusSettings(32, 60, "vbr", "music");
+                case 1:
+                    return CreateOpusSettings(64, 60, "vbr", "music");
+                case 2:
+                    return CreateOpusSettings(128, 40, "vbr", "music");
+                case 3:
+                    return CreateOpusSettings(192, 20, "vbr", "music");
+                default:
+                    return CreateOpusSettings(128, 40, "vbr", "music");
+            }
+        }
+        private EncoderSettings GetFlacPreset(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return CreateFlacSettings(0);
+                case 1:
+                    return CreateFlacSettings(4);
+                case 2:
+                    return CreateFlacSettings(8);
+                default:
+                    return CreateFlacSettings(4);
+            }
+        }
         private EncoderSettings CreateMp3Settings(int bitrate, string mode, string channelMode)
         {
             EncoderSettings settings = new EncoderSettings
@@ -147,7 +141,32 @@ namespace Auri.Managers
 
             return settings;
         }
+        private EncoderSettings CreateOpusSettings(int bitrate, float frameSize, string mode, string content)
+        {
+            EncoderSettings settings = new EncoderSettings
+            {
+                Frequency = 48000,
+                Channels = 2,
+                Bitrate = bitrate
+            };
 
-        #endregion
+            settings.CustomParams["mode"] = mode;
+            settings.CustomParams["content"] = content;
+            settings.CustomParams["complexity"] = "10";
+            settings.CustomParams["framesize"] = frameSize;
+
+            return settings;
+        }
+        private EncoderSettings CreateFlacSettings(int compress)
+        {
+            EncoderSettings settings = new EncoderSettings
+            {
+                Frequency = 44100,
+                Channels = 2,
+                Bitrate = 192
+            };
+            settings.CustomParams["compress"] = compress;
+            return settings;
+        }
     }
 }

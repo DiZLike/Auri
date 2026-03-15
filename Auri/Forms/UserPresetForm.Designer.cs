@@ -30,6 +30,16 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.mp3Page = new System.Windows.Forms.TabPage();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cmbMp3Channels = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cmbMp3Comp = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.cmbMp3Mode = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cmbMp3Bitrate = new System.Windows.Forms.ComboBox();
+            this.cmbMp3Frequency = new System.Windows.Forms.ComboBox();
             this.opusPage = new System.Windows.Forms.TabPage();
             this.label7 = new System.Windows.Forms.Label();
             this.cmbOpusChannels = new System.Windows.Forms.ComboBox();
@@ -47,19 +57,19 @@
             this.cmbOpusFrequency = new System.Windows.Forms.ComboBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.cmbMp3Channels = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.cmbMp3Comp = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.cmbMp3Mode = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.cmbMp3Bitrate = new System.Windows.Forms.ComboBox();
-            this.cmbMp3Frequency = new System.Windows.Forms.ComboBox();
+            this.flacPage = new System.Windows.Forms.TabPage();
+            this.label13 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.tbCompress = new System.Windows.Forms.TrackBar();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.cbLossyWav = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.mp3Page.SuspendLayout();
             this.opusPage.SuspendLayout();
+            this.flacPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCompress)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -69,6 +79,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.mp3Page);
             this.tabControl1.Controls.Add(this.opusPage);
+            this.tabControl1.Controls.Add(this.flacPage);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -95,6 +106,137 @@
             this.mp3Page.Text = "MP3";
             this.mp3Page.UseVisualStyleBackColor = true;
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 90);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(49, 13);
+            this.label8.TabIndex = 23;
+            this.label8.Text = "Каналы:";
+            // 
+            // cmbMp3Channels
+            // 
+            this.cmbMp3Channels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMp3Channels.FormattingEnabled = true;
+            this.cmbMp3Channels.Items.AddRange(new object[] {
+            "Stereo",
+            "Joint Stereo",
+            "Forced Joint Stereo",
+            "Mono"});
+            this.cmbMp3Channels.Location = new System.Drawing.Point(66, 87);
+            this.cmbMp3Channels.Name = "cmbMp3Channels";
+            this.cmbMp3Channels.Size = new System.Drawing.Size(121, 21);
+            this.cmbMp3Channels.TabIndex = 22;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(193, 9);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(59, 13);
+            this.label9.TabIndex = 21;
+            this.label9.Text = "Алгоритм:";
+            // 
+            // cmbMp3Comp
+            // 
+            this.cmbMp3Comp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMp3Comp.FormattingEnabled = true;
+            this.cmbMp3Comp.Items.AddRange(new object[] {
+            "9",
+            "8",
+            "7",
+            "6",
+            "5",
+            "4",
+            "3",
+            "2",
+            "1",
+            "0"});
+            this.cmbMp3Comp.Location = new System.Drawing.Point(281, 6);
+            this.cmbMp3Comp.Name = "cmbMp3Comp";
+            this.cmbMp3Comp.Size = new System.Drawing.Size(121, 21);
+            this.cmbMp3Comp.TabIndex = 20;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(8, 63);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(45, 13);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "Режим:";
+            // 
+            // cmbMp3Mode
+            // 
+            this.cmbMp3Mode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMp3Mode.FormattingEnabled = true;
+            this.cmbMp3Mode.Items.AddRange(new object[] {
+            "CBR",
+            "ABR",
+            "VBR"});
+            this.cmbMp3Mode.Location = new System.Drawing.Point(66, 60);
+            this.cmbMp3Mode.Name = "cmbMp3Mode";
+            this.cmbMp3Mode.Size = new System.Drawing.Size(121, 21);
+            this.cmbMp3Mode.TabIndex = 18;
+            this.cmbMp3Mode.SelectedIndexChanged += new System.EventHandler(this.cmbMp3Mode_SelectedIndexChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(8, 36);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(57, 13);
+            this.label11.TabIndex = 17;
+            this.label11.Text = "Качество:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(8, 9);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(52, 13);
+            this.label12.TabIndex = 16;
+            this.label12.Text = "Частота:";
+            // 
+            // cmbMp3Bitrate
+            // 
+            this.cmbMp3Bitrate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMp3Bitrate.FormattingEnabled = true;
+            this.cmbMp3Bitrate.Items.AddRange(new object[] {
+            "320",
+            "256",
+            "192",
+            "160",
+            "128",
+            "96",
+            "64",
+            "56",
+            "48",
+            "40",
+            "32"});
+            this.cmbMp3Bitrate.Location = new System.Drawing.Point(66, 33);
+            this.cmbMp3Bitrate.Name = "cmbMp3Bitrate";
+            this.cmbMp3Bitrate.Size = new System.Drawing.Size(121, 21);
+            this.cmbMp3Bitrate.TabIndex = 15;
+            // 
+            // cmbMp3Frequency
+            // 
+            this.cmbMp3Frequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMp3Frequency.FormattingEnabled = true;
+            this.cmbMp3Frequency.Items.AddRange(new object[] {
+            "48000",
+            "44100",
+            "32000",
+            "22050",
+            "16000",
+            "11025",
+            "8000"});
+            this.cmbMp3Frequency.Location = new System.Drawing.Point(66, 6);
+            this.cmbMp3Frequency.Name = "cmbMp3Frequency";
+            this.cmbMp3Frequency.Size = new System.Drawing.Size(121, 21);
+            this.cmbMp3Frequency.TabIndex = 14;
+            // 
             // opusPage
             // 
             this.opusPage.Controls.Add(this.label7);
@@ -116,7 +258,7 @@
             this.opusPage.Padding = new System.Windows.Forms.Padding(3);
             this.opusPage.Size = new System.Drawing.Size(454, 129);
             this.opusPage.TabIndex = 0;
-            this.opusPage.Text = "OPUS";
+            this.opusPage.Text = "Opus";
             this.opusPage.UseVisualStyleBackColor = true;
             // 
             // label7
@@ -318,125 +460,36 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // label8
+            // flacPage
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 90);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(49, 13);
-            this.label8.TabIndex = 23;
-            this.label8.Text = "Каналы:";
+            this.flacPage.Controls.Add(this.cbLossyWav);
+            this.flacPage.Controls.Add(this.label16);
+            this.flacPage.Controls.Add(this.label15);
+            this.flacPage.Controls.Add(this.label14);
+            this.flacPage.Controls.Add(this.tbCompress);
+            this.flacPage.Controls.Add(this.label13);
+            this.flacPage.Controls.Add(this.comboBox1);
+            this.flacPage.Location = new System.Drawing.Point(4, 22);
+            this.flacPage.Name = "flacPage";
+            this.flacPage.Size = new System.Drawing.Size(454, 129);
+            this.flacPage.TabIndex = 2;
+            this.flacPage.Text = "FLAC";
+            this.flacPage.UseVisualStyleBackColor = true;
             // 
-            // cmbMp3Channels
+            // label13
             // 
-            this.cmbMp3Channels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbMp3Channels.FormattingEnabled = true;
-            this.cmbMp3Channels.Items.AddRange(new object[] {
-            "Stereo",
-            "Joint Stereo",
-            "Forced Joint Stereo",
-            "Mono"});
-            this.cmbMp3Channels.Location = new System.Drawing.Point(66, 87);
-            this.cmbMp3Channels.Name = "cmbMp3Channels";
-            this.cmbMp3Channels.Size = new System.Drawing.Size(121, 21);
-            this.cmbMp3Channels.TabIndex = 22;
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(8, 9);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(52, 13);
+            this.label13.TabIndex = 18;
+            this.label13.Text = "Частота:";
             // 
-            // label9
+            // comboBox1
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(193, 9);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(59, 13);
-            this.label9.TabIndex = 21;
-            this.label9.Text = "Алгоритм:";
-            // 
-            // cmbMp3Comp
-            // 
-            this.cmbMp3Comp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbMp3Comp.FormattingEnabled = true;
-            this.cmbMp3Comp.Items.AddRange(new object[] {
-            "9",
-            "8",
-            "7",
-            "6",
-            "5",
-            "4",
-            "3",
-            "2",
-            "1",
-            "0"});
-            this.cmbMp3Comp.Location = new System.Drawing.Point(281, 6);
-            this.cmbMp3Comp.Name = "cmbMp3Comp";
-            this.cmbMp3Comp.Size = new System.Drawing.Size(121, 21);
-            this.cmbMp3Comp.TabIndex = 20;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(8, 63);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(45, 13);
-            this.label10.TabIndex = 19;
-            this.label10.Text = "Режим:";
-            // 
-            // cmbMp3Mode
-            // 
-            this.cmbMp3Mode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbMp3Mode.FormattingEnabled = true;
-            this.cmbMp3Mode.Items.AddRange(new object[] {
-            "CBR",
-            "ABR",
-            "VBR"});
-            this.cmbMp3Mode.Location = new System.Drawing.Point(66, 60);
-            this.cmbMp3Mode.Name = "cmbMp3Mode";
-            this.cmbMp3Mode.Size = new System.Drawing.Size(121, 21);
-            this.cmbMp3Mode.TabIndex = 18;
-            this.cmbMp3Mode.SelectedIndexChanged += new System.EventHandler(this.cmbMp3Mode_SelectedIndexChanged);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(8, 36);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(57, 13);
-            this.label11.TabIndex = 17;
-            this.label11.Text = "Качество:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(8, 9);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(52, 13);
-            this.label12.TabIndex = 16;
-            this.label12.Text = "Частота:";
-            // 
-            // cmbMp3Bitrate
-            // 
-            this.cmbMp3Bitrate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbMp3Bitrate.FormattingEnabled = true;
-            this.cmbMp3Bitrate.Items.AddRange(new object[] {
-            "320",
-            "256",
-            "192",
-            "160",
-            "128",
-            "96",
-            "64",
-            "56",
-            "48",
-            "40",
-            "32"});
-            this.cmbMp3Bitrate.Location = new System.Drawing.Point(66, 33);
-            this.cmbMp3Bitrate.Name = "cmbMp3Bitrate";
-            this.cmbMp3Bitrate.Size = new System.Drawing.Size(121, 21);
-            this.cmbMp3Bitrate.TabIndex = 15;
-            // 
-            // cmbMp3Frequency
-            // 
-            this.cmbMp3Frequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbMp3Frequency.FormattingEnabled = true;
-            this.cmbMp3Frequency.Items.AddRange(new object[] {
+            this.comboBox1.Enabled = false;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
             "48000",
             "44100",
             "32000",
@@ -444,10 +497,58 @@
             "16000",
             "11025",
             "8000"});
-            this.cmbMp3Frequency.Location = new System.Drawing.Point(66, 6);
-            this.cmbMp3Frequency.Name = "cmbMp3Frequency";
-            this.cmbMp3Frequency.Size = new System.Drawing.Size(121, 21);
-            this.cmbMp3Frequency.TabIndex = 14;
+            this.comboBox1.Location = new System.Drawing.Point(66, 6);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 17;
+            this.comboBox1.Text = "44100";
+            // 
+            // tbCompress
+            // 
+            this.tbCompress.AutoSize = false;
+            this.tbCompress.LargeChange = 1;
+            this.tbCompress.Location = new System.Drawing.Point(66, 33);
+            this.tbCompress.Maximum = 8;
+            this.tbCompress.Name = "tbCompress";
+            this.tbCompress.Size = new System.Drawing.Size(121, 21);
+            this.tbCompress.TabIndex = 20;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(8, 36);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(52, 13);
+            this.label14.TabIndex = 21;
+            this.label14.Text = "Частота:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(63, 57);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(13, 13);
+            this.label15.TabIndex = 22;
+            this.label15.Text = "0";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(174, 57);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(13, 13);
+            this.label16.TabIndex = 23;
+            this.label16.Text = "8";
+            // 
+            // cbLossyWav
+            // 
+            this.cbLossyWav.AutoSize = true;
+            this.cbLossyWav.Location = new System.Drawing.Point(207, 10);
+            this.cbLossyWav.Name = "cbLossyWav";
+            this.cbLossyWav.Size = new System.Drawing.Size(76, 17);
+            this.cbLossyWav.TabIndex = 24;
+            this.cbLossyWav.Text = "LossyWav";
+            this.cbLossyWav.UseVisualStyleBackColor = true;
             // 
             // UserPresetForm
             // 
@@ -468,6 +569,9 @@
             this.mp3Page.PerformLayout();
             this.opusPage.ResumeLayout(false);
             this.opusPage.PerformLayout();
+            this.flacPage.ResumeLayout(false);
+            this.flacPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbCompress)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -503,5 +607,13 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox cmbMp3Bitrate;
         private System.Windows.Forms.ComboBox cmbMp3Frequency;
+        private System.Windows.Forms.TabPage flacPage;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.TrackBar tbCompress;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.CheckBox cbLossyWav;
     }
 }

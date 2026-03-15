@@ -23,6 +23,7 @@ namespace Auri.Config
     [Serializable]
     public class ConverterSettings
     {
+        public bool AdvancedMode { get; set; }
         public int OutputFormatIndex { get; set; }
         public int QualityIndex { get; set; }
         public int ThreadsCountIndex { get; set; }
