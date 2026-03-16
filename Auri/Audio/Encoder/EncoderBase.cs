@@ -65,9 +65,9 @@ namespace Auri.Audio.Encoder
 
         protected abstract string BuildArguments(EncoderSettings settings, string outputAudio);
 
-        public void Stop()
+        public void AbortEncode()
         {
-            _encoderService.StopEncode();
+            _encoderService.AbortEncode();
         }
     }
 }

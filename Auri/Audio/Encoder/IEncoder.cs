@@ -10,7 +10,7 @@ namespace Auri.Audio.Encoder
     public interface IEncoder
     {
         bool Encode(string outputAudio, EncoderSettings settings, int pass, int totalPass);
-        void Stop();
+        void AbortEncode();
         event Action<string> OnError;
         event Action<int, float> OnProgress;
         event Action<int, bool> OnComplete;

@@ -70,6 +70,7 @@ namespace Auri.Services
         }
         public void StartEncode(int stream, int encoder, int pass, int totalPass)
         {
+            _isUserStopped = false;
             long fileLength = Bass.BASS_ChannelGetLength(stream);
             byte[] buffer = new byte[65536];
             int bytesRead;
@@ -141,7 +142,7 @@ namespace Auri.Services
             while (bytesRead > 0 && !_isUserStopped);
             wav.Close();
         }
-        public void StopEncode()
+        public void AbortEncode()
         {
             _isUserStopped = true;
         }
