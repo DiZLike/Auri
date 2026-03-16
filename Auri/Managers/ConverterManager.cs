@@ -123,7 +123,7 @@ namespace Auri.Managers
 
                         OnOverallProgress?.Invoke((int)overallProgress);
                     };
-                    bool isOk = encoder.Encode(outputAudio, _settings);
+                    bool isOk = encoder.Encode(outputAudio, _settings, 1, 1);
                     if (isOk)
                         _metaService.CopyMetadata(file.FilePath, outputAudio);
                 });

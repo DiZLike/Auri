@@ -8,8 +8,6 @@ namespace Auri.Services
     public class BassAudioService
     {
         public event Action<string> OnError;
-        //public event Action<float> OnProgress;
-        //public event Action<bool> OnComplete;
 
         private bool _isInitialized;
         private string _decPluginsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "decoders");
@@ -19,8 +17,6 @@ namespace Auri.Services
             if (!InitializeBass())
                 return;
             PluginsLoad();
-            //Encoder.OnProgress += (progress) => OnProgress?.Invoke(progress);
-            //Encoder.OnComplete += (status) => OnComplete?.Invoke(status);
         }
         private bool InitializeBass()
         {

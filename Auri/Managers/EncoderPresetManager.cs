@@ -7,9 +7,6 @@ using static Un4seen.Bass.Misc.BaseEncoder;
 
 namespace Auri.Managers
 {
-    /// <summary>
-    /// Управляет предустановками настроек для различных кодеков
-    /// </summary>
     public class EncoderPresetManager
     {
         private readonly string _configPath;
@@ -19,10 +16,6 @@ namespace Auri.Managers
             _configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "encoder_presets");
             Directory.CreateDirectory(_configPath);
         }
-
-        /// <summary>
-        /// Получить настройки для указанного формата и индекса пресета
-        /// </summary>
         public EncoderSettings GetPreset(string format, int presetIndex)
         {
             string lowerFormat = format.ToLower();
@@ -39,19 +32,11 @@ namespace Auri.Managers
             EncoderSettings defaultPreset = GetDefaultPreset(lowerFormat, presetIndex);
             return defaultPreset ?? new EncoderSettings();
         }
-
-        /// <summary>
-        /// Сохранить пользовательские настройки для формата
-        /// </summary>
         public void SaveCustomPreset(string format, EncoderSettings settings)
         {
             string filePath = Path.Combine(_configPath, $"{format.ToLower()}_custom.json");
             File.WriteAllText(filePath, JsonConvert.SerializeObject(settings, Formatting.Indented));
         }
-
-        /// <summary>
-        /// Загрузить пользовательские настройки для формата
-        /// </summary>
         public EncoderSettings LoadCustomPreset(string format)
         {
             string filePath = Path.Combine(_configPath, $"{format.ToLower()}_custom.json");
@@ -61,10 +46,6 @@ namespace Auri.Managers
             }
             return new EncoderSettings();
         }
-
-        /// <summary>
-        /// Получить стандартный пресет для формата и индекса
-        /// </summary>
         private EncoderSettings GetDefaultPreset(string format, int index)
         {
             string lowerFormat = format.ToLower();
@@ -75,6 +56,8 @@ namespace Auri.Managers
                 return GetMp3Preset(index);
             else if (lowerFormat == "flac")
                 return GetFlacPreset(index);
+            else if (lowerFormat == "wave")
+                return GetWavePreset(index);
             return null;
         }
         private EncoderSettings GetMp3Preset(int index)
@@ -120,11 +103,21 @@ namespace Auri.Managers
                 case 0:
                     return CreateFlacSettings(0);
                 case 1:
-                    return CreateFlacSettings(4);
+                    return CreateFlacSettings(5);
                 case 2:
                     return CreateFlacSettings(8);
                 default:
-                    return CreateFlacSettings(4);
+                    return CreateFlacSettings(5);
+            }
+        }
+        private EncoderSettings GetWavePreset(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return CreateWaveSettings(44100, 16, 2);
+                default:
+                    return CreateWaveSettings(44100, 16, 2);
             }
         }
         private EncoderSettings CreateMp3Settings(int bitrate, string mode, string channelMode)
@@ -166,6 +159,18 @@ namespace Auri.Managers
                 Bitrate = 192
             };
             settings.CustomParams["compress"] = compress;
+            settings.CustomParams["useLossyWav"] = false;
+            settings.CustomParams["lossyWavQuality"] = "S";
+            return settings;
+        }
+        private EncoderSettings CreateWaveSettings(int frequency, int bits, int channels)
+        {
+            EncoderSettings settings = new EncoderSettings
+            {
+                Frequency = frequency,
+                Channels = channels,
+                BitsPerSample = bits
+            };
             return settings;
         }
     }

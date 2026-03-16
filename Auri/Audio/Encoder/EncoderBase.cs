@@ -15,9 +15,10 @@ namespace Auri.Audio.Encoder
         protected readonly AudioFile _inputAudio;
         protected int _streamHandle;
         protected int _encoderHandle;
-        protected readonly string _encoderPath;
-        protected abstract string EncoderSubPath { get; }
-        protected abstract string EncoderFileName { get; }
+        protected string _encoderPath;
+        protected abstract string EncoderSubPath { get; set; }
+        protected abstract string EncoderFileName { get; set; }
+        
 
         protected EncoderBase(BassAudioService bass, AudioFile inputAudio)
         {
@@ -29,23 +30,26 @@ namespace Auri.Audio.Encoder
                 OnProgress?.Invoke(_inputAudio.Index, progress);
             _encoderService.OnComplete += (status) =>
                 OnComplete?.Invoke(_inputAudio.Index, status);
-
-            _encoderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                "encoders", EncoderSubPath, EncoderFileName);
         }
 
-        public bool Encode(string outputAudio, EncoderSettings settings)
+        public virtual bool Encode(string outputAudio, EncoderSettings settings, int pass, int totalPass)
         {
             try
             {
                 _inputAudio.Working = true;
 
                 string args = BuildArguments(settings, outputAudio);
+                LogService.LogInfo(args);
+
+                _encoderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                    "encoders", EncoderSubPath, EncoderFileName);
+
                 _streamHandle = _encoderService.CreateStream(
                     _inputAudio.FilePath, settings.Frequency, settings.Channels);
                 _encoderHandle = _encoderService.CreateEncoder(
-                    _streamHandle, _encoderPath, args);
-                _encoderService.StartEncode(_streamHandle, _encoderHandle);
+                    _streamHandle, _encoderPath, args, settings.BitsPerSample);
+
+                _encoderService.StartEncode(_streamHandle, _encoderHandle, pass, totalPass);
 
                 _inputAudio.Working = false;
                 _inputAudio.Completed = true;

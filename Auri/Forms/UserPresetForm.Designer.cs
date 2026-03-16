@@ -55,21 +55,33 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cmbOpusBitrate = new System.Windows.Forms.ComboBox();
             this.cmbOpusFrequency = new System.Windows.Forms.ComboBox();
+            this.flacPage = new System.Windows.Forms.TabPage();
+            this.label18 = new System.Windows.Forms.Label();
+            this.cmbLossyWavQuality = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.cmbFlacBitPerSample = new System.Windows.Forms.ComboBox();
+            this.cbLossyWav = new System.Windows.Forms.CheckBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.tbFlacCompress = new System.Windows.Forms.TrackBar();
+            this.label13 = new System.Windows.Forms.Label();
+            this.cmbFlacFrequency = new System.Windows.Forms.ComboBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.flacPage = new System.Windows.Forms.TabPage();
-            this.label13 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.tbCompress = new System.Windows.Forms.TrackBar();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.cbLossyWav = new System.Windows.Forms.CheckBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label19 = new System.Windows.Forms.Label();
+            this.cmbWaveFrequency = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.cmbWaveBitPerSample = new System.Windows.Forms.ComboBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.cmbWaveChannels = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.mp3Page.SuspendLayout();
             this.opusPage.SuspendLayout();
             this.flacPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCompress)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbFlacCompress)).BeginInit();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -80,10 +92,11 @@
             this.tabControl1.Controls.Add(this.mp3Page);
             this.tabControl1.Controls.Add(this.opusPage);
             this.tabControl1.Controls.Add(this.flacPage);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(462, 155);
+            this.tabControl1.Size = new System.Drawing.Size(418, 155);
             this.tabControl1.TabIndex = 0;
             // 
             // mp3Page
@@ -101,7 +114,7 @@
             this.mp3Page.Location = new System.Drawing.Point(4, 22);
             this.mp3Page.Name = "mp3Page";
             this.mp3Page.Padding = new System.Windows.Forms.Padding(3);
-            this.mp3Page.Size = new System.Drawing.Size(454, 129);
+            this.mp3Page.Size = new System.Drawing.Size(410, 129);
             this.mp3Page.TabIndex = 1;
             this.mp3Page.Text = "MP3";
             this.mp3Page.UseVisualStyleBackColor = true;
@@ -143,16 +156,16 @@
             this.cmbMp3Comp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMp3Comp.FormattingEnabled = true;
             this.cmbMp3Comp.Items.AddRange(new object[] {
-            "9",
-            "8",
-            "7",
-            "6",
-            "5",
-            "4",
-            "3",
-            "2",
+            "0 (качество)",
             "1",
-            "0"});
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9 (скорость)"});
             this.cmbMp3Comp.Location = new System.Drawing.Point(281, 6);
             this.cmbMp3Comp.Name = "cmbMp3Comp";
             this.cmbMp3Comp.Size = new System.Drawing.Size(121, 21);
@@ -256,7 +269,7 @@
             this.opusPage.Location = new System.Drawing.Point(4, 22);
             this.opusPage.Name = "opusPage";
             this.opusPage.Padding = new System.Windows.Forms.Padding(3);
-            this.opusPage.Size = new System.Drawing.Size(454, 129);
+            this.opusPage.Size = new System.Drawing.Size(410, 129);
             this.opusPage.TabIndex = 0;
             this.opusPage.Text = "Opus";
             this.opusPage.UseVisualStyleBackColor = true;
@@ -436,11 +449,166 @@
             this.cmbOpusFrequency.TabIndex = 0;
             this.cmbOpusFrequency.Text = "48000";
             // 
+            // flacPage
+            // 
+            this.flacPage.Controls.Add(this.label18);
+            this.flacPage.Controls.Add(this.cmbLossyWavQuality);
+            this.flacPage.Controls.Add(this.label17);
+            this.flacPage.Controls.Add(this.cmbFlacBitPerSample);
+            this.flacPage.Controls.Add(this.cbLossyWav);
+            this.flacPage.Controls.Add(this.label16);
+            this.flacPage.Controls.Add(this.label15);
+            this.flacPage.Controls.Add(this.label14);
+            this.flacPage.Controls.Add(this.tbFlacCompress);
+            this.flacPage.Controls.Add(this.label13);
+            this.flacPage.Controls.Add(this.cmbFlacFrequency);
+            this.flacPage.Location = new System.Drawing.Point(4, 22);
+            this.flacPage.Name = "flacPage";
+            this.flacPage.Size = new System.Drawing.Size(410, 129);
+            this.flacPage.TabIndex = 2;
+            this.flacPage.Text = "FLAC";
+            this.flacPage.UseVisualStyleBackColor = true;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(193, 36);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(57, 13);
+            this.label18.TabIndex = 28;
+            this.label18.Text = "Качество:";
+            // 
+            // cmbLossyWavQuality
+            // 
+            this.cmbLossyWavQuality.AutoCompleteCustomSource.AddRange(new string[] {
+            "32",
+            "24",
+            "16",
+            "8"});
+            this.cmbLossyWavQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbLossyWavQuality.Enabled = false;
+            this.cmbLossyWavQuality.FormattingEnabled = true;
+            this.cmbLossyWavQuality.Items.AddRange(new object[] {
+            "Наивысшее",
+            "Высокое",
+            "Повышенное",
+            "Стандартное",
+            "Среднее",
+            "Портативное",
+            "Низкое"});
+            this.cmbLossyWavQuality.Location = new System.Drawing.Point(254, 33);
+            this.cmbLossyWavQuality.Name = "cmbLossyWavQuality";
+            this.cmbLossyWavQuality.Size = new System.Drawing.Size(148, 21);
+            this.cmbLossyWavQuality.TabIndex = 27;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(8, 36);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(51, 13);
+            this.label17.TabIndex = 26;
+            this.label17.Text = "Глубина:";
+            // 
+            // cmbFlacBitPerSample
+            // 
+            this.cmbFlacBitPerSample.AutoCompleteCustomSource.AddRange(new string[] {
+            "32",
+            "24",
+            "16",
+            "8"});
+            this.cmbFlacBitPerSample.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFlacBitPerSample.FormattingEnabled = true;
+            this.cmbFlacBitPerSample.Items.AddRange(new object[] {
+            "32",
+            "24",
+            "16",
+            "8"});
+            this.cmbFlacBitPerSample.Location = new System.Drawing.Point(66, 33);
+            this.cmbFlacBitPerSample.Name = "cmbFlacBitPerSample";
+            this.cmbFlacBitPerSample.Size = new System.Drawing.Size(121, 21);
+            this.cmbFlacBitPerSample.TabIndex = 25;
+            // 
+            // cbLossyWav
+            // 
+            this.cbLossyWav.AutoSize = true;
+            this.cbLossyWav.Location = new System.Drawing.Point(196, 8);
+            this.cbLossyWav.Name = "cbLossyWav";
+            this.cbLossyWav.Size = new System.Drawing.Size(76, 17);
+            this.cbLossyWav.TabIndex = 24;
+            this.cbLossyWav.Text = "LossyWav";
+            this.cbLossyWav.UseVisualStyleBackColor = true;
+            this.cbLossyWav.CheckedChanged += new System.EventHandler(this.cbLossyWav_CheckedChanged);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(170, 84);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(13, 13);
+            this.label16.TabIndex = 23;
+            this.label16.Text = "8";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(70, 84);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(13, 13);
+            this.label15.TabIndex = 22;
+            this.label15.Text = "0";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(8, 63);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(48, 13);
+            this.label14.TabIndex = 21;
+            this.label14.Text = "Сжатие:";
+            // 
+            // tbFlacCompress
+            // 
+            this.tbFlacCompress.AutoSize = false;
+            this.tbFlacCompress.LargeChange = 1;
+            this.tbFlacCompress.Location = new System.Drawing.Point(66, 60);
+            this.tbFlacCompress.Maximum = 8;
+            this.tbFlacCompress.Name = "tbFlacCompress";
+            this.tbFlacCompress.Size = new System.Drawing.Size(121, 21);
+            this.tbFlacCompress.TabIndex = 20;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(8, 9);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(52, 13);
+            this.label13.TabIndex = 18;
+            this.label13.Text = "Частота:";
+            // 
+            // cmbFlacFrequency
+            // 
+            this.cmbFlacFrequency.Enabled = false;
+            this.cmbFlacFrequency.FormattingEnabled = true;
+            this.cmbFlacFrequency.Items.AddRange(new object[] {
+            "48000",
+            "44100",
+            "32000",
+            "22050",
+            "16000",
+            "11025",
+            "8000"});
+            this.cmbFlacFrequency.Location = new System.Drawing.Point(66, 6);
+            this.cmbFlacFrequency.Name = "cmbFlacFrequency";
+            this.cmbFlacFrequency.Size = new System.Drawing.Size(121, 21);
+            this.cmbFlacFrequency.TabIndex = 17;
+            this.cmbFlacFrequency.Text = "44100";
+            // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnSave.Location = new System.Drawing.Point(383, 157);
+            this.btnSave.Location = new System.Drawing.Point(339, 157);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 1;
@@ -452,7 +620,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(302, 157);
+            this.btnCancel.Location = new System.Drawing.Point(258, 157);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -460,36 +628,35 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // flacPage
+            // tabPage1
             // 
-            this.flacPage.Controls.Add(this.cbLossyWav);
-            this.flacPage.Controls.Add(this.label16);
-            this.flacPage.Controls.Add(this.label15);
-            this.flacPage.Controls.Add(this.label14);
-            this.flacPage.Controls.Add(this.tbCompress);
-            this.flacPage.Controls.Add(this.label13);
-            this.flacPage.Controls.Add(this.comboBox1);
-            this.flacPage.Location = new System.Drawing.Point(4, 22);
-            this.flacPage.Name = "flacPage";
-            this.flacPage.Size = new System.Drawing.Size(454, 129);
-            this.flacPage.TabIndex = 2;
-            this.flacPage.Text = "FLAC";
-            this.flacPage.UseVisualStyleBackColor = true;
+            this.tabPage1.Controls.Add(this.label21);
+            this.tabPage1.Controls.Add(this.cmbWaveChannels);
+            this.tabPage1.Controls.Add(this.label20);
+            this.tabPage1.Controls.Add(this.cmbWaveBitPerSample);
+            this.tabPage1.Controls.Add(this.label19);
+            this.tabPage1.Controls.Add(this.cmbWaveFrequency);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(410, 129);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "WAVE";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // label13
+            // label19
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(8, 9);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(52, 13);
-            this.label13.TabIndex = 18;
-            this.label13.Text = "Частота:";
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(8, 9);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(52, 13);
+            this.label19.TabIndex = 18;
+            this.label19.Text = "Частота:";
             // 
-            // comboBox1
+            // cmbWaveFrequency
             // 
-            this.comboBox1.Enabled = false;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cmbWaveFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbWaveFrequency.FormattingEnabled = true;
+            this.cmbWaveFrequency.Items.AddRange(new object[] {
             "48000",
             "44100",
             "32000",
@@ -497,64 +664,65 @@
             "16000",
             "11025",
             "8000"});
-            this.comboBox1.Location = new System.Drawing.Point(66, 6);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 17;
-            this.comboBox1.Text = "44100";
+            this.cmbWaveFrequency.Location = new System.Drawing.Point(66, 6);
+            this.cmbWaveFrequency.Name = "cmbWaveFrequency";
+            this.cmbWaveFrequency.Size = new System.Drawing.Size(121, 21);
+            this.cmbWaveFrequency.TabIndex = 17;
             // 
-            // tbCompress
+            // label20
             // 
-            this.tbCompress.AutoSize = false;
-            this.tbCompress.LargeChange = 1;
-            this.tbCompress.Location = new System.Drawing.Point(66, 33);
-            this.tbCompress.Maximum = 8;
-            this.tbCompress.Name = "tbCompress";
-            this.tbCompress.Size = new System.Drawing.Size(121, 21);
-            this.tbCompress.TabIndex = 20;
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(8, 36);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(51, 13);
+            this.label20.TabIndex = 28;
+            this.label20.Text = "Глубина:";
             // 
-            // label14
+            // cmbWaveBitPerSample
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(8, 36);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(52, 13);
-            this.label14.TabIndex = 21;
-            this.label14.Text = "Частота:";
+            this.cmbWaveBitPerSample.AutoCompleteCustomSource.AddRange(new string[] {
+            "32",
+            "24",
+            "16",
+            "8"});
+            this.cmbWaveBitPerSample.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbWaveBitPerSample.FormattingEnabled = true;
+            this.cmbWaveBitPerSample.Items.AddRange(new object[] {
+            "32",
+            "24",
+            "16",
+            "8"});
+            this.cmbWaveBitPerSample.Location = new System.Drawing.Point(66, 33);
+            this.cmbWaveBitPerSample.Name = "cmbWaveBitPerSample";
+            this.cmbWaveBitPerSample.Size = new System.Drawing.Size(121, 21);
+            this.cmbWaveBitPerSample.TabIndex = 27;
             // 
-            // label15
+            // label21
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(63, 57);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(13, 13);
-            this.label15.TabIndex = 22;
-            this.label15.Text = "0";
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(8, 63);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(49, 13);
+            this.label21.TabIndex = 30;
+            this.label21.Text = "Каналы:";
             // 
-            // label16
+            // cmbWaveChannels
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(174, 57);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(13, 13);
-            this.label16.TabIndex = 23;
-            this.label16.Text = "8";
-            // 
-            // cbLossyWav
-            // 
-            this.cbLossyWav.AutoSize = true;
-            this.cbLossyWav.Location = new System.Drawing.Point(207, 10);
-            this.cbLossyWav.Name = "cbLossyWav";
-            this.cbLossyWav.Size = new System.Drawing.Size(76, 17);
-            this.cbLossyWav.TabIndex = 24;
-            this.cbLossyWav.Text = "LossyWav";
-            this.cbLossyWav.UseVisualStyleBackColor = true;
+            this.cmbWaveChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbWaveChannels.FormattingEnabled = true;
+            this.cmbWaveChannels.Items.AddRange(new object[] {
+            "Stereo",
+            "Mono"});
+            this.cmbWaveChannels.Location = new System.Drawing.Point(66, 60);
+            this.cmbWaveChannels.Name = "cmbWaveChannels";
+            this.cmbWaveChannels.Size = new System.Drawing.Size(121, 21);
+            this.cmbWaveChannels.TabIndex = 29;
             // 
             // UserPresetForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(462, 186);
+            this.ClientSize = new System.Drawing.Size(418, 186);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tabControl1);
@@ -571,7 +739,9 @@
             this.opusPage.PerformLayout();
             this.flacPage.ResumeLayout(false);
             this.flacPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbCompress)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbFlacCompress)).EndInit();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -609,11 +779,22 @@
         private System.Windows.Forms.ComboBox cmbMp3Frequency;
         private System.Windows.Forms.TabPage flacPage;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TrackBar tbCompress;
+        private System.Windows.Forms.ComboBox cmbFlacFrequency;
+        private System.Windows.Forms.TrackBar tbFlacCompress;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.CheckBox cbLossyWav;
+        private System.Windows.Forms.ComboBox cmbFlacBitPerSample;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ComboBox cmbLossyWavQuality;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox cmbWaveFrequency;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ComboBox cmbWaveChannels;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.ComboBox cmbWaveBitPerSample;
     }
 }

@@ -9,7 +9,7 @@ namespace Auri.Audio.Encoder
 {
     public interface IEncoder
     {
-        bool Encode(string outputAudio, EncoderSettings settings);
+        bool Encode(string outputAudio, EncoderSettings settings, int pass, int totalPass);
         void Stop();
         event Action<string> OnError;
         event Action<int, float> OnProgress;
@@ -24,6 +24,8 @@ namespace Auri.Audio.Encoder
         public int Channels { get; set; } = 2;
         [JsonProperty("bitrate")]
         public int Bitrate { get; set; } = 128;
+        [JsonProperty("bit")]
+        public int BitsPerSample { get; set; } = 16;
         [JsonProperty("params")]
         public Dictionary<string, object> CustomParams { get; set; } = new Dictionary<string, object>();
     }

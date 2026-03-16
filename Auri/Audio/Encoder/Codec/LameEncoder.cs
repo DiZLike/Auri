@@ -1,11 +1,12 @@
 ﻿using Auri.Services;
+using System;
 
 namespace Auri.Audio.Encoder.Codec
 {
     public class LameEncoder : EncoderBase
     {
-        protected override string EncoderSubPath => "mp3";
-        protected override string EncoderFileName => "lame.exe";
+        protected override string EncoderSubPath { get; set; } = "mp3";
+        protected override string EncoderFileName { get; set; } = "lame.exe";
 
         public LameEncoder(BassAudioService bass, AudioFile inputAudio)
             : base(bass, inputAudio)
@@ -16,7 +17,7 @@ namespace Auri.Audio.Encoder.Codec
         {
             string mode = settings.CustomParams?["mode"] as string ?? "cbr";
             string channelMode = settings.CustomParams?["channelMode"] as string ?? "j";
-            int quality = settings.CustomParams?["quality"] as int? ?? 0;
+            int quality = Convert.ToInt32(settings.CustomParams?["quality"] ?? 0);
 
             string bitrate;
             if (mode == "abr")

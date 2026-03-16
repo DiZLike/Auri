@@ -98,6 +98,7 @@
     <Compile Include="Audio\AudioInfo.cs" />
     <Compile Include="Audio\Encoder\Codec\FlacEncoder.cs" />
     <Compile Include="Audio\Encoder\Codec\LameEncoder.cs" />
+    <Compile Include="Audio\Encoder\Codec\WaveEncoder.cs" />
     <Compile Include="Audio\Encoder\EncoderBase.cs" />
     <Compile Include="Audio\Encoder\EncoderFactory.cs" />
     <Compile Include="Audio\Encoder\IEncoder.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BassAudioService.cs" />
     <Compile Include="Services\EncodeService.cs" />
+    <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\MetaService.cs" />
     <Compile Include="Services\PathPatternService.cs" />
     <EmbeddedResource Include="Forms\PatternForm.resx">
@@ -178,6 +180,12 @@
     <Content Include="encoders\flac\flac.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="encoders\lossywav\libfftw3-3_64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="encoders\lossywav\lossyWAV.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="encoders\mp3\lame.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -212,6 +220,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="changelist.txt" />
+    <Content Include="encoder_presets\wave_presets.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="plugins\decoders\" />

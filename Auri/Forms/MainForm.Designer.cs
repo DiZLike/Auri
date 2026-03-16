@@ -145,7 +145,8 @@
             this.cmbOutputFormat.Items.AddRange(new object[] {
             "MP3 (популярный, хорошее сжатие)",
             "Opus (лучшее качество, отличное сжатие)",
-            "Flac (Без потери)"});
+            "FLAC (студийное качество, много места)",
+            "WAVE (много места)"});
             this.cmbOutputFormat.Location = new System.Drawing.Point(124, 9);
             this.cmbOutputFormat.Name = "cmbOutputFormat";
             this.cmbOutputFormat.Size = new System.Drawing.Size(364, 23);
