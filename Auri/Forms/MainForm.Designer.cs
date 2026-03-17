@@ -36,18 +36,22 @@
             this.cmbQuality = new System.Windows.Forms.ComboBox();
             this.panelControls = new System.Windows.Forms.Panel();
             this.panelFormats = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tbThreadCount = new System.Windows.Forms.TrackBar();
             this.btnPattern = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txtPattern = new System.Windows.Forms.TextBox();
             this.cbSaveTracks = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.cmbThreadCount = new System.Windows.Forms.ComboBox();
             this.btnUserPreset = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.btnQuickConvert = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.panelControls.SuspendLayout();
             this.panelFormats.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbThreadCount)).BeginInit();
             this.SuspendLayout();
             // 
             // btnAddFiles
@@ -55,7 +59,7 @@
             this.btnAddFiles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddFiles.Location = new System.Drawing.Point(13, 15);
             this.btnAddFiles.Name = "btnAddFiles";
-            this.btnAddFiles.Size = new System.Drawing.Size(130, 30);
+            this.btnAddFiles.Size = new System.Drawing.Size(146, 30);
             this.btnAddFiles.TabIndex = 0;
             this.btnAddFiles.Text = "➕ Добавить файлы";
             this.btnAddFiles.UseVisualStyleBackColor = true;
@@ -67,9 +71,9 @@
             this.btnConvert.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
             this.btnConvert.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnConvert.ForeColor = System.Drawing.Color.White;
-            this.btnConvert.Location = new System.Drawing.Point(763, 17);
+            this.btnConvert.Location = new System.Drawing.Point(586, 15);
             this.btnConvert.Name = "btnConvert";
-            this.btnConvert.Size = new System.Drawing.Size(130, 30);
+            this.btnConvert.Size = new System.Drawing.Size(153, 32);
             this.btnConvert.TabIndex = 3;
             this.btnConvert.Text = "▶ Конвертировать";
             this.btnConvert.UseVisualStyleBackColor = false;
@@ -111,7 +115,7 @@
             // colFormat
             // 
             this.colFormat.FillWeight = 80F;
-            this.colFormat.HeaderText = "Формат";
+            this.colFormat.HeaderText = "Исходный формат";
             this.colFormat.Name = "colFormat";
             this.colFormat.ReadOnly = true;
             // 
@@ -125,7 +129,7 @@
             // colStatus
             // 
             this.colStatus.FillWeight = 20F;
-            this.colStatus.HeaderText = "Статус";
+            this.colStatus.HeaderText = "Сотояние";
             this.colStatus.Name = "colStatus";
             this.colStatus.ReadOnly = true;
             // 
@@ -146,7 +150,7 @@
             "MP3 (популярный, хорошее сжатие)",
             "Opus (лучшее качество, отличное сжатие)",
             "FLAC (студийное качество, много места)",
-            "WAVE (много места)"});
+            "WAV (много места)"});
             this.cmbOutputFormat.Location = new System.Drawing.Point(124, 9);
             this.cmbOutputFormat.Name = "cmbOutputFormat";
             this.cmbOutputFormat.Size = new System.Drawing.Size(364, 23);
@@ -201,22 +205,22 @@
             // btnRemoveSelected
             // 
             this.btnRemoveSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRemoveSelected.Location = new System.Drawing.Point(149, 15);
+            this.btnRemoveSelected.Location = new System.Drawing.Point(165, 15);
             this.btnRemoveSelected.Name = "btnRemoveSelected";
-            this.btnRemoveSelected.Size = new System.Drawing.Size(130, 30);
+            this.btnRemoveSelected.Size = new System.Drawing.Size(146, 30);
             this.btnRemoveSelected.TabIndex = 1;
-            this.btnRemoveSelected.Text = "🗑 Удалить";
+            this.btnRemoveSelected.Text = "🗑 Удалить выбранные";
             this.btnRemoveSelected.UseVisualStyleBackColor = true;
             this.btnRemoveSelected.Click += new System.EventHandler(this.BtnRemoveSelected_Click);
             // 
             // btnClearAll
             // 
             this.btnClearAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClearAll.Location = new System.Drawing.Point(285, 15);
+            this.btnClearAll.Location = new System.Drawing.Point(317, 15);
             this.btnClearAll.Name = "btnClearAll";
-            this.btnClearAll.Size = new System.Drawing.Size(100, 30);
+            this.btnClearAll.Size = new System.Drawing.Size(146, 30);
             this.btnClearAll.TabIndex = 2;
-            this.btnClearAll.Text = "Очистить всё";
+            this.btnClearAll.Text = "🗑 Очистить всё";
             this.btnClearAll.UseVisualStyleBackColor = true;
             this.btnClearAll.Click += new System.EventHandler(this.BtnClearAll_Click);
             // 
@@ -242,6 +246,7 @@
             // panelControls
             // 
             this.panelControls.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(250)))));
+            this.panelControls.Controls.Add(this.btnQuickConvert);
             this.panelControls.Controls.Add(this.btnClearAll);
             this.panelControls.Controls.Add(this.btnRemoveSelected);
             this.panelControls.Controls.Add(this.btnAddFiles);
@@ -258,12 +263,14 @@
             this.panelFormats.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelFormats.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(250)))));
+            this.panelFormats.Controls.Add(this.label4);
+            this.panelFormats.Controls.Add(this.label3);
+            this.panelFormats.Controls.Add(this.tbThreadCount);
             this.panelFormats.Controls.Add(this.btnPattern);
             this.panelFormats.Controls.Add(this.label2);
             this.panelFormats.Controls.Add(this.txtPattern);
             this.panelFormats.Controls.Add(this.cbSaveTracks);
             this.panelFormats.Controls.Add(this.label1);
-            this.panelFormats.Controls.Add(this.cmbThreadCount);
             this.panelFormats.Controls.Add(this.btnUserPreset);
             this.panelFormats.Controls.Add(this.progressBar);
             this.panelFormats.Controls.Add(this.lblQuality);
@@ -278,6 +285,37 @@
             this.panelFormats.Padding = new System.Windows.Forms.Padding(15);
             this.panelFormats.Size = new System.Drawing.Size(906, 147);
             this.panelFormats.TabIndex = 2;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(609, 49);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(94, 15);
+            this.label4.TabIndex = 27;
+            this.label4.Text = "Максимальный";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(494, 49);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(87, 15);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "Экономичный";
+            // 
+            // tbThreadCount
+            // 
+            this.tbThreadCount.AutoSize = false;
+            this.tbThreadCount.BackColor = System.Drawing.Color.Snow;
+            this.tbThreadCount.LargeChange = 1;
+            this.tbThreadCount.Location = new System.Drawing.Point(497, 30);
+            this.tbThreadCount.Maximum = 9;
+            this.tbThreadCount.Minimum = 1;
+            this.tbThreadCount.Name = "tbThreadCount";
+            this.tbThreadCount.Size = new System.Drawing.Size(204, 21);
+            this.tbThreadCount.TabIndex = 25;
+            this.tbThreadCount.Value = 1;
             // 
             // btnPattern
             // 
@@ -309,7 +347,7 @@
             // cbSaveTracks
             // 
             this.cbSaveTracks.AutoSize = true;
-            this.cbSaveTracks.Location = new System.Drawing.Point(497, 37);
+            this.cbSaveTracks.Location = new System.Drawing.Point(497, 70);
             this.cbSaveTracks.Name = "cbSaveTracks";
             this.cbSaveTracks.Size = new System.Drawing.Size(170, 19);
             this.cbSaveTracks.TabIndex = 10;
@@ -321,18 +359,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(494, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(115, 15);
+            this.label1.Size = new System.Drawing.Size(166, 15);
             this.label1.TabIndex = 9;
-            this.label1.Text = "Использовать ядер:";
-            // 
-            // cmbThreadCount
-            // 
-            this.cmbThreadCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbThreadCount.FormattingEnabled = true;
-            this.cmbThreadCount.Location = new System.Drawing.Point(615, 9);
-            this.cmbThreadCount.Name = "cmbThreadCount";
-            this.cmbThreadCount.Size = new System.Drawing.Size(58, 23);
-            this.cmbThreadCount.TabIndex = 8;
+            this.label1.Text = "Режим производительности:";
             // 
             // btnUserPreset
             // 
@@ -354,6 +383,20 @@
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(889, 13);
             this.progressBar.TabIndex = 4;
+            // 
+            // btnQuickConvert
+            // 
+            this.btnQuickConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnQuickConvert.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
+            this.btnQuickConvert.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuickConvert.ForeColor = System.Drawing.Color.White;
+            this.btnQuickConvert.Location = new System.Drawing.Point(745, 15);
+            this.btnQuickConvert.Name = "btnQuickConvert";
+            this.btnQuickConvert.Size = new System.Drawing.Size(148, 32);
+            this.btnQuickConvert.TabIndex = 4;
+            this.btnQuickConvert.Text = "⚡Быстрая конвертация";
+            this.btnQuickConvert.UseVisualStyleBackColor = false;
+            this.btnQuickConvert.Click += new System.EventHandler(this.btnQuickConvert_Click);
             // 
             // MainForm
             // 
@@ -377,6 +420,7 @@
             this.panelControls.ResumeLayout(false);
             this.panelFormats.ResumeLayout(false);
             this.panelFormats.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbThreadCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -401,14 +445,17 @@
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Button btnUserPreset;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cmbThreadCount;
         private System.Windows.Forms.CheckBox cbSaveTracks;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtPattern;
+        private System.Windows.Forms.Button btnPattern;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFileName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFormat;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSize;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtPattern;
-        private System.Windows.Forms.Button btnPattern;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TrackBar tbThreadCount;
+        private System.Windows.Forms.Button btnQuickConvert;
     }
 }

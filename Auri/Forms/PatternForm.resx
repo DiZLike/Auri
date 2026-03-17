@@ -118,32 +118,44 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="txtHelp.Text" xml:space="preserve">
-    <value>Задайте структуру папок и имя файла с помощью тегов в квадратных скобках.
+    <value>ТЕГИ ДЛЯ ШАБЛОНОВ:
 
-Примеры:
-  [artist]\[album]\[track] - [title].[format]
-  [year]\[albumartist]\[disc]-[number] [title].[format]
-  [genre]\[artist] - [title].[format]
+МЕТАДАННЫЕ:
+	[artist]		- исполнитель
+	[albumartist]	- исполнитель альбома
+	[album]		- альбом
+	[title]		- название трека
+	[year]		- год
+	[genre]		- жанр
+	[composer]	- композитор
 
-Доступные теги:
-  [artist]        - Исполнитель
-  [albumartist]   - Исполнитель альбома (или artist, если не указан)
-  [album]         - Название альбома
-  [title]         - Название трека
-  [year]          - Год (или 0000)
-  [track]         - Номер трека
-  [number]        - Номер трека (всегда 2 цифры: 01, 02...)
-  [trackcount]    - Всего треков
-  [disc]          - Номер диска
-  [disccount]     - Всего дисков
-  [genre]         - Жанр
-  [composer]      - Композитор
-  [format]        - Расширение файла
-  [filename]      - Исходное имя файла (без расширения)
-  [bitrate]       - Битрейт
-  [duration]      - Длительность (ЧЧ:ММ:СС)
-  [samplerate]    - Частота дискретизации
+НУМЕРАЦИЯ:
+	[track]		- номер трека (01, 02...)
+	[trackcount]	- всего треков
+	[disc]		- номер диска
+	[disccount]	- всего дисков
+	[number]		- номер по порядку
 
-Недопустимые символы в названиях папок/файлов будут заменены на "_".</value>
+ТЕХНИЧЕСКИЕ:
+	[format]		- формат (mp3, flac)
+	[filename]		- имя исходного файла
+	[bitrate]		- битрейт
+	[duration]		- длительность
+	[samplerate]	- частота
+
+РАЗДЕЛИТЕЛИ:
+	-		- дефис
+	\		- папка
+	.		- точка
+
+ПРИМЕРЫ:
+	• [artist] - [title]
+	Queen - Bohemian Rhapsody
+
+	• [artist]\[album]\[track] [title]
+	Queen\Greatest Hits\01 Bohemian Rhapsody
+
+	• [track]. [title]
+	01. Bohemian Rhapsody</value>
   </data>
 </root>

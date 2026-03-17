@@ -30,10 +30,10 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.mp3Page = new System.Windows.Forms.TabPage();
+            this.tbMp3Quality = new System.Windows.Forms.TrackBar();
             this.label8 = new System.Windows.Forms.Label();
             this.cmbMp3Channels = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.cmbMp3Comp = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.cmbMp3Mode = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -41,12 +41,12 @@
             this.cmbMp3Bitrate = new System.Windows.Forms.ComboBox();
             this.cmbMp3Frequency = new System.Windows.Forms.ComboBox();
             this.opusPage = new System.Windows.Forms.TabPage();
+            this.tbOpusQuality = new System.Windows.Forms.TrackBar();
             this.label7 = new System.Windows.Forms.Label();
             this.cmbOpusChannels = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cmbOpusContent = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.cmbOpusComp = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cmbOpusMode = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -61,27 +61,27 @@
             this.label17 = new System.Windows.Forms.Label();
             this.cmbFlacBitPerSample = new System.Windows.Forms.ComboBox();
             this.cbLossyWav = new System.Windows.Forms.CheckBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.tbFlacCompress = new System.Windows.Forms.TrackBar();
             this.label13 = new System.Windows.Forms.Label();
             this.cmbFlacFrequency = new System.Windows.Forms.ComboBox();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label19 = new System.Windows.Forms.Label();
-            this.cmbWaveFrequency = new System.Windows.Forms.ComboBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.cmbWaveBitPerSample = new System.Windows.Forms.ComboBox();
+            this.wavPage = new System.Windows.Forms.TabPage();
             this.label21 = new System.Windows.Forms.Label();
             this.cmbWaveChannels = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.cmbWaveBitPerSample = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.cmbWaveFrequency = new System.Windows.Forms.ComboBox();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.mp3Page.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMp3Quality)).BeginInit();
             this.opusPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbOpusQuality)).BeginInit();
             this.flacPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbFlacCompress)).BeginInit();
-            this.tabPage1.SuspendLayout();
+            this.wavPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -92,19 +92,19 @@
             this.tabControl1.Controls.Add(this.mp3Page);
             this.tabControl1.Controls.Add(this.opusPage);
             this.tabControl1.Controls.Add(this.flacPage);
-            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.wavPage);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(418, 155);
+            this.tabControl1.Size = new System.Drawing.Size(343, 206);
             this.tabControl1.TabIndex = 0;
             // 
             // mp3Page
             // 
+            this.mp3Page.Controls.Add(this.tbMp3Quality);
             this.mp3Page.Controls.Add(this.label8);
             this.mp3Page.Controls.Add(this.cmbMp3Channels);
             this.mp3Page.Controls.Add(this.label9);
-            this.mp3Page.Controls.Add(this.cmbMp3Comp);
             this.mp3Page.Controls.Add(this.label10);
             this.mp3Page.Controls.Add(this.cmbMp3Mode);
             this.mp3Page.Controls.Add(this.label11);
@@ -114,19 +114,30 @@
             this.mp3Page.Location = new System.Drawing.Point(4, 22);
             this.mp3Page.Name = "mp3Page";
             this.mp3Page.Padding = new System.Windows.Forms.Padding(3);
-            this.mp3Page.Size = new System.Drawing.Size(410, 129);
+            this.mp3Page.Size = new System.Drawing.Size(335, 180);
             this.mp3Page.TabIndex = 1;
             this.mp3Page.Text = "MP3";
             this.mp3Page.UseVisualStyleBackColor = true;
             // 
+            // tbMp3Quality
+            // 
+            this.tbMp3Quality.AutoSize = false;
+            this.tbMp3Quality.BackColor = System.Drawing.Color.Snow;
+            this.tbMp3Quality.LargeChange = 1;
+            this.tbMp3Quality.Location = new System.Drawing.Point(171, 65);
+            this.tbMp3Quality.Maximum = 9;
+            this.tbMp3Quality.Name = "tbMp3Quality";
+            this.tbMp3Quality.Size = new System.Drawing.Size(147, 21);
+            this.tbMp3Quality.TabIndex = 24;
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 90);
+            this.label8.Location = new System.Drawing.Point(168, 9);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(49, 13);
+            this.label8.Size = new System.Drawing.Size(90, 13);
             this.label8.TabIndex = 23;
-            this.label8.Text = "Каналы:";
+            this.label8.Text = "Режим каналов:";
             // 
             // cmbMp3Channels
             // 
@@ -137,48 +148,28 @@
             "Joint Stereo",
             "Forced Joint Stereo",
             "Mono"});
-            this.cmbMp3Channels.Location = new System.Drawing.Point(66, 87);
+            this.cmbMp3Channels.Location = new System.Drawing.Point(171, 25);
             this.cmbMp3Channels.Name = "cmbMp3Channels";
-            this.cmbMp3Channels.Size = new System.Drawing.Size(121, 21);
+            this.cmbMp3Channels.Size = new System.Drawing.Size(147, 21);
             this.cmbMp3Channels.TabIndex = 22;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(193, 9);
+            this.label9.Location = new System.Drawing.Point(168, 49);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(59, 13);
+            this.label9.Size = new System.Drawing.Size(110, 13);
             this.label9.TabIndex = 21;
-            this.label9.Text = "Алгоритм:";
-            // 
-            // cmbMp3Comp
-            // 
-            this.cmbMp3Comp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbMp3Comp.FormattingEnabled = true;
-            this.cmbMp3Comp.Items.AddRange(new object[] {
-            "0 (качество)",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9 (скорость)"});
-            this.cmbMp3Comp.Location = new System.Drawing.Point(281, 6);
-            this.cmbMp3Comp.Name = "cmbMp3Comp";
-            this.cmbMp3Comp.Size = new System.Drawing.Size(121, 21);
-            this.cmbMp3Comp.TabIndex = 20;
+            this.label9.Text = "Качество/Скорость:";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(8, 63);
+            this.label10.Location = new System.Drawing.Point(8, 89);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(45, 13);
+            this.label10.Size = new System.Drawing.Size(78, 13);
             this.label10.TabIndex = 19;
-            this.label10.Text = "Режим:";
+            this.label10.Text = "Тип битрейта:";
             // 
             // cmbMp3Mode
             // 
@@ -188,29 +179,29 @@
             "CBR",
             "ABR",
             "VBR"});
-            this.cmbMp3Mode.Location = new System.Drawing.Point(66, 60);
+            this.cmbMp3Mode.Location = new System.Drawing.Point(11, 105);
             this.cmbMp3Mode.Name = "cmbMp3Mode";
-            this.cmbMp3Mode.Size = new System.Drawing.Size(121, 21);
+            this.cmbMp3Mode.Size = new System.Drawing.Size(147, 21);
             this.cmbMp3Mode.TabIndex = 18;
             this.cmbMp3Mode.SelectedIndexChanged += new System.EventHandler(this.cmbMp3Mode_SelectedIndexChanged);
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(8, 36);
+            this.label11.Location = new System.Drawing.Point(8, 49);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(57, 13);
+            this.label11.Size = new System.Drawing.Size(94, 13);
             this.label11.TabIndex = 17;
-            this.label11.Text = "Качество:";
+            this.label11.Text = "Битрейт (кбит/с):";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(8, 9);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(52, 13);
+            this.label12.Size = new System.Drawing.Size(154, 13);
             this.label12.TabIndex = 16;
-            this.label12.Text = "Частота:";
+            this.label12.Text = "Частота дискретизации (Hz):";
             // 
             // cmbMp3Bitrate
             // 
@@ -228,9 +219,9 @@
             "48",
             "40",
             "32"});
-            this.cmbMp3Bitrate.Location = new System.Drawing.Point(66, 33);
+            this.cmbMp3Bitrate.Location = new System.Drawing.Point(11, 65);
             this.cmbMp3Bitrate.Name = "cmbMp3Bitrate";
-            this.cmbMp3Bitrate.Size = new System.Drawing.Size(121, 21);
+            this.cmbMp3Bitrate.Size = new System.Drawing.Size(147, 21);
             this.cmbMp3Bitrate.TabIndex = 15;
             // 
             // cmbMp3Frequency
@@ -245,19 +236,19 @@
             "16000",
             "11025",
             "8000"});
-            this.cmbMp3Frequency.Location = new System.Drawing.Point(66, 6);
+            this.cmbMp3Frequency.Location = new System.Drawing.Point(11, 25);
             this.cmbMp3Frequency.Name = "cmbMp3Frequency";
-            this.cmbMp3Frequency.Size = new System.Drawing.Size(121, 21);
+            this.cmbMp3Frequency.Size = new System.Drawing.Size(147, 21);
             this.cmbMp3Frequency.TabIndex = 14;
             // 
             // opusPage
             // 
+            this.opusPage.Controls.Add(this.tbOpusQuality);
             this.opusPage.Controls.Add(this.label7);
             this.opusPage.Controls.Add(this.cmbOpusChannels);
             this.opusPage.Controls.Add(this.label6);
             this.opusPage.Controls.Add(this.cmbOpusContent);
             this.opusPage.Controls.Add(this.label5);
-            this.opusPage.Controls.Add(this.cmbOpusComp);
             this.opusPage.Controls.Add(this.label4);
             this.opusPage.Controls.Add(this.cmbOpusMode);
             this.opusPage.Controls.Add(this.label3);
@@ -269,19 +260,30 @@
             this.opusPage.Location = new System.Drawing.Point(4, 22);
             this.opusPage.Name = "opusPage";
             this.opusPage.Padding = new System.Windows.Forms.Padding(3);
-            this.opusPage.Size = new System.Drawing.Size(410, 129);
+            this.opusPage.Size = new System.Drawing.Size(335, 180);
             this.opusPage.TabIndex = 0;
             this.opusPage.Text = "Opus";
             this.opusPage.UseVisualStyleBackColor = true;
             // 
+            // tbOpusQuality
+            // 
+            this.tbOpusQuality.AutoSize = false;
+            this.tbOpusQuality.BackColor = System.Drawing.Color.Snow;
+            this.tbOpusQuality.LargeChange = 1;
+            this.tbOpusQuality.Location = new System.Drawing.Point(171, 65);
+            this.tbOpusQuality.Maximum = 9;
+            this.tbOpusQuality.Name = "tbOpusQuality";
+            this.tbOpusQuality.Size = new System.Drawing.Size(147, 21);
+            this.tbOpusQuality.TabIndex = 25;
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 90);
+            this.label7.Location = new System.Drawing.Point(168, 9);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(49, 13);
+            this.label7.Size = new System.Drawing.Size(90, 13);
             this.label7.TabIndex = 13;
-            this.label7.Text = "Каналы:";
+            this.label7.Text = "Режим каналов:";
             // 
             // cmbOpusChannels
             // 
@@ -290,19 +292,19 @@
             this.cmbOpusChannels.Items.AddRange(new object[] {
             "Stereo",
             "Mono"});
-            this.cmbOpusChannels.Location = new System.Drawing.Point(66, 87);
+            this.cmbOpusChannels.Location = new System.Drawing.Point(171, 25);
             this.cmbOpusChannels.Name = "cmbOpusChannels";
-            this.cmbOpusChannels.Size = new System.Drawing.Size(121, 21);
+            this.cmbOpusChannels.Size = new System.Drawing.Size(147, 21);
             this.cmbOpusChannels.TabIndex = 12;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(193, 63);
+            this.label6.Location = new System.Drawing.Point(168, 89);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(51, 13);
+            this.label6.Size = new System.Drawing.Size(117, 13);
             this.label6.TabIndex = 11;
-            this.label6.Text = "Контент:";
+            this.label6.Text = "Оптимизировать для:";
             // 
             // cmbOpusContent
             // 
@@ -311,48 +313,28 @@
             this.cmbOpusContent.Items.AddRange(new object[] {
             "Music",
             "Speech"});
-            this.cmbOpusContent.Location = new System.Drawing.Point(281, 60);
+            this.cmbOpusContent.Location = new System.Drawing.Point(171, 105);
             this.cmbOpusContent.Name = "cmbOpusContent";
-            this.cmbOpusContent.Size = new System.Drawing.Size(121, 21);
+            this.cmbOpusContent.Size = new System.Drawing.Size(147, 21);
             this.cmbOpusContent.TabIndex = 10;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(193, 36);
+            this.label5.Location = new System.Drawing.Point(168, 49);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 13);
+            this.label5.Size = new System.Drawing.Size(110, 13);
             this.label5.TabIndex = 9;
-            this.label5.Text = "Алгоритм:";
-            // 
-            // cmbOpusComp
-            // 
-            this.cmbOpusComp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbOpusComp.FormattingEnabled = true;
-            this.cmbOpusComp.Items.AddRange(new object[] {
-            "10",
-            "9",
-            "8",
-            "7",
-            "6",
-            "5",
-            "4",
-            "3",
-            "2",
-            "1"});
-            this.cmbOpusComp.Location = new System.Drawing.Point(281, 33);
-            this.cmbOpusComp.Name = "cmbOpusComp";
-            this.cmbOpusComp.Size = new System.Drawing.Size(121, 21);
-            this.cmbOpusComp.TabIndex = 8;
+            this.label5.Text = "Скорость/Качество:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 63);
+            this.label4.Location = new System.Drawing.Point(8, 89);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(45, 13);
+            this.label4.Size = new System.Drawing.Size(78, 13);
             this.label4.TabIndex = 7;
-            this.label4.Text = "Режим:";
+            this.label4.Text = "Тип битрейта:";
             // 
             // cmbOpusMode
             // 
@@ -362,19 +344,19 @@
             "VBR",
             "CVBR",
             "HARD-CBR"});
-            this.cmbOpusMode.Location = new System.Drawing.Point(66, 60);
+            this.cmbOpusMode.Location = new System.Drawing.Point(11, 105);
             this.cmbOpusMode.Name = "cmbOpusMode";
-            this.cmbOpusMode.Size = new System.Drawing.Size(121, 21);
+            this.cmbOpusMode.Size = new System.Drawing.Size(147, 21);
             this.cmbOpusMode.TabIndex = 6;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(193, 9);
+            this.label3.Location = new System.Drawing.Point(8, 129);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 13);
+            this.label3.Size = new System.Drawing.Size(105, 13);
             this.label3.TabIndex = 5;
-            this.label3.Text = "Размер кадра:";
+            this.label3.Text = "Размер кадра (мс):";
             // 
             // cmbOpusFramesize
             // 
@@ -387,28 +369,28 @@
             "10",
             "5",
             "2.5"});
-            this.cmbOpusFramesize.Location = new System.Drawing.Point(281, 6);
+            this.cmbOpusFramesize.Location = new System.Drawing.Point(11, 145);
             this.cmbOpusFramesize.Name = "cmbOpusFramesize";
-            this.cmbOpusFramesize.Size = new System.Drawing.Size(121, 21);
+            this.cmbOpusFramesize.Size = new System.Drawing.Size(147, 21);
             this.cmbOpusFramesize.TabIndex = 4;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 36);
+            this.label2.Location = new System.Drawing.Point(8, 49);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 13);
+            this.label2.Size = new System.Drawing.Size(94, 13);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Качество:";
+            this.label2.Text = "Битрейт (кбит/с):";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(8, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 13);
+            this.label1.Size = new System.Drawing.Size(154, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Частота:";
+            this.label1.Text = "Частота дискретизации (Hz):";
             // 
             // cmbOpusBitrate
             // 
@@ -426,9 +408,9 @@
             "48",
             "40",
             "32"});
-            this.cmbOpusBitrate.Location = new System.Drawing.Point(66, 33);
+            this.cmbOpusBitrate.Location = new System.Drawing.Point(11, 65);
             this.cmbOpusBitrate.Name = "cmbOpusBitrate";
-            this.cmbOpusBitrate.Size = new System.Drawing.Size(121, 21);
+            this.cmbOpusBitrate.Size = new System.Drawing.Size(147, 21);
             this.cmbOpusBitrate.TabIndex = 1;
             // 
             // cmbOpusFrequency
@@ -443,9 +425,9 @@
             "16000",
             "11025",
             "8000"});
-            this.cmbOpusFrequency.Location = new System.Drawing.Point(66, 6);
+            this.cmbOpusFrequency.Location = new System.Drawing.Point(11, 25);
             this.cmbOpusFrequency.Name = "cmbOpusFrequency";
-            this.cmbOpusFrequency.Size = new System.Drawing.Size(121, 21);
+            this.cmbOpusFrequency.Size = new System.Drawing.Size(147, 21);
             this.cmbOpusFrequency.TabIndex = 0;
             this.cmbOpusFrequency.Text = "48000";
             // 
@@ -456,15 +438,13 @@
             this.flacPage.Controls.Add(this.label17);
             this.flacPage.Controls.Add(this.cmbFlacBitPerSample);
             this.flacPage.Controls.Add(this.cbLossyWav);
-            this.flacPage.Controls.Add(this.label16);
-            this.flacPage.Controls.Add(this.label15);
             this.flacPage.Controls.Add(this.label14);
             this.flacPage.Controls.Add(this.tbFlacCompress);
             this.flacPage.Controls.Add(this.label13);
             this.flacPage.Controls.Add(this.cmbFlacFrequency);
             this.flacPage.Location = new System.Drawing.Point(4, 22);
             this.flacPage.Name = "flacPage";
-            this.flacPage.Size = new System.Drawing.Size(410, 129);
+            this.flacPage.Size = new System.Drawing.Size(335, 180);
             this.flacPage.TabIndex = 2;
             this.flacPage.Text = "FLAC";
             this.flacPage.UseVisualStyleBackColor = true;
@@ -472,11 +452,11 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(193, 36);
+            this.label18.Location = new System.Drawing.Point(168, 9);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(57, 13);
+            this.label18.Size = new System.Drawing.Size(112, 13);
             this.label18.TabIndex = 28;
-            this.label18.Text = "Качество:";
+            this.label18.Text = "Качество LossyWAV:";
             // 
             // cmbLossyWavQuality
             // 
@@ -496,19 +476,19 @@
             "Среднее",
             "Портативное",
             "Низкое"});
-            this.cmbLossyWavQuality.Location = new System.Drawing.Point(254, 33);
+            this.cmbLossyWavQuality.Location = new System.Drawing.Point(171, 25);
             this.cmbLossyWavQuality.Name = "cmbLossyWavQuality";
-            this.cmbLossyWavQuality.Size = new System.Drawing.Size(148, 21);
+            this.cmbLossyWavQuality.Size = new System.Drawing.Size(147, 21);
             this.cmbLossyWavQuality.TabIndex = 27;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(8, 36);
+            this.label17.Location = new System.Drawing.Point(8, 49);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(51, 13);
+            this.label17.Size = new System.Drawing.Size(102, 13);
             this.label17.TabIndex = 26;
-            this.label17.Text = "Глубина:";
+            this.label17.Text = "Разрядность (бит):";
             // 
             // cmbFlacBitPerSample
             // 
@@ -524,57 +504,40 @@
             "24",
             "16",
             "8"});
-            this.cmbFlacBitPerSample.Location = new System.Drawing.Point(66, 33);
+            this.cmbFlacBitPerSample.Location = new System.Drawing.Point(11, 65);
             this.cmbFlacBitPerSample.Name = "cmbFlacBitPerSample";
-            this.cmbFlacBitPerSample.Size = new System.Drawing.Size(121, 21);
+            this.cmbFlacBitPerSample.Size = new System.Drawing.Size(147, 21);
             this.cmbFlacBitPerSample.TabIndex = 25;
             // 
             // cbLossyWav
             // 
             this.cbLossyWav.AutoSize = true;
-            this.cbLossyWav.Location = new System.Drawing.Point(196, 8);
+            this.cbLossyWav.Location = new System.Drawing.Point(171, 67);
             this.cbLossyWav.Name = "cbLossyWav";
-            this.cbLossyWav.Size = new System.Drawing.Size(76, 17);
+            this.cbLossyWav.Size = new System.Drawing.Size(117, 17);
             this.cbLossyWav.TabIndex = 24;
-            this.cbLossyWav.Text = "LossyWav";
+            this.cbLossyWav.Text = "Сжатие LossyWav";
             this.cbLossyWav.UseVisualStyleBackColor = true;
             this.cbLossyWav.CheckedChanged += new System.EventHandler(this.cbLossyWav_CheckedChanged);
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(170, 84);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(13, 13);
-            this.label16.TabIndex = 23;
-            this.label16.Text = "8";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(70, 84);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(13, 13);
-            this.label15.TabIndex = 22;
-            this.label15.Text = "0";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(8, 63);
+            this.label14.Location = new System.Drawing.Point(8, 89);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(48, 13);
+            this.label14.Size = new System.Drawing.Size(154, 13);
             this.label14.TabIndex = 21;
-            this.label14.Text = "Сжатие:";
+            this.label14.Text = "Уровень сжатия (мин/макс):";
             // 
             // tbFlacCompress
             // 
             this.tbFlacCompress.AutoSize = false;
+            this.tbFlacCompress.BackColor = System.Drawing.Color.Snow;
             this.tbFlacCompress.LargeChange = 1;
-            this.tbFlacCompress.Location = new System.Drawing.Point(66, 60);
+            this.tbFlacCompress.Location = new System.Drawing.Point(11, 105);
             this.tbFlacCompress.Maximum = 8;
             this.tbFlacCompress.Name = "tbFlacCompress";
-            this.tbFlacCompress.Size = new System.Drawing.Size(121, 21);
+            this.tbFlacCompress.Size = new System.Drawing.Size(147, 21);
             this.tbFlacCompress.TabIndex = 20;
             // 
             // label13
@@ -582,9 +545,9 @@
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(8, 9);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(52, 13);
+            this.label13.Size = new System.Drawing.Size(154, 13);
             this.label13.TabIndex = 18;
-            this.label13.Text = "Частота:";
+            this.label13.Text = "Частота дискретизации (Hz):";
             // 
             // cmbFlacFrequency
             // 
@@ -598,85 +561,56 @@
             "16000",
             "11025",
             "8000"});
-            this.cmbFlacFrequency.Location = new System.Drawing.Point(66, 6);
+            this.cmbFlacFrequency.Location = new System.Drawing.Point(11, 25);
             this.cmbFlacFrequency.Name = "cmbFlacFrequency";
-            this.cmbFlacFrequency.Size = new System.Drawing.Size(121, 21);
+            this.cmbFlacFrequency.Size = new System.Drawing.Size(147, 21);
             this.cmbFlacFrequency.TabIndex = 17;
             this.cmbFlacFrequency.Text = "44100";
             // 
-            // btnSave
+            // wavPage
             // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnSave.Location = new System.Drawing.Point(339, 157);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 1;
-            this.btnSave.Text = "Сохранить";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.wavPage.Controls.Add(this.label21);
+            this.wavPage.Controls.Add(this.cmbWaveChannels);
+            this.wavPage.Controls.Add(this.label20);
+            this.wavPage.Controls.Add(this.cmbWaveBitPerSample);
+            this.wavPage.Controls.Add(this.label19);
+            this.wavPage.Controls.Add(this.cmbWaveFrequency);
+            this.wavPage.Location = new System.Drawing.Point(4, 22);
+            this.wavPage.Name = "wavPage";
+            this.wavPage.Size = new System.Drawing.Size(335, 180);
+            this.wavPage.TabIndex = 3;
+            this.wavPage.Text = "WAV";
+            this.wavPage.UseVisualStyleBackColor = true;
             // 
-            // btnCancel
+            // label21
             // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(258, 157);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 2;
-            this.btnCancel.Text = "Отмена";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(8, 89);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(90, 13);
+            this.label21.TabIndex = 30;
+            this.label21.Text = "Режим каналов:";
             // 
-            // tabPage1
+            // cmbWaveChannels
             // 
-            this.tabPage1.Controls.Add(this.label21);
-            this.tabPage1.Controls.Add(this.cmbWaveChannels);
-            this.tabPage1.Controls.Add(this.label20);
-            this.tabPage1.Controls.Add(this.cmbWaveBitPerSample);
-            this.tabPage1.Controls.Add(this.label19);
-            this.tabPage1.Controls.Add(this.cmbWaveFrequency);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(410, 129);
-            this.tabPage1.TabIndex = 3;
-            this.tabPage1.Text = "WAVE";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(8, 9);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(52, 13);
-            this.label19.TabIndex = 18;
-            this.label19.Text = "Частота:";
-            // 
-            // cmbWaveFrequency
-            // 
-            this.cmbWaveFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbWaveFrequency.FormattingEnabled = true;
-            this.cmbWaveFrequency.Items.AddRange(new object[] {
-            "48000",
-            "44100",
-            "32000",
-            "22050",
-            "16000",
-            "11025",
-            "8000"});
-            this.cmbWaveFrequency.Location = new System.Drawing.Point(66, 6);
-            this.cmbWaveFrequency.Name = "cmbWaveFrequency";
-            this.cmbWaveFrequency.Size = new System.Drawing.Size(121, 21);
-            this.cmbWaveFrequency.TabIndex = 17;
+            this.cmbWaveChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbWaveChannels.FormattingEnabled = true;
+            this.cmbWaveChannels.Items.AddRange(new object[] {
+            "Stereo",
+            "Mono"});
+            this.cmbWaveChannels.Location = new System.Drawing.Point(11, 105);
+            this.cmbWaveChannels.Name = "cmbWaveChannels";
+            this.cmbWaveChannels.Size = new System.Drawing.Size(147, 21);
+            this.cmbWaveChannels.TabIndex = 29;
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(8, 36);
+            this.label20.Location = new System.Drawing.Point(8, 49);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(51, 13);
+            this.label20.Size = new System.Drawing.Size(102, 13);
             this.label20.TabIndex = 28;
-            this.label20.Text = "Глубина:";
+            this.label20.Text = "Разрядность (бит):";
             // 
             // cmbWaveBitPerSample
             // 
@@ -692,37 +626,66 @@
             "24",
             "16",
             "8"});
-            this.cmbWaveBitPerSample.Location = new System.Drawing.Point(66, 33);
+            this.cmbWaveBitPerSample.Location = new System.Drawing.Point(11, 65);
             this.cmbWaveBitPerSample.Name = "cmbWaveBitPerSample";
-            this.cmbWaveBitPerSample.Size = new System.Drawing.Size(121, 21);
+            this.cmbWaveBitPerSample.Size = new System.Drawing.Size(147, 21);
             this.cmbWaveBitPerSample.TabIndex = 27;
             // 
-            // label21
+            // label19
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(8, 63);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(49, 13);
-            this.label21.TabIndex = 30;
-            this.label21.Text = "Каналы:";
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(8, 9);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(154, 13);
+            this.label19.TabIndex = 18;
+            this.label19.Text = "Частота дискретизации (Hz):";
             // 
-            // cmbWaveChannels
+            // cmbWaveFrequency
             // 
-            this.cmbWaveChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbWaveChannels.FormattingEnabled = true;
-            this.cmbWaveChannels.Items.AddRange(new object[] {
-            "Stereo",
-            "Mono"});
-            this.cmbWaveChannels.Location = new System.Drawing.Point(66, 60);
-            this.cmbWaveChannels.Name = "cmbWaveChannels";
-            this.cmbWaveChannels.Size = new System.Drawing.Size(121, 21);
-            this.cmbWaveChannels.TabIndex = 29;
+            this.cmbWaveFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbWaveFrequency.FormattingEnabled = true;
+            this.cmbWaveFrequency.Items.AddRange(new object[] {
+            "48000",
+            "44100",
+            "32000",
+            "22050",
+            "16000",
+            "11025",
+            "8000"});
+            this.cmbWaveFrequency.Location = new System.Drawing.Point(11, 25);
+            this.cmbWaveFrequency.Name = "cmbWaveFrequency";
+            this.cmbWaveFrequency.Size = new System.Drawing.Size(147, 21);
+            this.cmbWaveFrequency.TabIndex = 17;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnSave.Location = new System.Drawing.Point(264, 208);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 1;
+            this.btnSave.Text = "Сохранить";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(183, 208);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 2;
+            this.btnCancel.Text = "Отмена";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // UserPresetForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(418, 186);
+            this.ClientSize = new System.Drawing.Size(343, 237);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tabControl1);
@@ -735,13 +698,15 @@
             this.tabControl1.ResumeLayout(false);
             this.mp3Page.ResumeLayout(false);
             this.mp3Page.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMp3Quality)).EndInit();
             this.opusPage.ResumeLayout(false);
             this.opusPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbOpusQuality)).EndInit();
             this.flacPage.ResumeLayout(false);
             this.flacPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbFlacCompress)).EndInit();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.wavPage.ResumeLayout(false);
+            this.wavPage.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -762,7 +727,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cmbOpusContent;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cmbOpusComp;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label label7;
@@ -770,7 +734,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cmbMp3Channels;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox cmbMp3Comp;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox cmbMp3Mode;
         private System.Windows.Forms.Label label11;
@@ -782,19 +745,19 @@
         private System.Windows.Forms.ComboBox cmbFlacFrequency;
         private System.Windows.Forms.TrackBar tbFlacCompress;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.CheckBox cbLossyWav;
         private System.Windows.Forms.ComboBox cmbFlacBitPerSample;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox cmbLossyWavQuality;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage wavPage;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ComboBox cmbWaveFrequency;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.ComboBox cmbWaveChannels;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.ComboBox cmbWaveBitPerSample;
+        private System.Windows.Forms.TrackBar tbMp3Quality;
+        private System.Windows.Forms.TrackBar tbOpusQuality;
     }
 }

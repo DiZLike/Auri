@@ -56,7 +56,7 @@ namespace Auri.Managers
                 return GetMp3Preset(index);
             else if (lowerFormat == "flac")
                 return GetFlacPreset(index);
-            else if (lowerFormat == "wave")
+            else if (lowerFormat == "wav")
                 return GetWavePreset(index);
             return null;
         }

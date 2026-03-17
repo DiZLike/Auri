@@ -20,8 +20,8 @@ namespace Auri.Forms
         private static readonly object[] Mp3CbrBitrates = { 320, 256, 192, 160, 128, 96, 64, 56, 48, 40, 32 };
         private static readonly object[] Mp3VbrBitrates =
         {
-            "~245 кбит/с", "~225 кбит/с", "~190 кбит/с", "~175 кбит/с", "~165 кбит/с",
-            "~130 кбит/с", "~115 кбит/с", "~100 кбит/с", "~85 кбит/с", "~65 кбит/с"
+            "~245", "~225", "~190", "~175", "~165",
+            "~130", "~115", "~100", "~85", "~65"
         };
 
         // Маппинги для параметров LossyWav
@@ -67,8 +67,8 @@ namespace Auri.Forms
                 SetComboBoxValue(cmbOpusFramesize, settings.CustomParams["framesize"].ToString());
             else cmbOpusFramesize.SelectedIndex = 0;
             if (settings.CustomParams.ContainsKey("complexity"))
-                SetComboBoxValue(cmbOpusComp, settings.CustomParams["complexity"].ToString());
-            else cmbOpusComp.SelectedIndex = 0;
+                tbOpusQuality.Value = ConvertToInt(settings.CustomParams["complexity"]);
+            else tbOpusQuality.Value = 0;
             if (settings.CustomParams.ContainsKey("content"))
                 SetComboBoxValue(cmbOpusContent, settings.CustomParams["content"].ToString());
             else cmbOpusContent.SelectedIndex = 0;
@@ -85,7 +85,7 @@ namespace Auri.Forms
                 settings.CustomParams?.Clear();
                 settings.CustomParams["mode"] = cmbOpusMode.SelectedItem.ToString().ToLower();
                 settings.CustomParams["framesize"] = cmbOpusFramesize.SelectedItem.ToString().ToLower();
-                settings.CustomParams["complexity"] = cmbOpusComp.SelectedItem.ToString().ToLower();
+                settings.CustomParams["complexity"] = tbOpusQuality.Value;
                 settings.CustomParams["content"] = cmbOpusContent.SelectedItem.ToString().ToLower();
 
                 EncoderSettingsChanged?.Invoke(settings);
@@ -131,8 +131,8 @@ namespace Auri.Forms
                 SetComboBoxValue(cmbMp3Channels, mp3ChannelModeMap[settings.CustomParams["channelMode"].ToString()]);
             else cmbMp3Channels.SelectedIndex = 0;
             if (settings.CustomParams.ContainsKey("quality"))
-                SetComboBoxValue(cmbMp3Comp, settings.CustomParams["quality"].ToString());
-            else cmbMp3Comp.SelectedIndex = 0;
+                tbMp3Quality.Value = ConvertToInt(settings.CustomParams["quality"]);
+            else tbMp3Quality.Value = 0;
         }
 
         private void SaveMp3Preset()
@@ -161,12 +161,7 @@ namespace Auri.Forms
                 // стерео режим
                 settings.CustomParams["channelMode"] = mp3ChannelModeMap[cmbMp3Channels.SelectedItem.ToString()];
 
-                // Извлекаем число из качества алгоритма
-                Match match = Regex.Match(cmbMp3Comp.SelectedItem.ToString(), @"\d+");
-                if (match.Success)
-                    settings.CustomParams["quality"] = int.Parse(match.Value);
-                else
-                    settings.CustomParams["quality"] = 0;
+                settings.CustomParams["quality"] = tbMp3Quality.Value;
 
                 EncoderSettingsChanged?.Invoke(settings);
             }

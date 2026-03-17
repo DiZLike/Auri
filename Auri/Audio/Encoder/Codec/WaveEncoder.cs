@@ -22,8 +22,9 @@ namespace Auri.Audio.Encoder.Codec
         public override bool Encode(string outputAudio, EncoderSettings settings, int pass, int totalPass)
         {
             int stream = _encoderService.CreateStream(_inputAudio.FilePath, settings.Frequency, settings.Channels);
-            _encoderService.StartWaveWrite(stream, settings.Frequency, settings.BitsPerSample, settings.Channels, outputAudio);
-
+            _encoderService.WriteWaveFile(stream, outputAudio, settings.Frequency, settings.Channels, settings.BitsPerSample);
+            //var wavConverter = new WaveConverterService();
+            //wavConverter.ConvertToWav(stream, outputAudio, settings.Frequency, settings.Channels, settings.BitsPerSample);
             return true;
         }
     }

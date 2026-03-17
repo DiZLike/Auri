@@ -179,7 +179,6 @@
     <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\MetaService.cs" />
     <Compile Include="Services\PathPatternService.cs" />
-    <Compile Include="Services\WaveConverterService.cs" />
     <EmbeddedResource Include="Forms\PatternForm.resx">
       <DependentUpon>PatternForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -267,7 +266,19 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="changelist.txt" />
-    <Content Include="encoder_presets\wave_presets.txt">
+    <Content Include="encoder_presets\wav_presets.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help\flac.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help\mp3.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help\opus.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help\wav.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

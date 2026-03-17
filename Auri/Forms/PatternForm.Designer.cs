@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PatternForm));
-            this.txtHelp = new System.Windows.Forms.TextBox();
             this.btn1 = new System.Windows.Forms.Button();
             this.btn2 = new System.Windows.Forms.Button();
             this.btn3 = new System.Windows.Forms.Button();
@@ -50,18 +49,8 @@
             this.btn18 = new System.Windows.Forms.Button();
             this.btn19 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.txtHelp = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
-            // 
-            // txtHelp
-            // 
-            this.txtHelp.Location = new System.Drawing.Point(12, 12);
-            this.txtHelp.Multiline = true;
-            this.txtHelp.Name = "txtHelp";
-            this.txtHelp.ReadOnly = true;
-            this.txtHelp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtHelp.Size = new System.Drawing.Size(448, 359);
-            this.txtHelp.TabIndex = 900;
-            this.txtHelp.Text = resources.GetString("txtHelp.Text");
             // 
             // btn1
             // 
@@ -283,11 +272,20 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.btnPattern_Click);
             // 
+            // txtHelp
+            // 
+            this.txtHelp.Location = new System.Drawing.Point(12, 12);
+            this.txtHelp.Name = "txtHelp";
+            this.txtHelp.Size = new System.Drawing.Size(448, 356);
+            this.txtHelp.TabIndex = 28;
+            this.txtHelp.Text = resources.GetString("txtHelp.Text");
+            // 
             // PatternForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(691, 380);
+            this.Controls.Add(this.txtHelp);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btn19);
             this.Controls.Add(this.btn18);
@@ -308,18 +306,14 @@
             this.Controls.Add(this.btn3);
             this.Controls.Add(this.btn2);
             this.Controls.Add(this.btn1);
-            this.Controls.Add(this.txtHelp);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "PatternForm";
             this.Text = "Шаблоны";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox txtHelp;
         private System.Windows.Forms.Button btn1;
         private System.Windows.Forms.Button btn2;
         private System.Windows.Forms.Button btn3;
@@ -340,5 +334,6 @@
         private System.Windows.Forms.Button btn18;
         private System.Windows.Forms.Button btn19;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RichTextBox txtHelp;
     }
 }

@@ -47,7 +47,7 @@ namespace Auri
             // конвертер
             _config.Settings.ConverterSettings.OutputFormatIndex = cmbOutputFormat.SelectedIndex;
             _config.Settings.ConverterSettings.QualityIndex = cmbQuality.SelectedIndex;
-            _config.Settings.ConverterSettings.ThreadsCountIndex = cmbThreadCount.SelectedIndex;
+            _config.Settings.ConverterSettings.ThreadsCountIndex = tbThreadCount.Value;
             _config.Settings.ConverterSettings.OutputPath = txtOutputPath.Text;
             _config.Settings.ConverterSettings.PathPattern = txtPattern.Text;
 
@@ -82,10 +82,10 @@ namespace Auri
             cmbOutputFormat.SelectedIndex = _config.Settings.ConverterSettings.OutputFormatIndex;
             cmbQuality.SelectedIndex = _config.Settings.ConverterSettings.QualityIndex;
 
-            if (_config.Settings.ConverterSettings.ThreadsCountIndex < cmbThreadCount.Items.Count)
-                cmbThreadCount.SelectedIndex = _config.Settings.ConverterSettings.ThreadsCountIndex;
+            if (_config.Settings.ConverterSettings.ThreadsCountIndex < tbThreadCount.Maximum)
+                tbThreadCount.Value = _config.Settings.ConverterSettings.ThreadsCountIndex;
             else
-                cmbThreadCount.SelectedIndex = cmbThreadCount.Items.Count - 1;
+                tbThreadCount.Value = tbThreadCount.Maximum;
 
             txtOutputPath.Text = _config.Settings.ConverterSettings.OutputPath;
             if (txtOutputPath.Text == String.Empty)
@@ -109,11 +109,8 @@ namespace Auri
         private void InitializeThreadCountComboBox()
         {
             int threads = Environment.ProcessorCount;
-            for (int i = 0; i < threads; i++)
-            {
-                cmbThreadCount.Items.Add((i + 1).ToString());
-            }
-            cmbThreadCount.SelectedIndex = cmbThreadCount.Items.Count - 1;
+            tbThreadCount.Maximum = threads;
+            tbThreadCount.Value = tbThreadCount.Maximum;
         }
 
         private void BtnAddFiles_Click(object sender, EventArgs e)
@@ -287,7 +284,7 @@ namespace Auri
 
         private void StartConversion(string format, EncoderSettings preset, string outputPath)
         {
-            int threads = int.Parse(cmbThreadCount.Text);
+            int threads = tbThreadCount.Value;
             int totalFiles = dataGridViewFiles.Rows.Count;
             _audioFiles.Clear();
             foreach (DataGridViewRow row in dataGridViewFiles.Rows)
@@ -443,6 +440,47 @@ namespace Auri
                 txtPattern.Text += tag;
             };
             patternForm.Show();
+        }
+
+        private void btnQuickConvert_Click(object sender, EventArgs e)
+        {
+            btnConvert.Text = "Остановить";
+            btnConvert.BackColor = Color.Red;
+            if (dataGridViewFiles.Rows.Count == 0)
+            {
+                MessageBox.Show("Добавьте файлы для конвертации", "Информация",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string format = "mp3";
+            EncoderSettings encoderSettings = new EncoderSettings();
+            encoderSettings.Frequency = 44100;
+            encoderSettings.Bitrate = 192;
+            encoderSettings.Channels = 2;
+            encoderSettings.CustomParams["mode"] = "cbr";
+            encoderSettings.CustomParams["channelMode"] = "j";
+            encoderSettings.CustomParams["quality"] = 0;
+
+
+            string outputPath = txtOutputPath.Text;
+
+            // Проверка папки вывода
+            if (!Directory.Exists(outputPath))
+            {
+                try
+                {
+                    Directory.CreateDirectory(outputPath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Не удалось создать папку вывода: {ex.Message}",
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            StartConversion(format, encoderSettings, outputPath);
         }
     }
 }
