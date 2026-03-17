@@ -256,7 +256,7 @@ namespace Auri
             string format = GetSelectedFormat();
             int preset = cmbQuality.SelectedIndex;
 
-            EncoderSettings encoderSettings = new EncoderSettings();
+            EncoderPreset encoderSettings = new EncoderPreset();
             if (cmbQuality.Items[preset].ToString().ToLower() == "пользовательский")
                 encoderSettings = _config.GetUserEncoderPreset(format);
             else
@@ -282,7 +282,7 @@ namespace Auri
             StartConversion(format, encoderSettings, outputPath);
         }
 
-        private void StartConversion(string format, EncoderSettings preset, string outputPath)
+        private void StartConversion(string format, EncoderPreset preset, string outputPath)
         {
             int threads = tbThreadCount.Value;
             int totalFiles = dataGridViewFiles.Rows.Count;
@@ -419,7 +419,7 @@ namespace Auri
             string format = GetSelectedFormat();
             //EncoderSettings settings = _config.GetUserEncoderPreset(format);
             var userPresetForm = new UserPresetForm(format, _config);
-            userPresetForm.EncoderSettingsChanged += (preset) =>
+            userPresetForm.EncoderPresetChanged += (preset) =>
             {
                 _config.SaveUserEncoderPreset(format, preset);
                 lblStatus.Text = "Настройки сохранены";
@@ -454,13 +454,13 @@ namespace Auri
             }
 
             string format = "mp3";
-            EncoderSettings encoderSettings = new EncoderSettings();
-            encoderSettings.Frequency = 44100;
+            EncoderPreset encoderSettings = new EncoderPreset();
+            encoderSettings.SampleRate = 44100;
             encoderSettings.Bitrate = 192;
             encoderSettings.Channels = 2;
-            encoderSettings.CustomParams["mode"] = "cbr";
-            encoderSettings.CustomParams["channelMode"] = "j";
-            encoderSettings.CustomParams["quality"] = 0;
+            encoderSettings.CustomParams["Mode"] = "cbr";
+            encoderSettings.CustomParams["ChannelMode"] = "j";
+            encoderSettings.CustomParams["Quality"] = 0;
 
 
             string outputPath = txtOutputPath.Text;

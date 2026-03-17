@@ -11,7 +11,7 @@ namespace Auri.Forms
 {
     public partial class UserPresetForm : Form
     {
-        public event Action<EncoderSettings> EncoderSettingsChanged;
+        public event Action<EncoderPreset> EncoderPresetChanged;
 
         private readonly string _format;
         private readonly ConfigManager _config;
@@ -25,7 +25,6 @@ namespace Auri.Forms
         };
 
         // Маппинги для параметров LossyWav
-
         public UserPresetForm(string format, ConfigManager config)
         {
             InitializeComponent();
@@ -35,7 +34,6 @@ namespace Auri.Forms
             LoadPreset();
             SelectTabByFormat(format);
         }
-
         private void LoadPreset()
         {
             try
@@ -43,6 +41,7 @@ namespace Auri.Forms
                 LoadOpusPreset();
                 LoadMp3Preset();
                 LoadFlacPreset();
+                LoadWavePreset();
             }
             catch (Exception ex)
             {
@@ -54,41 +53,41 @@ namespace Auri.Forms
         #region Opus Preset Methods
         private void LoadOpusPreset()
         {
-            EncoderSettings settings = _config.GetUserEncoderPreset("opus");
-            if (settings == null) return;
+            EncoderPreset preset = _config.GetUserEncoderPreset("opus");
+            if (preset == null) return;
 
-            SetComboBoxValue(cmbOpusBitrate, settings.Bitrate.ToString());
-            SetComboBoxValue(cmbOpusChannels, settings.Channels > 1 ? "Stereo" : "Mono");
+            SetComboBoxValue(cmbOpusBitrate, preset.Bitrate.ToString());
+            SetComboBoxValue(cmbOpusChannels, preset.Channels > 1 ? "Stereo" : "Mono");
 
-            if (settings.CustomParams.ContainsKey("mode"))
-                SetComboBoxValue(cmbOpusMode, settings.CustomParams["mode"].ToString());
+            if (preset.CustomParams.ContainsKey("Mode"))
+                SetComboBoxValue(cmbOpusMode, preset.CustomParams["Mode"].ToString());
             else cmbOpusMode.SelectedIndex = 0;
-            if (settings.CustomParams.ContainsKey("framesize"))
-                SetComboBoxValue(cmbOpusFramesize, settings.CustomParams["framesize"].ToString());
+            if (preset.CustomParams.ContainsKey("Framesize"))
+                SetComboBoxValue(cmbOpusFramesize, preset.CustomParams["Framesize"].ToString());
             else cmbOpusFramesize.SelectedIndex = 0;
-            if (settings.CustomParams.ContainsKey("complexity"))
-                tbOpusQuality.Value = ConvertToInt(settings.CustomParams["complexity"]);
+            if (preset.CustomParams.ContainsKey("Complexity"))
+                tbOpusQuality.Value = ConvertToInt(preset.CustomParams["Complexity"]);
             else tbOpusQuality.Value = 0;
-            if (settings.CustomParams.ContainsKey("content"))
-                SetComboBoxValue(cmbOpusContent, settings.CustomParams["content"].ToString());
+            if (preset.CustomParams.ContainsKey("Content"))
+                SetComboBoxValue(cmbOpusContent, preset.CustomParams["Content"].ToString());
             else cmbOpusContent.SelectedIndex = 0;
         }
         private void SaveOpusPreset()
         {
             try
             {
-                EncoderSettings settings = new EncoderSettings();
-                settings.Bitrate = TryParseInt(cmbOpusBitrate.SelectedItem?.ToString()) ?? 0;
-                settings.Frequency = TryParseInt(cmbOpusFrequency.SelectedItem?.ToString()) ?? 0;
-                settings.Channels = cmbOpusChannels.SelectedItem?.ToString() == "Mono" ? 1 : 2;
+                EncoderPreset preset = new EncoderPreset();
+                preset.Bitrate = TryParseInt(cmbOpusBitrate.SelectedItem?.ToString()) ?? 0;
+                preset.SampleRate = TryParseInt(cmbOpusFrequency.SelectedItem?.ToString()) ?? 0;
+                preset.Channels = cmbOpusChannels.SelectedItem?.ToString() == "Mono" ? 1 : 2;
 
-                settings.CustomParams?.Clear();
-                settings.CustomParams["mode"] = cmbOpusMode.SelectedItem.ToString().ToLower();
-                settings.CustomParams["framesize"] = cmbOpusFramesize.SelectedItem.ToString().ToLower();
-                settings.CustomParams["complexity"] = tbOpusQuality.Value;
-                settings.CustomParams["content"] = cmbOpusContent.SelectedItem.ToString().ToLower();
+                preset.CustomParams?.Clear();
+                preset.CustomParams["Mode"] = cmbOpusMode.SelectedItem.ToString().ToLower();
+                preset.CustomParams["Framesize"] = cmbOpusFramesize.SelectedItem.ToString().ToLower();
+                preset.CustomParams["Complexity"] = tbOpusQuality.Value;
+                preset.CustomParams["Content"] = cmbOpusContent.SelectedItem.ToString().ToLower();
 
-                EncoderSettingsChanged?.Invoke(settings);
+                EncoderPresetChanged?.Invoke(preset);
             }
             catch (Exception ex)
             {
@@ -96,7 +95,6 @@ namespace Auri.Forms
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         #endregion
 
         #region MP3 Preset Methods
@@ -111,30 +109,29 @@ namespace Auri.Forms
                 { "m", "Mono" }
             };
 
-            EncoderSettings settings = _config.GetUserEncoderPreset("mp3");
-            if (settings == null) return;
+            EncoderPreset preset = _config.GetUserEncoderPreset("mp3");
+            if (preset == null) return;
 
-            SetComboBoxValue(cmbMp3Frequency, settings.Frequency.ToString());
-            if (settings.CustomParams.ContainsKey("mode"))
+            SetComboBoxValue(cmbMp3Frequency, preset.SampleRate.ToString());
+            if (preset.CustomParams.ContainsKey("Mode"))
             {
-                SetComboBoxValue(cmbMp3Mode, settings.CustomParams["mode"].ToString());
-                if (settings.CustomParams["mode"].ToString() != "vbr")
-                    SetComboBoxValue(cmbMp3Bitrate, settings.Bitrate.ToString());
+                SetComboBoxValue(cmbMp3Mode, preset.CustomParams["Mode"].ToString());
+                if (preset.CustomParams["Mode"].ToString() != "vbr")
+                    SetComboBoxValue(cmbMp3Bitrate, preset.Bitrate.ToString());
                 else
-                    cmbMp3Bitrate.SelectedIndex = settings.Bitrate;
+                    cmbMp3Bitrate.SelectedIndex = preset.Bitrate;
             }
             else cmbMp3Mode.SelectedIndex = 0;
 
             
 
-            if (settings.CustomParams.ContainsKey("channelMode"))
-                SetComboBoxValue(cmbMp3Channels, mp3ChannelModeMap[settings.CustomParams["channelMode"].ToString()]);
+            if (preset.CustomParams.ContainsKey("ChannelMode"))
+                SetComboBoxValue(cmbMp3Channels, mp3ChannelModeMap[preset.CustomParams["ChannelMode"].ToString()]);
             else cmbMp3Channels.SelectedIndex = 0;
-            if (settings.CustomParams.ContainsKey("quality"))
-                tbMp3Quality.Value = ConvertToInt(settings.CustomParams["quality"]);
+            if (preset.CustomParams.ContainsKey("Quality"))
+                tbMp3Quality.Value = ConvertToInt(preset.CustomParams["Quality"]);
             else tbMp3Quality.Value = 0;
         }
-
         private void SaveMp3Preset()
         {
             Dictionary<string, string> mp3ChannelModeMap = new Dictionary<string, string>
@@ -147,23 +144,23 @@ namespace Auri.Forms
             };
             try
             {
-                EncoderSettings settings = new EncoderSettings
+                EncoderPreset preset = new EncoderPreset
                 {
                     Bitrate = GetMp3Bitrate(),
-                    Frequency = TryParseInt(cmbMp3Frequency.SelectedItem?.ToString()) ?? 0,
+                    SampleRate = TryParseInt(cmbMp3Frequency.SelectedItem?.ToString()) ?? 0,
                     Channels = cmbMp3Channels.SelectedItem?.ToString() == "Mono" ? 1 : 2
                 };
 
                 // режим битрейта
-                settings.CustomParams?.Clear();
-                settings.CustomParams["mode"] = cmbMp3Mode.SelectedItem.ToString().ToLower();
+                preset.CustomParams?.Clear();
+                preset.CustomParams["Mode"] = cmbMp3Mode.SelectedItem.ToString().ToLower();
 
                 // стерео режим
-                settings.CustomParams["channelMode"] = mp3ChannelModeMap[cmbMp3Channels.SelectedItem.ToString()];
+                preset.CustomParams["ChannelMode"] = mp3ChannelModeMap[cmbMp3Channels.SelectedItem.ToString()];
 
-                settings.CustomParams["quality"] = tbMp3Quality.Value;
+                preset.CustomParams["Quality"] = tbMp3Quality.Value;
 
-                EncoderSettingsChanged?.Invoke(settings);
+                EncoderPresetChanged?.Invoke(preset);
             }
             catch (Exception ex)
             {
@@ -203,21 +200,20 @@ namespace Auri.Forms
                 { "X", "Низкое" }
             };
 
-            EncoderSettings settings = _config.GetUserEncoderPreset("flac");
-            if (settings == null) return;
+            EncoderPreset preset = _config.GetUserEncoderPreset("flac");
+            if (preset == null) return;
 
-            SetComboBoxValue(cmbFlacBitPerSample, settings.BitsPerSample.ToString());
-            if (settings.CustomParams.ContainsKey("compress"))
-                tbFlacCompress.Value = ConvertToInt(settings.CustomParams["compress"]);
+            SetComboBoxValue(cmbFlacBitPerSample, preset.BitsPerSample.ToString());
+            if (preset.CustomParams.ContainsKey("Compress"))
+                tbFlacCompress.Value = ConvertToInt(preset.CustomParams["Compress"]);
             else tbFlacCompress.Value = 0;
-            if (settings.CustomParams.ContainsKey("useLossyWav"))
-                cbLossyWav.Checked = ConvertToBool(settings.CustomParams["useLossyWav"]);
+            if (preset.CustomParams.ContainsKey("UseLossyWav"))
+                cbLossyWav.Checked = ConvertToBool(preset.CustomParams["UseLossyWav"]);
             else cbLossyWav.Checked = false;
-            if (settings.CustomParams.ContainsKey("lossyWavQuality"))
-                SetComboBoxValue(cmbLossyWavQuality, lossyQualityMap[settings.CustomParams["lossyWavQuality"].ToString()]);
+            if (preset.CustomParams.ContainsKey("LossyWavQuality"))
+                SetComboBoxValue(cmbLossyWavQuality, lossyQualityMap[preset.CustomParams["LossyWavQuality"].ToString()]);
             else cmbLossyWavQuality.SelectedIndex = 0;
         }
-
         private void SaveFlacPreset()
         {
             Dictionary<string, string> lossyQualityMap = new Dictionary<string, string>
@@ -233,15 +229,15 @@ namespace Auri.Forms
             try
             {
 
-                EncoderSettings settings = new EncoderSettings();
-                settings.BitsPerSample = TryParseInt(cmbFlacBitPerSample.SelectedItem?.ToString()) ?? 16;
+                EncoderPreset preset = new EncoderPreset();
+                preset.BitsPerSample = TryParseInt(cmbFlacBitPerSample.SelectedItem?.ToString()) ?? 16;
 
-                settings.CustomParams?.Clear();
-                settings.CustomParams["compress"] = tbFlacCompress.Value;
-                settings.CustomParams["useLossyWav"] = cbLossyWav.Checked;
-                settings.CustomParams["lossyWavQuality"] = lossyQualityMap[cmbLossyWavQuality.SelectedItem.ToString()];
+                preset.CustomParams?.Clear();
+                preset.CustomParams["Compress"] = tbFlacCompress.Value;
+                preset.CustomParams["UseLossyWav"] = cbLossyWav.Checked;
+                preset.CustomParams["LossyWavQuality"] = lossyQualityMap[cmbLossyWavQuality.SelectedItem.ToString()];
 
-                EncoderSettingsChanged?.Invoke(settings);
+                EncoderPresetChanged?.Invoke(preset);
             }
             catch (Exception ex)
             {
@@ -249,11 +245,38 @@ namespace Auri.Forms
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        #endregion
 
+        #region WAV Preset Methods
+        private void LoadWavePreset()
+        {
+            EncoderPreset preset = _config.GetUserEncoderPreset("wav");
+            if (preset == null) return;
+
+            SetComboBoxValue(cmbWaveFrequency, preset.SampleRate.ToString());
+            SetComboBoxValue(cmbWaveBitPerSample, preset.BitsPerSample.ToString());
+            SetComboBoxValue(cmbWaveChannels, preset.Channels > 1 ? "Stereo" : "Mono");
+        }
+        private void SaveWavePreset()
+        {
+            try
+            {
+                EncoderPreset preset = new EncoderPreset();
+                preset.SampleRate = ConvertToInt(cmbWaveFrequency.SelectedItem.ToString());
+                preset.BitsPerSample = ConvertToInt(cmbWaveBitPerSample.SelectedItem.ToString());
+                preset.Channels = cmbWaveChannels.SelectedItem.ToString() == "Mono" ? 1 : 2;
+
+                EncoderPresetChanged?.Invoke(preset);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении пресета FLAC: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         #endregion
 
         #region Helper Methods
-
         private static int? TryParseInt(string value)
         {
             if (string.IsNullOrEmpty(value))
@@ -263,7 +286,6 @@ namespace Auri.Forms
                 return result;
             return null;
         }
-
         private static int ConvertToInt(object value)
         {
             if (value == null) return 0;
@@ -283,7 +305,6 @@ namespace Auri.Forms
                 return 0;
             }
         }
-
         private static bool ConvertToBool(object value)
         {
             if (value == null) return false;
@@ -303,7 +324,6 @@ namespace Auri.Forms
                 return false;
             }
         }
-
         private void SetComboBoxValue(ComboBox comboBox, string value)
         {
             if (comboBox == null || string.IsNullOrEmpty(value)) return;
@@ -341,11 +361,9 @@ namespace Auri.Forms
             if (tabPage != null)
                 tabControl1.SelectedTab = tabPage;
         }
-
         #endregion
 
         #region Event Handlers
-
         private void btnSave_Click(object sender, EventArgs e)
         {
             try
@@ -361,6 +379,9 @@ namespace Auri.Forms
                     case "flac":
                         SaveFlacPreset();
                         break;
+                    case "wav":
+                        SaveWavePreset();
+                        break;
                     default:
                         MessageBox.Show($"Неизвестный формат: {_format}", "Ошибка",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -374,12 +395,10 @@ namespace Auri.Forms
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
-
         private void cmbMp3Mode_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbMp3Bitrate == null) return;
@@ -407,7 +426,6 @@ namespace Auri.Forms
                 cmbMp3Bitrate.SelectedIndex = 0;
             }
         }
-
         private void cbLossyWav_CheckedChanged(object sender, EventArgs e)
         {
             if (cmbLossyWavQuality != null)

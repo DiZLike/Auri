@@ -16,37 +16,37 @@ namespace Auri.Managers
             _configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "encoder_presets");
             Directory.CreateDirectory(_configPath);
         }
-        public EncoderSettings GetPreset(string format, int presetIndex)
+        public EncoderPreset GetPreset(string format, int presetIndex)
         {
             string lowerFormat = format.ToLower();
 
             // Индекс 0xFF всегда означает пользовательский пресет для данного формата
             if (presetIndex == 0xFF)
             {
-                EncoderSettings customPreset = LoadCustomPreset(lowerFormat);
+                EncoderPreset customPreset = LoadCustomPreset(lowerFormat);
                 if (customPreset != null)
                     return customPreset;
             }
 
             // Возвращаем стандартный пресет
-            EncoderSettings defaultPreset = GetDefaultPreset(lowerFormat, presetIndex);
-            return defaultPreset ?? new EncoderSettings();
+            EncoderPreset defaultPreset = GetDefaultPreset(lowerFormat, presetIndex);
+            return defaultPreset ?? new EncoderPreset();
         }
-        public void SaveCustomPreset(string format, EncoderSettings settings)
+        public void SaveCustomPreset(string format, EncoderPreset settings)
         {
             string filePath = Path.Combine(_configPath, $"{format.ToLower()}_custom.json");
             File.WriteAllText(filePath, JsonConvert.SerializeObject(settings, Formatting.Indented));
         }
-        public EncoderSettings LoadCustomPreset(string format)
+        public EncoderPreset LoadCustomPreset(string format)
         {
             string filePath = Path.Combine(_configPath, $"{format.ToLower()}_custom.json");
             if (File.Exists(filePath))
             {
-                return JsonConvert.DeserializeObject<EncoderSettings>(File.ReadAllText(filePath));
+                return JsonConvert.DeserializeObject<EncoderPreset>(File.ReadAllText(filePath));
             }
-            return new EncoderSettings();
+            return new EncoderPreset();
         }
-        private EncoderSettings GetDefaultPreset(string format, int index)
+        private EncoderPreset GetDefaultPreset(string format, int index)
         {
             string lowerFormat = format.ToLower();
 
@@ -60,7 +60,7 @@ namespace Auri.Managers
                 return GetWavePreset(index);
             return null;
         }
-        private EncoderSettings GetMp3Preset(int index)
+        private EncoderPreset GetMp3Preset(int index)
         {
             switch (index)
             {
@@ -80,7 +80,7 @@ namespace Auri.Managers
                     return CreateMp3Settings(128, "cbr", "j");
             }
         }
-        private EncoderSettings GetOpusPreset(int index)
+        private EncoderPreset GetOpusPreset(int index)
         {
             switch (index)
             {
@@ -96,7 +96,7 @@ namespace Auri.Managers
                     return CreateOpusSettings(128, 40, "vbr", "music");
             }
         }
-        private EncoderSettings GetFlacPreset(int index)
+        private EncoderPreset GetFlacPreset(int index)
         {
             switch (index)
             {
@@ -110,7 +110,7 @@ namespace Auri.Managers
                     return CreateFlacSettings(5);
             }
         }
-        private EncoderSettings GetWavePreset(int index)
+        private EncoderPreset GetWavePreset(int index)
         {
             switch (index)
             {
@@ -120,54 +120,54 @@ namespace Auri.Managers
                     return CreateWaveSettings(44100, 16, 2);
             }
         }
-        private EncoderSettings CreateMp3Settings(int bitrate, string mode, string channelMode)
+        private EncoderPreset CreateMp3Settings(int bitrate, string mode, string channelMode)
         {
-            EncoderSettings settings = new EncoderSettings
+            EncoderPreset settings = new EncoderPreset
             {
-                Frequency = 44100,
+                SampleRate = 44100,
                 Channels = 2,
                 Bitrate = bitrate
             };
-            settings.CustomParams["mode"] = mode;
-            settings.CustomParams["channelMode"] = channelMode;
-            settings.CustomParams["quality"] = 0;
+            settings.CustomParams["Mode"] = mode;
+            settings.CustomParams["ChannelMode"] = channelMode;
+            settings.CustomParams["Quality"] = 0;
 
             return settings;
         }
-        private EncoderSettings CreateOpusSettings(int bitrate, float frameSize, string mode, string content)
+        private EncoderPreset CreateOpusSettings(int bitrate, float frameSize, string mode, string content)
         {
-            EncoderSettings settings = new EncoderSettings
+            EncoderPreset settings = new EncoderPreset
             {
-                Frequency = 48000,
+                SampleRate = 48000,
                 Channels = 2,
                 Bitrate = bitrate
             };
 
-            settings.CustomParams["mode"] = mode;
-            settings.CustomParams["content"] = content;
-            settings.CustomParams["complexity"] = "10";
-            settings.CustomParams["framesize"] = frameSize;
+            settings.CustomParams["Mode"] = mode;
+            settings.CustomParams["Content"] = content;
+            settings.CustomParams["Complexity"] = "10";
+            settings.CustomParams["Framesize"] = frameSize;
 
             return settings;
         }
-        private EncoderSettings CreateFlacSettings(int compress)
+        private EncoderPreset CreateFlacSettings(int compress)
         {
-            EncoderSettings settings = new EncoderSettings
+            EncoderPreset settings = new EncoderPreset
             {
-                Frequency = 44100,
+                SampleRate = 44100,
                 Channels = 2,
                 Bitrate = 192
             };
-            settings.CustomParams["compress"] = compress;
-            settings.CustomParams["useLossyWav"] = false;
-            settings.CustomParams["lossyWavQuality"] = "S";
+            settings.CustomParams["Compress"] = compress;
+            settings.CustomParams["UseLossyWav"] = false;
+            settings.CustomParams["LossyWavQuality"] = "S";
             return settings;
         }
-        private EncoderSettings CreateWaveSettings(int frequency, int bits, int channels)
+        private EncoderPreset CreateWaveSettings(int frequency, int bits, int channels)
         {
-            EncoderSettings settings = new EncoderSettings
+            EncoderPreset settings = new EncoderPreset
             {
-                Frequency = frequency,
+                SampleRate = frequency,
                 Channels = channels,
                 BitsPerSample = bits
             };

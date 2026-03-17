@@ -25,7 +25,7 @@ namespace Auri.Audio.Encoder.Codec
         {
         }
 
-        protected override string BuildArguments(EncoderSettings settings, string outputAudio)
+        protected override string BuildArguments(EncoderPreset settings, string outputAudio)
         {
             var (compressionLevel, useLossyWav, lossyWavQuality) = ExtractEncoderSettings(settings);
             var outputFileName = Path.GetFileNameWithoutExtension(outputAudio);
@@ -45,18 +45,18 @@ namespace Auri.Audio.Encoder.Codec
             return BuildStandardFlacArguments(compressionLevel, outputAudio);
         }
 
-        private (int compressionLevel, bool useLossyWav, string lossyWavQuality) ExtractEncoderSettings(EncoderSettings settings)
+        private (int compressionLevel, bool useLossyWav, string lossyWavQuality) ExtractEncoderSettings(EncoderPreset settings)
         {
             var compressionLevel = DefaultCompressionLevel;
-            if (settings.CustomParams?.TryGetValue("compress", out var compressObj) == true && compressObj is int compressInt)
+            if (settings.CustomParams?.TryGetValue("Compress", out var compressObj) == true && compressObj is int compressInt)
                 compressionLevel = compressInt;
 
             var useLossyWav = false;
-            if (settings.CustomParams?.TryGetValue("useLossyWav", out var useLossyObj) == true && useLossyObj is bool useLossyBool)
+            if (settings.CustomParams?.TryGetValue("UseLossyWav", out var useLossyObj) == true && useLossyObj is bool useLossyBool)
                 useLossyWav = useLossyBool;
 
             var lossyWavQuality = DefaultLossyWavQuality;
-            if (settings.CustomParams?.TryGetValue("lossyWavQuality", out var qualityObj) == true && qualityObj is string qualityString)
+            if (settings.CustomParams?.TryGetValue("LossyWavQuality", out var qualityObj) == true && qualityObj is string qualityString)
                 lossyWavQuality = qualityString;
 
             return (compressionLevel, useLossyWav, lossyWavQuality);
@@ -108,7 +108,7 @@ namespace Auri.Audio.Encoder.Codec
             }
         }
 
-        public override bool Encode(string outputAudio, EncoderSettings settings, int pass, int totalPass)
+        public override bool Encode(string outputAudio, EncoderPreset settings, int pass, int totalPass)
         {
             var (_, useLossyWav, _) = ExtractEncoderSettings(settings);
 

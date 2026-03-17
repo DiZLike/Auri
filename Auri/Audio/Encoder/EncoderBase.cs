@@ -32,7 +32,7 @@ namespace Auri.Audio.Encoder
                 OnComplete?.Invoke(_inputAudio.Index, status);
         }
 
-        public virtual bool Encode(string outputAudio, EncoderSettings settings, int pass, int totalPass)
+        public virtual bool Encode(string outputAudio, EncoderPreset settings, int pass, int totalPass)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace Auri.Audio.Encoder
                     "encoders", EncoderSubPath, EncoderFileName);
 
                 _streamHandle = _encoderService.CreateStream(
-                    _inputAudio.FilePath, settings.Frequency, settings.Channels);
+                    _inputAudio.FilePath, settings.SampleRate, settings.Channels);
                 _encoderHandle = _encoderService.CreateEncoder(
                     _streamHandle, _encoderPath, args, settings.BitsPerSample);
 
@@ -63,7 +63,7 @@ namespace Auri.Audio.Encoder
             }
         }
 
-        protected abstract string BuildArguments(EncoderSettings settings, string outputAudio);
+        protected abstract string BuildArguments(EncoderPreset settings, string outputAudio);
 
         public void AbortEncode()
         {

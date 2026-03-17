@@ -15,14 +15,14 @@ namespace Auri.Audio.Encoder.Codec
             : base(bass, inputAudio)
         {
         }
-        protected override string BuildArguments(EncoderSettings settings, string outputAudio)
+        protected override string BuildArguments(EncoderPreset settings, string outputAudio)
         {
             return String.Empty;
         }
-        public override bool Encode(string outputAudio, EncoderSettings settings, int pass, int totalPass)
+        public override bool Encode(string outputAudio, EncoderPreset settings, int pass, int totalPass)
         {
-            int stream = _encoderService.CreateStream(_inputAudio.FilePath, settings.Frequency, settings.Channels);
-            _encoderService.WriteWaveFile(stream, outputAudio, settings.Frequency, settings.Channels, settings.BitsPerSample);
+            int stream = _encoderService.CreateStream(_inputAudio.FilePath, settings.SampleRate, settings.Channels);
+            _encoderService.WriteWaveFile(stream, outputAudio, settings.SampleRate, settings.Channels, settings.BitsPerSample);
             //var wavConverter = new WaveConverterService();
             //wavConverter.ConvertToWav(stream, outputAudio, settings.Frequency, settings.Channels, settings.BitsPerSample);
             return true;

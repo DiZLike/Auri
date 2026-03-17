@@ -26,7 +26,7 @@ namespace Auri.Managers
         private readonly string _outputPath;
         private readonly string _pattern;
         private readonly string _format;
-        private readonly EncoderSettings _settings;
+        private readonly EncoderPreset _settings;
 
         private float[] _fileProgress;
         private int _totalFiles;
@@ -36,7 +36,7 @@ namespace Auri.Managers
         private int _currentAudio;
         private List<IEncoder> _encoders;
 
-        public ConverterManager(BassAudioService bass, AudioFile[] audioFiles, string outputPath, string pattern, string format, EncoderSettings settings)
+        public ConverterManager(BassAudioService bass, AudioFile[] audioFiles, string outputPath, string pattern, string format, EncoderPreset settings)
         {
             _bass = bass;
             _audioFiles = audioFiles;

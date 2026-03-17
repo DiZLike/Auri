@@ -13,11 +13,11 @@ namespace Auri.Audio.Encoder.Codec
         {
         }
 
-        protected override string BuildArguments(EncoderSettings settings, string outputAudio)
+        protected override string BuildArguments(EncoderPreset settings, string outputAudio)
         {
-            string mode = settings.CustomParams?["mode"] as string ?? "cbr";
-            string channelMode = settings.CustomParams?["channelMode"] as string ?? "j";
-            int quality = Convert.ToInt32(settings.CustomParams?["quality"] ?? 0);
+            string mode = settings.CustomParams?["Mode"] as string ?? "cbr";
+            string channelMode = settings.CustomParams?["ChannelMode"] as string ?? "j";
+            int quality = Convert.ToInt32(settings.CustomParams?["Quality"] ?? 0);
 
             string bitrate;
             if (mode == "abr")
@@ -27,12 +27,12 @@ namespace Auri.Audio.Encoder.Codec
             else // cbr по умолчанию
                 bitrate = $"-b {settings.Bitrate}";
 
-            string resample = (settings.Frequency / 1000f).ToString().Replace(",", ".");
+            string resample = (settings.SampleRate / 1000f).ToString().Replace(",", ".");
 
             return $"{bitrate} " +
                    $"-m {channelMode} " +
                    $"-q {quality} " +
-                   $"--lowpass {settings.Frequency / 2} " +
+                   $"--lowpass {settings.SampleRate / 2} " +
                    $"--resample {resample} " +
                    $"- \"{outputAudio}\"";
         }

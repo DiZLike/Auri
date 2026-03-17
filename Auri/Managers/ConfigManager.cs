@@ -58,15 +58,15 @@ namespace Auri.Managers
         }
 
         // Пресеты
-        public EncoderSettings GetEncoderPreset(string format, int index)
+        public EncoderPreset GetEncoderPreset(string format, int index)
         {
             return _presets.GetPreset(format, index);
         }
-        public EncoderSettings GetUserEncoderPreset(string format)
+        public EncoderPreset GetUserEncoderPreset(string format)
         {
             return _presets.GetPreset(format, 0xFF);
         }
-        public void SaveUserEncoderPreset(string format, EncoderSettings settings)
+        public void SaveUserEncoderPreset(string format, EncoderPreset settings)
         {
             _presets.SaveCustomPreset(format, settings);
         }
