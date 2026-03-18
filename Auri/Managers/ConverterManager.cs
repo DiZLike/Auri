@@ -16,6 +16,7 @@ namespace Auri.Managers
     public class ConverterManager
     {
         public event Action<string> OnError;
+        public event Action OnAbort;
         public event Action<int, float> OnProgress;
         public event Action<float> OnOverallProgress;
         public event Action<int, bool> OnComplete;
@@ -32,8 +33,7 @@ namespace Auri.Managers
         private int _totalFiles;
         private int _completedFilesCount;
         private bool _allCompleted;
-
-        private int _currentAudio;
+        private bool _aborted;
         private List<IEncoder> _encoders;
 
         public ConverterManager(BassAudioService bass, AudioFile[] audioFiles, string outputPath, string pattern, string format, EncoderPreset settings)
@@ -46,6 +46,8 @@ namespace Auri.Managers
             _pattern = pattern;
             _format = format.ToLower();
             _settings = settings;
+            _aborted = false;
+            _encoders = new List<IEncoder>();
 
             if (!Directory.Exists(outputPath))
                 Directory.CreateDirectory(outputPath);
@@ -54,6 +56,7 @@ namespace Auri.Managers
         {
             Task.Factory.StartNew(() =>
             {
+                _encoders.Clear();
                 // Используем потокобезопасную сумму или блокировку
                 var lockObject = new object();
                 float overallProgress = 0;
@@ -63,16 +66,19 @@ namespace Auri.Managers
                     MaxDegreeOfParallelism = threads
                 }, index =>
                 {
+                    if (_aborted)
+                        return;
                     var file = _audioFiles[index];
                     string fileName = Path.GetFileName(file.FilePath);
                     string outputAudio = Path.Combine(_outputPath, Path.ChangeExtension(fileName, $".{_format}"));
 
-                    if(_pattern != String.Empty)
+                    if (_pattern != String.Empty)
                     {
                         var generator = new PathPatternService(_outputPath, outputAudio, _pattern);
                         outputAudio = generator.GeneratePath(file.FilePath);
                     }
                     IEncoder encoder = EncoderFactory.Create(_format, _bass, file);
+                    _encoders.Add(encoder);
 
                     encoder.OnProgress += (fileIndex, progress) =>
                     {
@@ -128,6 +134,13 @@ namespace Auri.Managers
                         _metaService.CopyMetadata(file.FilePath, outputAudio);
                 });
             });
+        }
+        public void AbortAll()
+        {
+            _aborted = true;
+            OnAbort?.Invoke();
+            foreach (var encoder in _encoders)
+                encoder.AbortEncode();
         }
 
     }

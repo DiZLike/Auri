@@ -23,6 +23,7 @@ namespace Auri
         private MetaService _metaService;
 
         private int _lastQualityIndex;
+        private bool _aborted;
 
         public MainForm()
         {
@@ -244,42 +245,54 @@ namespace Auri
 
         private void BtnConvert_Click(object sender, EventArgs e)
         {
-            btnConvert.Text = "Остановить";
-            btnConvert.BackColor = Color.Red;
-            if (dataGridViewFiles.Rows.Count == 0)
+            if (btnConvert.Tag.ToString() == "convert")
             {
-                MessageBox.Show("Добавьте файлы для конвертации", "Информация",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            string format = GetSelectedFormat();
-            int preset = cmbQuality.SelectedIndex;
-
-            EncoderPreset encoderSettings = new EncoderPreset();
-            if (cmbQuality.Items[preset].ToString().ToLower() == "пользовательский")
-                encoderSettings = _config.GetUserEncoderPreset(format);
-            else
-                encoderSettings = _config.GetEncoderPreset(format, preset);
-
-            string outputPath = txtOutputPath.Text;
-
-            // Проверка папки вывода
-            if (!Directory.Exists(outputPath))
-            {
-                try
+                _aborted = false;
+                btnConvert.Text = "Остановить";
+                btnConvert.Tag = "abort";
+                btnQuickConvert.Enabled = false;
+                btnConvert.BackColor = Color.Red;
+                if (dataGridViewFiles.Rows.Count == 0)
                 {
-                    Directory.CreateDirectory(outputPath);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Не удалось создать папку вывода: {ex.Message}",
-                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Добавьте файлы для конвертации", "Информация",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-            }
 
-            StartConversion(format, encoderSettings, outputPath);
+                string format = GetSelectedFormat();
+                int preset = cmbQuality.SelectedIndex;
+
+                EncoderPreset encoderSettings = new EncoderPreset();
+                if (cmbQuality.Items[preset].ToString().ToLower() == "пользовательский")
+                    encoderSettings = _config.GetUserEncoderPreset(format);
+                else
+                    encoderSettings = _config.GetEncoderPreset(format, preset);
+
+                string outputPath = txtOutputPath.Text;
+
+                // Проверка папки вывода
+                if (!Directory.Exists(outputPath))
+                {
+                    try
+                    {
+                        Directory.CreateDirectory(outputPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Не удалось создать папку вывода: {ex.Message}",
+                            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                StartConversion(format, encoderSettings, outputPath);
+            }
+            else
+            {
+                btnQuickConvert.Enabled = true;
+                _aborted = true;
+                _converter.AbortAll();
+            }
         }
 
         private void StartConversion(string format, EncoderPreset preset, string outputPath)
@@ -309,6 +322,8 @@ namespace Auri
             _converter = new ConverterManager(_bass, _audioFiles.ToArray(), outputPath, txtPattern.Text, format, preset);
             _converter.OnProgress += (index, progress) =>
             {
+                if (_aborted)
+                    return;
                 if (index < dataGridViewFiles.Rows.Count)
                 {
                     DataGridViewRow row = dataGridViewFiles.Rows[index];
@@ -317,6 +332,8 @@ namespace Auri
             };
             _converter.OnOverallProgress += (overall) =>
             {
+                if (_aborted)
+                    return;
                 progressBar.Invoke(new Action(() =>
                 {
                     progressBar.Maximum = 100;
@@ -325,6 +342,8 @@ namespace Auri
             };
             _converter.OnComplete += (index, status) =>
             {
+                if (_aborted)
+                    return;
                 if (index < dataGridViewFiles.Rows.Count)
                 {
                     DataGridViewRow row = dataGridViewFiles.Rows[index];
@@ -336,6 +355,8 @@ namespace Auri
                 this.BeginInvoke(new Action(() =>
                 {
                     btnConvert.Text = "Конвертировать";
+                    btnConvert.Tag = "convert";
+                    btnQuickConvert.Enabled = true;
                     btnConvert.BackColor = Color.FromArgb(76, 175, 80);
                     Task.Delay(500).ContinueWith(_ =>
                     {
@@ -347,6 +368,28 @@ namespace Auri
                     });
                 }));
             };
+            _converter.OnAbort += () =>
+            {
+                this.BeginInvoke(new Action(() =>
+                {
+                    btnConvert.Text = "Конвертировать";
+                    btnConvert.Tag = "convert";
+                    btnQuickConvert.Enabled = true;
+                    btnConvert.BackColor = Color.FromArgb(76, 175, 80);
+                    this.BeginInvoke(new Action(() =>
+                    {
+                        progressBar.Value = 0;
+                        lblStatus.Text = "Конвертация отменена";
+                        for (int i = 0; i < dataGridViewFiles.Rows.Count; i++)
+                        {
+                            DataGridViewRow row = dataGridViewFiles.Rows[i];
+                            row.Cells[3].Value = $"Отменено";
+                        }
+
+                    }));
+                }));
+            };
+
             _converter.Convert(threads, _metaService);
         }
 
@@ -444,6 +487,9 @@ namespace Auri
 
         private void btnQuickConvert_Click(object sender, EventArgs e)
         {
+            btnConvert.Tag = "abort";
+            btnQuickConvert.Enabled = false;
+            _aborted = false;
             btnConvert.Text = "Остановить";
             btnConvert.BackColor = Color.Red;
             if (dataGridViewFiles.Rows.Count == 0)

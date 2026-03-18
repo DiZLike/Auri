@@ -19,10 +19,6 @@
             this.btnAddFiles = new System.Windows.Forms.Button();
             this.btnConvert = new System.Windows.Forms.Button();
             this.dataGridViewFiles = new System.Windows.Forms.DataGridView();
-            this.colFileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFormat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblOutputFormat = new System.Windows.Forms.Label();
             this.cmbOutputFormat = new System.Windows.Forms.ComboBox();
             this.lblOutputFolder = new System.Windows.Forms.Label();
@@ -35,6 +31,7 @@
             this.lblQuality = new System.Windows.Forms.Label();
             this.cmbQuality = new System.Windows.Forms.ComboBox();
             this.panelControls = new System.Windows.Forms.Panel();
+            this.btnQuickConvert = new System.Windows.Forms.Button();
             this.panelFormats = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -46,7 +43,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnUserPreset = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.btnQuickConvert = new System.Windows.Forms.Button();
+            this.colFileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFormat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.panelControls.SuspendLayout();
@@ -75,6 +75,7 @@
             this.btnConvert.Name = "btnConvert";
             this.btnConvert.Size = new System.Drawing.Size(153, 32);
             this.btnConvert.TabIndex = 3;
+            this.btnConvert.Tag = "convert";
             this.btnConvert.Text = "▶ Конвертировать";
             this.btnConvert.UseVisualStyleBackColor = false;
             this.btnConvert.Click += new System.EventHandler(this.BtnConvert_Click);
@@ -104,34 +105,6 @@
             this.dataGridViewFiles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewFiles.Size = new System.Drawing.Size(880, 354);
             this.dataGridViewFiles.TabIndex = 1;
-            // 
-            // colFileName
-            // 
-            this.colFileName.FillWeight = 65F;
-            this.colFileName.HeaderText = "Имя файла";
-            this.colFileName.Name = "colFileName";
-            this.colFileName.ReadOnly = true;
-            // 
-            // colFormat
-            // 
-            this.colFormat.FillWeight = 80F;
-            this.colFormat.HeaderText = "Исходный формат";
-            this.colFormat.Name = "colFormat";
-            this.colFormat.ReadOnly = true;
-            // 
-            // colSize
-            // 
-            this.colSize.FillWeight = 20F;
-            this.colSize.HeaderText = "Размер";
-            this.colSize.Name = "colSize";
-            this.colSize.ReadOnly = true;
-            // 
-            // colStatus
-            // 
-            this.colStatus.FillWeight = 20F;
-            this.colStatus.HeaderText = "Сотояние";
-            this.colStatus.Name = "colStatus";
-            this.colStatus.ReadOnly = true;
             // 
             // lblOutputFormat
             // 
@@ -257,6 +230,20 @@
             this.panelControls.Padding = new System.Windows.Forms.Padding(10);
             this.panelControls.Size = new System.Drawing.Size(906, 60);
             this.panelControls.TabIndex = 0;
+            // 
+            // btnQuickConvert
+            // 
+            this.btnQuickConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnQuickConvert.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
+            this.btnQuickConvert.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuickConvert.ForeColor = System.Drawing.Color.White;
+            this.btnQuickConvert.Location = new System.Drawing.Point(745, 15);
+            this.btnQuickConvert.Name = "btnQuickConvert";
+            this.btnQuickConvert.Size = new System.Drawing.Size(148, 32);
+            this.btnQuickConvert.TabIndex = 4;
+            this.btnQuickConvert.Text = "⚡Быстрая конвертация";
+            this.btnQuickConvert.UseVisualStyleBackColor = false;
+            this.btnQuickConvert.Click += new System.EventHandler(this.btnQuickConvert_Click);
             // 
             // panelFormats
             // 
@@ -384,19 +371,33 @@
             this.progressBar.Size = new System.Drawing.Size(889, 13);
             this.progressBar.TabIndex = 4;
             // 
-            // btnQuickConvert
+            // colFileName
             // 
-            this.btnQuickConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnQuickConvert.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
-            this.btnQuickConvert.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuickConvert.ForeColor = System.Drawing.Color.White;
-            this.btnQuickConvert.Location = new System.Drawing.Point(745, 15);
-            this.btnQuickConvert.Name = "btnQuickConvert";
-            this.btnQuickConvert.Size = new System.Drawing.Size(148, 32);
-            this.btnQuickConvert.TabIndex = 4;
-            this.btnQuickConvert.Text = "⚡Быстрая конвертация";
-            this.btnQuickConvert.UseVisualStyleBackColor = false;
-            this.btnQuickConvert.Click += new System.EventHandler(this.btnQuickConvert_Click);
+            this.colFileName.FillWeight = 65F;
+            this.colFileName.HeaderText = "Имя файла";
+            this.colFileName.Name = "colFileName";
+            this.colFileName.ReadOnly = true;
+            // 
+            // colFormat
+            // 
+            this.colFormat.FillWeight = 80F;
+            this.colFormat.HeaderText = "Исходный формат";
+            this.colFormat.Name = "colFormat";
+            this.colFormat.ReadOnly = true;
+            // 
+            // colSize
+            // 
+            this.colSize.FillWeight = 20F;
+            this.colSize.HeaderText = "Размер";
+            this.colSize.Name = "colSize";
+            this.colSize.ReadOnly = true;
+            // 
+            // colStatus
+            // 
+            this.colStatus.FillWeight = 20F;
+            this.colStatus.HeaderText = "Состояние";
+            this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
             // 
             // MainForm
             // 
@@ -449,13 +450,13 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtPattern;
         private System.Windows.Forms.Button btnPattern;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colFileName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colFormat;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colSize;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TrackBar tbThreadCount;
         private System.Windows.Forms.Button btnQuickConvert;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFileName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFormat;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSize;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
     }
 }

@@ -435,5 +435,10 @@ namespace Auri.Forms
         }
 
         #endregion
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

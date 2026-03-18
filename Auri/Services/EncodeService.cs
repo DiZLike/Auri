@@ -117,7 +117,7 @@ namespace Auri.Services
             while (bytesRead > 0 && !_isUserStopped);
 
             // Убеждаемся, что отправляем 100% только когда все проходы завершены
-            if (pass == totalPass)
+            if (pass == totalPass && !_isUserStopped)
             {
                 OnProgress?.Invoke(100f);
                 OnComplete.Invoke(true);
@@ -153,12 +153,8 @@ namespace Auri.Services
 
                     if (bytesRead <= 0)
                     {
-                        // Проверяем, не было ли ошибки
                         if (bytesRead < 0)
-                        {
-                            OnError?.Invoke($"Ошибка чтения данных: {Bass.BASS_ErrorGetCode()}");
-                        }
-                        break;
+                            break;
                     }
 
                     waveWriter.Write(buffer, bytesRead);
@@ -174,7 +170,7 @@ namespace Auri.Services
 
                 if (_isUserStopped)
                 {
-                    OnComplete?.Invoke(false);
+                    //OnComplete?.Invoke(false);
                 }
                 else
                 {
