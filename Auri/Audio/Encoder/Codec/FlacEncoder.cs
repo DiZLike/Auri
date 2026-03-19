@@ -14,6 +14,8 @@ namespace Auri.Audio.Encoder.Codec
         private const int DefaultCompressionLevel = 8;
         private const string DefaultLossyWavQuality = "S";
 
+        public override string Extension { get; } = "flac";
+
         protected override string EncoderSubPath { get; set; } = FlacSubPath;
         protected override string EncoderFileName { get; set; } = FlacExecutable;
 
@@ -83,9 +85,9 @@ namespace Auri.Audio.Encoder.Codec
             return $"-{compressionLevel} -f \"{lossyWavFilePath}\" --output-name=\"{outputAudio}\"";
         }
 
-        private static string BuildStandardFlacArguments(int compressionLevel, string outputAudio)
+        private string BuildStandardFlacArguments(int compressionLevel, string outputAudio)
         {
-            return $"-{compressionLevel} -f - --output-name=\"{outputAudio}\"";
+            return $"-{compressionLevel} -f - --output-name=\"{outputAudio}{Extension}\"";
         }
 
         private void CleanupTempFiles()

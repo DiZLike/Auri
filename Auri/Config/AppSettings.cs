@@ -30,6 +30,7 @@ namespace Auri.Config
         public string OutputPath { get; set; }
         public string PathPattern { get; set; }
         public bool SaveTrackList { get; set; }
+        public bool RewriteAudio { get; set; }
         public List<string> TrackList { get; set; } = new List<string>();
     }
 }

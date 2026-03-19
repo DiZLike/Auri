@@ -58,6 +58,8 @@ namespace Auri.Managers
                 return GetFlacPreset(index);
             else if (lowerFormat == "wav")
                 return GetWavePreset(index);
+            else if (lowerFormat == "qaac")
+                return GetQAacPreset(index);
             return null;
         }
         private EncoderPreset GetMp3Preset(int index)
@@ -65,19 +67,19 @@ namespace Auri.Managers
             switch (index)
             {
                 case 0:
-                    return CreateMp3Settings(32, "cbr", "j");
+                    return CreateMp3Presets(32, "cbr", "j");
                 case 1:
-                    return CreateMp3Settings(64, "cbr", "j");
+                    return CreateMp3Presets(64, "cbr", "j");
                 case 2:
-                    return CreateMp3Settings(128, "cbr", "j");
+                    return CreateMp3Presets(128, "cbr", "j");
                 case 3:
-                    return CreateMp3Settings(192, "cbr", "j");
+                    return CreateMp3Presets(192, "cbr", "j");
                 case 4:
-                    return CreateMp3Settings(256, "cbr", "j");
+                    return CreateMp3Presets(256, "cbr", "j");
                 case 5:
-                    return CreateMp3Settings(320, "cbr", "j");
+                    return CreateMp3Presets(320, "cbr", "j");
                 default:
-                    return CreateMp3Settings(128, "cbr", "j");
+                    return CreateMp3Presets(128, "cbr", "j");
             }
         }
         private EncoderPreset GetOpusPreset(int index)
@@ -85,15 +87,15 @@ namespace Auri.Managers
             switch (index)
             {
                 case 0:
-                    return CreateOpusSettings(32, 60, "vbr", "music");
+                    return CreateOpusPresets(32, 60, "vbr", "music");
                 case 1:
-                    return CreateOpusSettings(64, 60, "vbr", "music");
+                    return CreateOpusPresets(64, 60, "vbr", "music");
                 case 2:
-                    return CreateOpusSettings(128, 40, "vbr", "music");
+                    return CreateOpusPresets(128, 40, "vbr", "music");
                 case 3:
-                    return CreateOpusSettings(192, 20, "vbr", "music");
+                    return CreateOpusPresets(192, 20, "vbr", "music");
                 default:
-                    return CreateOpusSettings(128, 40, "vbr", "music");
+                    return CreateOpusPresets(128, 40, "vbr", "music");
             }
         }
         private EncoderPreset GetFlacPreset(int index)
@@ -101,13 +103,13 @@ namespace Auri.Managers
             switch (index)
             {
                 case 0:
-                    return CreateFlacSettings(0);
+                    return CreateFlacPresets(0);
                 case 1:
-                    return CreateFlacSettings(5);
+                    return CreateFlacPresets(5);
                 case 2:
-                    return CreateFlacSettings(8);
+                    return CreateFlacPresets(8);
                 default:
-                    return CreateFlacSettings(5);
+                    return CreateFlacPresets(5);
             }
         }
         private EncoderPreset GetWavePreset(int index)
@@ -115,63 +117,104 @@ namespace Auri.Managers
             switch (index)
             {
                 case 0:
-                    return CreateWaveSettings(44100, 16, 2);
+                    return CreateWavePresets(44100, 16, 1);
+                case 1:
+                    return CreateWavePresets(44100, 16, 2);
+                case 2:
+                    return CreateWavePresets(48000, 16, 2);
+                case 3:
+                    return CreateWavePresets(48000, 24, 2);
                 default:
-                    return CreateWaveSettings(44100, 16, 2);
+                    return CreateWavePresets(44100, 16, 2);
             }
         }
-        private EncoderPreset CreateMp3Settings(int bitrate, string mode, string channelMode)
+        private EncoderPreset GetQAacPreset(int index)
         {
-            EncoderPreset settings = new EncoderPreset
+            switch (index)
+            {
+                case 0:
+                    return CreateQAacPresets("abr", 32, true);
+                case 1:
+                    return CreateQAacPresets("abr", 64, true);
+                case 2:
+                    return CreateQAacPresets("vbr", 46, false);
+                case 3:
+                    return CreateQAacPresets("vbr", 67, false);
+                case 4:
+                    return CreateQAacPresets("vbr", 89, false);
+                case 5:
+                    return CreateQAacPresets("vbr", 127, false);
+                default:
+                    return CreateQAacPresets("vbr", 67, false);
+            }
+        }
+        private EncoderPreset CreateMp3Presets(int bitrate, string mode, string channelMode)
+        {
+            EncoderPreset preset = new EncoderPreset
             {
                 SampleRate = 44100,
                 Channels = 2,
                 Bitrate = bitrate
             };
-            settings.CustomParams["Mode"] = mode;
-            settings.CustomParams["ChannelMode"] = channelMode;
-            settings.CustomParams["Quality"] = 0;
+            preset.CustomParams["Mode"] = mode;
+            preset.CustomParams["ChannelMode"] = channelMode;
+            preset.CustomParams["Quality"] = 0;
 
-            return settings;
+            return preset;
         }
-        private EncoderPreset CreateOpusSettings(int bitrate, float frameSize, string mode, string content)
+        private EncoderPreset CreateOpusPresets(int bitrate, float frameSize, string mode, string content)
         {
-            EncoderPreset settings = new EncoderPreset
+            EncoderPreset preset = new EncoderPreset
             {
                 SampleRate = 48000,
                 Channels = 2,
                 Bitrate = bitrate
             };
 
-            settings.CustomParams["Mode"] = mode;
-            settings.CustomParams["Content"] = content;
-            settings.CustomParams["Complexity"] = "10";
-            settings.CustomParams["Framesize"] = frameSize;
+            preset.CustomParams["Mode"] = mode;
+            preset.CustomParams["Content"] = content;
+            preset.CustomParams["Complexity"] = "10";
+            preset.CustomParams["Framesize"] = frameSize;
 
-            return settings;
+            return preset;
         }
-        private EncoderPreset CreateFlacSettings(int compress)
+        private EncoderPreset CreateFlacPresets(int compress)
         {
-            EncoderPreset settings = new EncoderPreset
+            EncoderPreset preset = new EncoderPreset
             {
                 SampleRate = 44100,
                 Channels = 2,
                 Bitrate = 192
             };
-            settings.CustomParams["Compress"] = compress;
-            settings.CustomParams["UseLossyWav"] = false;
-            settings.CustomParams["LossyWavQuality"] = "S";
-            return settings;
+            preset.CustomParams["Compress"] = compress;
+            preset.CustomParams["UseLossyWav"] = false;
+            preset.CustomParams["LossyWavQuality"] = "S";
+            return preset;
         }
-        private EncoderPreset CreateWaveSettings(int frequency, int bits, int channels)
+        private EncoderPreset CreateWavePresets(int frequency, int bits, int channels)
         {
-            EncoderPreset settings = new EncoderPreset
+            EncoderPreset preset = new EncoderPreset
             {
                 SampleRate = frequency,
                 Channels = channels,
                 BitsPerSample = bits
             };
-            return settings;
+            return preset;
+        }
+        private EncoderPreset CreateQAacPresets(string mode, int vbr, bool he)
+        {
+            EncoderPreset preset = new EncoderPreset
+            {
+                SampleRate = 44100,
+                Channels = 2,
+                Bitrate = 128
+            };
+            preset.CustomParams["VbrBitrate"] = vbr;
+            preset.CustomParams["Mode"] = mode;
+            preset.CustomParams["He"] = he;
+            preset.CustomParams["Quality"] = 2;
+
+            return preset;
         }
     }
 }

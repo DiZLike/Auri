@@ -18,7 +18,7 @@ namespace Auri.Audio.Encoder
         protected string _encoderPath;
         protected abstract string EncoderSubPath { get; set; }
         protected abstract string EncoderFileName { get; set; }
-        
+        public abstract string Extension { get; }
 
         protected EncoderBase(BassAudioService bass, AudioFile inputAudio)
         {
@@ -64,7 +64,6 @@ namespace Auri.Audio.Encoder
         }
 
         protected abstract string BuildArguments(EncoderPreset settings, string outputAudio);
-
         public void AbortEncode()
         {
             _encoderService.AbortEncode();

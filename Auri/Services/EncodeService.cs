@@ -152,10 +152,7 @@ namespace Auri.Services
                     bytesRead = Bass.BASS_ChannelGetData(stream, buffer, buffer.Length);
 
                     if (bytesRead <= 0)
-                    {
-                        if (bytesRead < 0)
-                            break;
-                    }
+                        break;
 
                     waveWriter.Write(buffer, bytesRead);
                     totalBytesRead += bytesRead;

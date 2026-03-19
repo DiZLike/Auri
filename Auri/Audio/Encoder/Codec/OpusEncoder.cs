@@ -6,6 +6,7 @@ namespace Auri.Audio.Encoder.Codec
     {
         protected override string EncoderSubPath { get; set; } = "opus";
         protected override string EncoderFileName { get; set; } = "opusenc.exe";
+        public override string Extension { get; } = "opus";
 
         public OpusEncoder(BassAudioService bass, AudioFile inputAudio)
             : base(bass, inputAudio)
@@ -26,7 +27,7 @@ namespace Auri.Audio.Encoder.Codec
                    $"--comp {complexity} " +
                    $"--framesize {frameSize.ToString().Replace(",", ".")} " +
                    $"--downmix-{downmix} " +
-                   $"- \"{outputAudio}\"";
+                   $"- \"{outputAudio}{Extension}\"";
         }
     }
 }

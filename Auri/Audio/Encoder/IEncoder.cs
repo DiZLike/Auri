@@ -14,6 +14,8 @@ namespace Auri.Audio.Encoder
         event Action<string> OnError;
         event Action<int, float> OnProgress;
         event Action<int, bool> OnComplete;
+
+        string Extension { get; }
     }
     [Serializable]
     public class EncoderPreset

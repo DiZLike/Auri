@@ -123,4 +123,64 @@
   <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="cmbMp3Channels.ToolTip" xml:space="preserve">
+    <value>Stereo — полноценное стерео, два независимых канала (максимум качества).
+Joint Stereo — умный режим: убирает дублирование в похожих каналах, экономит место без потери качества.
+Forced Joint Stereo — принудительное «склеивание» каналов, возможны искажения. Лучше не включать.
+Mono — один канал (речь, старые записи)</value>
+  </data>
+  <data name="cmbMp3Bitrate.ToolTip" xml:space="preserve">
+    <value>Объём данных, выделяемый на секунду звука.
+Выше битрейт = лучше качество, но больше размер файла.
+96 kbps — для речи (аудиокниги, подкасты)
+128 kbps — минимально приемлемо для музыки
+192 kbps — хорошо для музыки (золотая середина)
+256 kbps — отличное качество, близкое к CD
+320 kbps — максимальное качество для MP3</value>
+  </data>
+  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="cmbOpusBitrate.ToolTip" xml:space="preserve">
+    <value>Объём данных, выделяемый на секунду звука.
+Выше битрейт = лучше качество, но больше размер файла.
+32–64 kbps — приемлемо для речи (подкасты, аудиокниги)
+96 kbps — хорошее качество для музыки (звучит как MP3 ~160–192)
+128 kbps — отличное качество, прозрачно для большинства людей (аналог MP3 256–320) 
+160–192 kbps — максимальное качество, выше уже нет смысла</value>
+  </data>
+  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="tbQaacVbr.ToolTip" xml:space="preserve">
+    <value>Насколько сильно может меняться битрейт (от 0 до 127).
+Выше значение - лучше качество.
+64 — ~128 kbps (хорошо)
+91 — ~160–192 kbps (отлично, значение по умолчанию)
+100–109 — ~256 kbps
+127 — ~320 kbps</value>
+  </data>
+  <data name="cmbQaacBitrate.ToolTip" xml:space="preserve">
+    <value>Объём данных, выделяемый на секунду звука.
+Выше битрейт = лучше качество, но больше размер файла.
+96–128 kbps — хорошее качество для фонового прослушивания
+160–192 kbps — отличное качество, прозрачно для большинства 
+256 kbps — iTunes Plus (аналог ~320 MP3) 
+320 kbps — максимальное качество</value>
+  </data>
+  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

@@ -16,8 +16,9 @@ namespace Auri.Forms
         private readonly string _format;
         private readonly ConfigManager _config;
 
-        // Константы для MP3
         private static readonly object[] Mp3CbrBitrates = { 320, 256, 192, 160, 128, 96, 64, 56, 48, 40, 32 };
+        private static readonly object[] QAacACbrBitrates = { 320, 256, 192, 160, 128, 96, 64, 56, 48, 40, 32, 24, 16, 8 };
+        private static readonly object[] QAacHEBitrates = { 96, 64, 56, 48, 40, 32, 24, 16, 8 };
         private static readonly object[] Mp3VbrBitrates =
         {
             "~245", "~225", "~190", "~175", "~165",
@@ -42,6 +43,7 @@ namespace Auri.Forms
                 LoadMp3Preset();
                 LoadFlacPreset();
                 LoadWavePreset();
+                LoadQAacPreset();
             }
             catch (Exception ex)
             {
@@ -55,6 +57,7 @@ namespace Auri.Forms
         {
             EncoderPreset preset = _config.GetUserEncoderPreset("opus");
             if (preset == null) return;
+            cmbOpusFrequency.SelectedIndex = 0;
 
             SetComboBoxValue(cmbOpusBitrate, preset.Bitrate.ToString());
             SetComboBoxValue(cmbOpusChannels, preset.Channels > 1 ? "Stereo" : "Mono");
@@ -168,7 +171,6 @@ namespace Auri.Forms
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private int GetMp3Bitrate()
         {
             if (cmbMp3Bitrate.SelectedItem == null) return 0;
@@ -202,6 +204,7 @@ namespace Auri.Forms
 
             EncoderPreset preset = _config.GetUserEncoderPreset("flac");
             if (preset == null) return;
+            cmbFlacFrequency.SelectedIndex = 1;
 
             SetComboBoxValue(cmbFlacBitPerSample, preset.BitsPerSample.ToString());
             if (preset.CustomParams.ContainsKey("Compress"))
@@ -271,6 +274,51 @@ namespace Auri.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при сохранении пресета FLAC: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        #endregion
+
+        #region QAAC Preset Methods
+        private void LoadQAacPreset()
+        {
+            EncoderPreset preset = _config.GetUserEncoderPreset("qaac");
+            if (preset == null) return;
+            SetComboBoxValue(cmbQaacFrequency, preset.SampleRate.ToString());
+            SetComboBoxValue(cmbQaacChannels, preset.Channels > 1 ? "Stereo" : "Mono");
+            if (preset.CustomParams.ContainsKey("Mode"))
+                SetComboBoxValue(cmbQaacMode, preset.CustomParams["Mode"].ToString());
+            else
+                cmbQaacMode.SelectedIndex = 0;
+            if (preset.CustomParams.ContainsKey("He"))
+                cbQaacHe.Checked = ConvertToBool(preset.CustomParams["He"]);
+            if (preset.CustomParams.ContainsKey("VbrBitrate"))
+                tbQaacVbr.Value = ConvertToInt(preset.CustomParams["VbrBitrate"]);
+            if (preset.CustomParams.ContainsKey("Quality"))
+                tbQaacQuality.Value = ConvertToInt(preset.CustomParams["Quality"]);
+
+            SetComboBoxValue(cmbQaacBitrate, preset.Bitrate.ToString());
+        }
+        private void SaveQAacPreset()
+        {
+            try
+            {
+                EncoderPreset preset = new EncoderPreset
+                {
+                    SampleRate = TryParseInt(cmbQaacFrequency.SelectedItem?.ToString()) ?? 0,
+                    Channels = cmbQaacChannels.SelectedItem?.ToString() == "Mono" ? 1 : 2
+                };
+                preset.Bitrate = ConvertToInt(cmbQaacBitrate.SelectedItem?.ToString());
+                preset.CustomParams["VbrBitrate"] = tbQaacVbr.Value;
+                preset.CustomParams["Mode"] = cmbQaacMode.SelectedItem?.ToString().ToLower();
+                preset.CustomParams["He"] = cbQaacHe.Checked;
+                preset.CustomParams["Quality"] = tbQaacQuality.Value;
+
+                EncoderPresetChanged.Invoke(preset);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении пресета QAAC: {ex.Message}", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -382,6 +430,9 @@ namespace Auri.Forms
                     case "wav":
                         SaveWavePreset();
                         break;
+                    case "qaac":
+                        SaveQAacPreset();
+                        break;
                     default:
                         MessageBox.Show($"Неизвестный формат: {_format}", "Ошибка",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -439,6 +490,36 @@ namespace Auri.Forms
         private void btnReset_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void cbQaacHe_CheckedChanged(object sender, EventArgs e)
+        {
+            cmbQaacBitrate.Items.Clear();
+            if (cbQaacHe.Checked)
+            {
+                cmbQaacMode.SelectedIndex = 0;
+                cmbQaacBitrate.Items.AddRange(QAacHEBitrates);
+            }
+            else
+                cmbQaacBitrate.Items.AddRange(QAacACbrBitrates);
+            cmbQaacBitrate.SelectedIndex = 0;
+
+        }
+
+        private void cmbQaacMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = cmbQaacMode.SelectedIndex;
+            if (index == 3)
+            {
+                tbQaacVbr.Enabled = true;
+                cmbQaacBitrate.Enabled = false;
+                cbQaacHe.Checked = false;
+            }
+            else
+            {
+                tbQaacVbr.Enabled = false;
+                cmbQaacBitrate.Enabled = true;
+            }
         }
     }
 }

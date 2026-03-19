@@ -7,6 +7,7 @@ namespace Auri.Audio.Encoder.Codec
     {
         protected override string EncoderSubPath { get; set; } = "mp3";
         protected override string EncoderFileName { get; set; } = "lame.exe";
+        public override string Extension { get; } = "mp3";
 
         public LameEncoder(BassAudioService bass, AudioFile inputAudio)
             : base(bass, inputAudio)
@@ -34,7 +35,7 @@ namespace Auri.Audio.Encoder.Codec
                    $"-q {quality} " +
                    $"--lowpass {settings.SampleRate / 2} " +
                    $"--resample {resample} " +
-                   $"- \"{outputAudio}\"";
+                   $"- \"{outputAudio}{Extension}\"";
         }
     }
 }

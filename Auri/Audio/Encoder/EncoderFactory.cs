@@ -17,6 +17,8 @@ namespace Auri.Audio.Encoder
                     return new FlacEncoder(bass, inputAudio);
                 case "wav":
                     return new WaveEncoder(bass, inputAudio);
+                case "qaac":
+                    return new QAacEncoder(bass, inputAudio);
                 default:
                     throw new NotSupportedException($"Format {format} not supported");
             }

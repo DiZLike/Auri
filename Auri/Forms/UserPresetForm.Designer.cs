@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserPresetForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.mp3Page = new System.Windows.Forms.TabPage();
             this.tbMp3Quality = new System.Windows.Forms.TrackBar();
@@ -56,6 +57,20 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cmbOpusBitrate = new System.Windows.Forms.ComboBox();
             this.cmbOpusFrequency = new System.Windows.Forms.ComboBox();
+            this.qaacPage = new System.Windows.Forms.TabPage();
+            this.cbQaacHe = new System.Windows.Forms.CheckBox();
+            this.tbQaacVbr = new System.Windows.Forms.TrackBar();
+            this.label25 = new System.Windows.Forms.Label();
+            this.tbQaacQuality = new System.Windows.Forms.TrackBar();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.cmbQaacChannels = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cmbQaacMode = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.cmbQaacBitrate = new System.Windows.Forms.ComboBox();
+            this.cmbQaacFrequency = new System.Windows.Forms.ComboBox();
             this.flacPage = new System.Windows.Forms.TabPage();
             this.lblLossyWavInfo = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -83,6 +98,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbMp3Quality)).BeginInit();
             this.opusPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbOpusQuality)).BeginInit();
+            this.qaacPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbQaacVbr)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbQaacQuality)).BeginInit();
             this.flacPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbFlacCompress)).BeginInit();
             this.wavPage.SuspendLayout();
@@ -95,6 +113,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.mp3Page);
             this.tabControl1.Controls.Add(this.opusPage);
+            this.tabControl1.Controls.Add(this.qaacPage);
             this.tabControl1.Controls.Add(this.flacPage);
             this.tabControl1.Controls.Add(this.wavPage);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -119,7 +138,7 @@
             this.mp3Page.Location = new System.Drawing.Point(4, 22);
             this.mp3Page.Name = "mp3Page";
             this.mp3Page.Padding = new System.Windows.Forms.Padding(3);
-            this.mp3Page.Size = new System.Drawing.Size(384, 194);
+            this.mp3Page.Size = new System.Drawing.Size(355, 194);
             this.mp3Page.TabIndex = 1;
             this.mp3Page.Text = "MP3";
             this.mp3Page.UseVisualStyleBackColor = true;
@@ -129,12 +148,12 @@
             this.tbMp3Quality.AutoSize = false;
             this.tbMp3Quality.BackColor = System.Drawing.Color.Snow;
             this.tbMp3Quality.LargeChange = 1;
-            this.tbMp3Quality.Location = new System.Drawing.Point(195, 105);
+            this.tbMp3Quality.Location = new System.Drawing.Point(195, 108);
             this.tbMp3Quality.Maximum = 9;
             this.tbMp3Quality.Name = "tbMp3Quality";
             this.tbMp3Quality.Size = new System.Drawing.Size(140, 21);
             this.tbMp3Quality.TabIndex = 24;
-            this.toolTip.SetToolTip(this.tbMp3Quality, "0 - наилучшее качество (медленнее)\n9 - максимальная скорость (ниже качество)");
+            this.toolTip.SetToolTip(this.tbMp3Quality, "0 - наилучшее качество (медленнее)\r\n9 - максимальная скорость (ниже качество)");
             this.tbMp3Quality.Value = 5;
             // 
             // label8
@@ -159,12 +178,12 @@
             this.cmbMp3Channels.Name = "cmbMp3Channels";
             this.cmbMp3Channels.Size = new System.Drawing.Size(140, 21);
             this.cmbMp3Channels.TabIndex = 22;
-            this.toolTip.SetToolTip(this.cmbMp3Channels, "Режим объединения каналов");
+            this.toolTip.SetToolTip(this.cmbMp3Channels, resources.GetString("cmbMp3Channels.ToolTip"));
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(192, 89);
+            this.label9.Location = new System.Drawing.Point(192, 92);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(110, 13);
             this.label9.TabIndex = 21;
@@ -191,7 +210,8 @@
             this.cmbMp3Mode.Name = "cmbMp3Mode";
             this.cmbMp3Mode.Size = new System.Drawing.Size(140, 21);
             this.cmbMp3Mode.TabIndex = 18;
-            this.toolTip.SetToolTip(this.cmbMp3Mode, "CBR - постоянный битрейт\nABR - средний битрейт\nVBR - переменный битрейт");
+            this.toolTip.SetToolTip(this.cmbMp3Mode, "CBR - постоянный битрейт (предсказуемый размер)\r\nABR - средний битрейт (компромис" +
+        "с)\r\nVBR - переменный битрейт (лучшее качество при том же размере)");
             this.cmbMp3Mode.SelectedIndexChanged += new System.EventHandler(this.cmbMp3Mode_SelectedIndexChanged);
             // 
             // label11
@@ -232,6 +252,7 @@
             this.cmbMp3Bitrate.Name = "cmbMp3Bitrate";
             this.cmbMp3Bitrate.Size = new System.Drawing.Size(140, 21);
             this.cmbMp3Bitrate.TabIndex = 15;
+            this.toolTip.SetToolTip(this.cmbMp3Bitrate, resources.GetString("cmbMp3Bitrate.ToolTip"));
             // 
             // cmbMp3Frequency
             // 
@@ -249,6 +270,8 @@
             this.cmbMp3Frequency.Name = "cmbMp3Frequency";
             this.cmbMp3Frequency.Size = new System.Drawing.Size(140, 21);
             this.cmbMp3Frequency.TabIndex = 14;
+            this.toolTip.SetToolTip(this.cmbMp3Frequency, "Чем выше частота, тем лучше передаются высокие частоты.\r\nСтандарт для музыки - 44" +
+        "100");
             // 
             // opusPage
             // 
@@ -279,11 +302,12 @@
             this.tbOpusQuality.AutoSize = false;
             this.tbOpusQuality.BackColor = System.Drawing.Color.Snow;
             this.tbOpusQuality.LargeChange = 1;
-            this.tbOpusQuality.Location = new System.Drawing.Point(195, 105);
+            this.tbOpusQuality.Location = new System.Drawing.Point(195, 108);
             this.tbOpusQuality.Maximum = 9;
             this.tbOpusQuality.Name = "tbOpusQuality";
             this.tbOpusQuality.Size = new System.Drawing.Size(140, 21);
             this.tbOpusQuality.TabIndex = 25;
+            this.toolTip.SetToolTip(this.tbOpusQuality, "Баланс между скоростью кодирования и качеством звука");
             this.tbOpusQuality.Value = 5;
             // 
             // label7
@@ -306,6 +330,8 @@
             this.cmbOpusChannels.Name = "cmbOpusChannels";
             this.cmbOpusChannels.Size = new System.Drawing.Size(140, 21);
             this.cmbOpusChannels.TabIndex = 12;
+            this.toolTip.SetToolTip(this.cmbOpusChannels, "Как обрабатывать стерео.\r\nStereo - полноценное стерео\r\nMono - смешивает в один ка" +
+        "нал (экономит место)");
             // 
             // label6
             // 
@@ -327,12 +353,13 @@
             this.cmbOpusContent.Name = "cmbOpusContent";
             this.cmbOpusContent.Size = new System.Drawing.Size(140, 21);
             this.cmbOpusContent.TabIndex = 10;
-            this.toolTip.SetToolTip(this.cmbOpusContent, "Оптимизация кодека под тип контента");
+            this.toolTip.SetToolTip(this.cmbOpusContent, "Оптимизация кодека под тип контента\r\nMusic - для музыки\r\nSpeech - для речи/подкас" +
+        "тов");
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(192, 89);
+            this.label5.Location = new System.Drawing.Point(192, 92);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(110, 13);
             this.label5.TabIndex = 9;
@@ -359,7 +386,9 @@
             this.cmbOpusMode.Name = "cmbOpusMode";
             this.cmbOpusMode.Size = new System.Drawing.Size(140, 21);
             this.cmbOpusMode.TabIndex = 6;
-            this.toolTip.SetToolTip(this.cmbOpusMode, "Режим управления битрейтом");
+            this.toolTip.SetToolTip(this.cmbOpusMode, "VBR - качество меняется в зависимости от сложности музыки (лучшее соотношение раз" +
+        "мер/качество)\r\nCVBR - ограниченный переменный битрейт\r\nHARD-CBR - строго постоян" +
+        "ный битрейт (для стримов)");
             // 
             // label3
             // 
@@ -385,6 +414,9 @@
             this.cmbOpusFramesize.Name = "cmbOpusFramesize";
             this.cmbOpusFramesize.Size = new System.Drawing.Size(140, 21);
             this.cmbOpusFramesize.TabIndex = 4;
+            this.toolTip.SetToolTip(this.cmbOpusFramesize, "Влияет на задержку кодирования.\r\nМеньше значение — ниже задержка (важно для стрим" +
+        "ов и звонков)\r\nБольше значение — выше качество на низких битрейтах, но растёт за" +
+        "держка");
             // 
             // label2
             // 
@@ -424,6 +456,7 @@
             this.cmbOpusBitrate.Name = "cmbOpusBitrate";
             this.cmbOpusBitrate.Size = new System.Drawing.Size(140, 21);
             this.cmbOpusBitrate.TabIndex = 1;
+            this.toolTip.SetToolTip(this.cmbOpusBitrate, resources.GetString("cmbOpusBitrate.ToolTip"));
             // 
             // cmbOpusFrequency
             // 
@@ -442,6 +475,192 @@
             this.cmbOpusFrequency.Name = "cmbOpusFrequency";
             this.cmbOpusFrequency.Size = new System.Drawing.Size(140, 21);
             this.cmbOpusFrequency.TabIndex = 0;
+            // 
+            // qaacPage
+            // 
+            this.qaacPage.Controls.Add(this.cbQaacHe);
+            this.qaacPage.Controls.Add(this.tbQaacVbr);
+            this.qaacPage.Controls.Add(this.label25);
+            this.qaacPage.Controls.Add(this.tbQaacQuality);
+            this.qaacPage.Controls.Add(this.label24);
+            this.qaacPage.Controls.Add(this.label23);
+            this.qaacPage.Controls.Add(this.cmbQaacChannels);
+            this.qaacPage.Controls.Add(this.label15);
+            this.qaacPage.Controls.Add(this.cmbQaacMode);
+            this.qaacPage.Controls.Add(this.label16);
+            this.qaacPage.Controls.Add(this.label22);
+            this.qaacPage.Controls.Add(this.cmbQaacBitrate);
+            this.qaacPage.Controls.Add(this.cmbQaacFrequency);
+            this.qaacPage.Location = new System.Drawing.Point(4, 22);
+            this.qaacPage.Name = "qaacPage";
+            this.qaacPage.Size = new System.Drawing.Size(355, 194);
+            this.qaacPage.TabIndex = 4;
+            this.qaacPage.Text = "QAAC";
+            this.qaacPage.UseVisualStyleBackColor = true;
+            // 
+            // cbQaacHe
+            // 
+            this.cbQaacHe.AutoSize = true;
+            this.cbQaacHe.Location = new System.Drawing.Point(15, 135);
+            this.cbQaacHe.Name = "cbQaacHe";
+            this.cbQaacHe.Size = new System.Drawing.Size(97, 17);
+            this.cbQaacHe.TabIndex = 32;
+            this.cbQaacHe.Text = "High Efficiency";
+            this.toolTip.SetToolTip(this.cbQaacHe, "Режим повышенной эффективности для низких битрейтов (хорошо для стриминга)");
+            this.cbQaacHe.UseVisualStyleBackColor = true;
+            this.cbQaacHe.CheckedChanged += new System.EventHandler(this.cbQaacHe_CheckedChanged);
+            // 
+            // tbQaacVbr
+            // 
+            this.tbQaacVbr.AutoSize = false;
+            this.tbQaacVbr.BackColor = System.Drawing.Color.Snow;
+            this.tbQaacVbr.LargeChange = 1;
+            this.tbQaacVbr.Location = new System.Drawing.Point(195, 68);
+            this.tbQaacVbr.Maximum = 127;
+            this.tbQaacVbr.Name = "tbQaacVbr";
+            this.tbQaacVbr.Size = new System.Drawing.Size(140, 21);
+            this.tbQaacVbr.TabIndex = 31;
+            this.tbQaacVbr.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.toolTip.SetToolTip(this.tbQaacVbr, resources.GetString("tbQaacVbr.ToolTip"));
+            this.tbQaacVbr.Value = 90;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(192, 52);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(142, 13);
+            this.label25.TabIndex = 30;
+            this.label25.Text = "Качество VBR (мин/макс):";
+            // 
+            // tbQaacQuality
+            // 
+            this.tbQaacQuality.AutoSize = false;
+            this.tbQaacQuality.BackColor = System.Drawing.Color.Snow;
+            this.tbQaacQuality.LargeChange = 1;
+            this.tbQaacQuality.Location = new System.Drawing.Point(195, 108);
+            this.tbQaacQuality.Maximum = 2;
+            this.tbQaacQuality.Name = "tbQaacQuality";
+            this.tbQaacQuality.Size = new System.Drawing.Size(140, 21);
+            this.tbQaacQuality.TabIndex = 29;
+            this.toolTip.SetToolTip(this.tbQaacQuality, "Баланс скорости кодирования и качества (0-2)");
+            this.tbQaacQuality.Value = 2;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(192, 92);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(110, 13);
+            this.label24.TabIndex = 28;
+            this.label24.Text = "Скорость/Качество:";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(192, 12);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(90, 13);
+            this.label23.TabIndex = 27;
+            this.label23.Text = "Режим каналов:";
+            // 
+            // cmbQaacChannels
+            // 
+            this.cmbQaacChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbQaacChannels.FormattingEnabled = true;
+            this.cmbQaacChannels.Items.AddRange(new object[] {
+            "Stereo",
+            "Mono"});
+            this.cmbQaacChannels.Location = new System.Drawing.Point(195, 28);
+            this.cmbQaacChannels.Name = "cmbQaacChannels";
+            this.cmbQaacChannels.Size = new System.Drawing.Size(140, 21);
+            this.cmbQaacChannels.TabIndex = 26;
+            this.toolTip.SetToolTip(this.cmbQaacChannels, "Как обрабатывать стерео.\r\nStereo - полноценное стерео\r\nMono - смешивает в один ка" +
+        "нал (экономит место)");
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(12, 92);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(78, 13);
+            this.label15.TabIndex = 25;
+            this.label15.Text = "Тип битрейта:";
+            // 
+            // cmbQaacMode
+            // 
+            this.cmbQaacMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbQaacMode.FormattingEnabled = true;
+            this.cmbQaacMode.Items.AddRange(new object[] {
+            "CBR",
+            "ABR",
+            "CVBR",
+            "VBR"});
+            this.cmbQaacMode.Location = new System.Drawing.Point(15, 108);
+            this.cmbQaacMode.Name = "cmbQaacMode";
+            this.cmbQaacMode.Size = new System.Drawing.Size(140, 21);
+            this.cmbQaacMode.TabIndex = 24;
+            this.toolTip.SetToolTip(this.cmbQaacMode, "CBR - постоянный битрейт\nABR - средний битрейт\nVBR - переменный битрейт");
+            this.cmbQaacMode.SelectedIndexChanged += new System.EventHandler(this.cmbQaacMode_SelectedIndexChanged);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(12, 52);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(94, 13);
+            this.label16.TabIndex = 23;
+            this.label16.Text = "Битрейт (кбит/с):";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(12, 12);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(154, 13);
+            this.label22.TabIndex = 22;
+            this.label22.Text = "Частота дискретизации (Hz):";
+            // 
+            // cmbQaacBitrate
+            // 
+            this.cmbQaacBitrate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbQaacBitrate.FormattingEnabled = true;
+            this.cmbQaacBitrate.Items.AddRange(new object[] {
+            "320",
+            "256",
+            "192",
+            "160",
+            "128",
+            "96",
+            "64",
+            "56",
+            "48",
+            "40",
+            "32"});
+            this.cmbQaacBitrate.Location = new System.Drawing.Point(15, 68);
+            this.cmbQaacBitrate.Name = "cmbQaacBitrate";
+            this.cmbQaacBitrate.Size = new System.Drawing.Size(140, 21);
+            this.cmbQaacBitrate.TabIndex = 21;
+            this.toolTip.SetToolTip(this.cmbQaacBitrate, resources.GetString("cmbQaacBitrate.ToolTip"));
+            // 
+            // cmbQaacFrequency
+            // 
+            this.cmbQaacFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbQaacFrequency.FormattingEnabled = true;
+            this.cmbQaacFrequency.Items.AddRange(new object[] {
+            "48000",
+            "44100",
+            "32000",
+            "22050",
+            "16000",
+            "11025",
+            "8000"});
+            this.cmbQaacFrequency.Location = new System.Drawing.Point(15, 28);
+            this.cmbQaacFrequency.Name = "cmbQaacFrequency";
+            this.cmbQaacFrequency.Size = new System.Drawing.Size(140, 21);
+            this.cmbQaacFrequency.TabIndex = 20;
+            this.toolTip.SetToolTip(this.cmbQaacFrequency, "Чем выше частота, тем лучше передаются высокие частоты.\r\nСтандарт для музыки - 44" +
+        "100");
             // 
             // flacPage
             // 
@@ -504,6 +723,8 @@
             this.cmbLossyWavQuality.Name = "cmbLossyWavQuality";
             this.cmbLossyWavQuality.Size = new System.Drawing.Size(140, 21);
             this.cmbLossyWavQuality.TabIndex = 27;
+            this.toolTip.SetToolTip(this.cmbLossyWavQuality, "Степень сжатия с потерями\r\nНаивысшее - минимальные потери\r\nНизкое - сильное сжати" +
+        "е");
             // 
             // label17
             // 
@@ -532,6 +753,8 @@
             this.cmbFlacBitPerSample.Name = "cmbFlacBitPerSample";
             this.cmbFlacBitPerSample.Size = new System.Drawing.Size(140, 21);
             this.cmbFlacBitPerSample.TabIndex = 25;
+            this.toolTip.SetToolTip(this.cmbFlacBitPerSample, "Точность передачи динамического диапазона.\r\n16 бит - стандарт для CD\r\n24 бит - дл" +
+        "я студийных записей");
             // 
             // cbLossyWav
             // 
@@ -541,7 +764,7 @@
             this.cbLossyWav.Size = new System.Drawing.Size(117, 17);
             this.cbLossyWav.TabIndex = 24;
             this.cbLossyWav.Text = "Сжатие LossyWav";
-            this.toolTip.SetToolTip(this.cbLossyWav, "Предварительное сжатие с потерями\nдля уменьшения размера");
+            this.toolTip.SetToolTip(this.cbLossyWav, "Дополнительное сжатие с небольшими потерями,\r\nчтобы уменьшить размер файла");
             this.cbLossyWav.UseVisualStyleBackColor = true;
             this.cbLossyWav.CheckedChanged += new System.EventHandler(this.cbLossyWav_CheckedChanged);
             // 
@@ -564,6 +787,8 @@
             this.tbFlacCompress.Name = "tbFlacCompress";
             this.tbFlacCompress.Size = new System.Drawing.Size(140, 21);
             this.tbFlacCompress.TabIndex = 20;
+            this.toolTip.SetToolTip(this.tbFlacCompress, "0 - минимальное сжатие (быстро)\r\n8 - максимальное сжатие (медленнее, но файл мень" +
+        "ше)\r\nКачество звука НЕ меняется!");
             this.tbFlacCompress.Value = 5;
             // 
             // label13
@@ -603,7 +828,7 @@
             this.wavPage.Controls.Add(this.cmbWaveFrequency);
             this.wavPage.Location = new System.Drawing.Point(4, 22);
             this.wavPage.Name = "wavPage";
-            this.wavPage.Size = new System.Drawing.Size(384, 194);
+            this.wavPage.Size = new System.Drawing.Size(355, 194);
             this.wavPage.TabIndex = 3;
             this.wavPage.Text = "WAV";
             this.wavPage.UseVisualStyleBackColor = true;
@@ -628,6 +853,8 @@
             this.cmbWaveChannels.Name = "cmbWaveChannels";
             this.cmbWaveChannels.Size = new System.Drawing.Size(140, 21);
             this.cmbWaveChannels.TabIndex = 29;
+            this.toolTip.SetToolTip(this.cmbWaveChannels, "Как обрабатывать стерео.\r\nStereo - полноценное стерео\r\nMono - смешивает в один ка" +
+        "нал (экономит место)");
             // 
             // label20
             // 
@@ -656,6 +883,7 @@
             this.cmbWaveBitPerSample.Name = "cmbWaveBitPerSample";
             this.cmbWaveBitPerSample.Size = new System.Drawing.Size(140, 21);
             this.cmbWaveBitPerSample.TabIndex = 27;
+            this.toolTip.SetToolTip(this.cmbWaveBitPerSample, "Точность звука.\r\n16 бит - стандарт\r\n24 бит - для профессиональной работы");
             // 
             // label19
             // 
@@ -682,6 +910,8 @@
             this.cmbWaveFrequency.Name = "cmbWaveFrequency";
             this.cmbWaveFrequency.Size = new System.Drawing.Size(140, 21);
             this.cmbWaveFrequency.TabIndex = 17;
+            this.toolTip.SetToolTip(this.cmbWaveFrequency, "Чем выше частота, тем лучше передаются высокие частоты.\r\nСтандарт для музыки - 44" +
+        "100");
             // 
             // btnSave
             // 
@@ -748,6 +978,10 @@
             this.opusPage.ResumeLayout(false);
             this.opusPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbOpusQuality)).EndInit();
+            this.qaacPage.ResumeLayout(false);
+            this.qaacPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbQaacVbr)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbQaacQuality)).EndInit();
             this.flacPage.ResumeLayout(false);
             this.flacPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbFlacCompress)).EndInit();
@@ -820,5 +1054,19 @@
 
         // ToolTip
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.TabPage qaacPage;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox cmbQaacMode;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.ComboBox cmbQaacBitrate;
+        private System.Windows.Forms.ComboBox cmbQaacFrequency;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.ComboBox cmbQaacChannels;
+        private System.Windows.Forms.TrackBar tbQaacQuality;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TrackBar tbQaacVbr;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.CheckBox cbQaacHe;
     }
 }

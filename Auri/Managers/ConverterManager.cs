@@ -1,5 +1,6 @@
 ﻿using Auri.Audio;
 using Auri.Audio.Encoder;
+using Auri.Config;
 using Auri.Services;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace Auri.Managers
         public event Action<int, bool> OnComplete;
         public event Action<bool> OnAllComplete;
 
+        private readonly ConfigManager _config;
         private readonly BassAudioService _bass;
         private readonly AudioFile[] _audioFiles;
         private readonly string _outputPath;
@@ -36,8 +38,9 @@ namespace Auri.Managers
         private bool _aborted;
         private List<IEncoder> _encoders;
 
-        public ConverterManager(BassAudioService bass, AudioFile[] audioFiles, string outputPath, string pattern, string format, EncoderPreset settings)
+        public ConverterManager(ConfigManager config, BassAudioService bass, AudioFile[] audioFiles, string outputPath, string pattern, string format, EncoderPreset settings)
         {
+            _config = config;
             _bass = bass;
             _audioFiles = audioFiles;
             _totalFiles = audioFiles.Length;
@@ -69,8 +72,8 @@ namespace Auri.Managers
                     if (_aborted)
                         return;
                     var file = _audioFiles[index];
-                    string fileName = Path.GetFileName(file.FilePath);
-                    string outputAudio = Path.Combine(_outputPath, Path.ChangeExtension(fileName, $".{_format}"));
+                    string fileName = Path.GetFileNameWithoutExtension(file.FilePath);
+                    string outputAudio = Path.Combine(_outputPath, fileName);
 
                     if (_pattern != String.Empty)
                     {
@@ -79,6 +82,13 @@ namespace Auri.Managers
                     }
                     IEncoder encoder = EncoderFactory.Create(_format, _bass, file);
                     _encoders.Add(encoder);
+                    var checkFile = outputAudio + encoder.Extension;
+                    if (!_config.Settings.ConverterSettings.RewriteAudio && File.Exists(checkFile))
+                    {
+                        OnError?.Invoke($"Файл {checkFile} существует в целевой папке!");
+                        return;
+                    }
+
 
                     encoder.OnProgress += (fileIndex, progress) =>
                     {

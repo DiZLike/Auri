@@ -70,6 +70,9 @@ namespace Auri
                 }
             }
 
+            // перезапись аудио
+            _config.Settings.ConverterSettings.RewriteAudio = cbRewriteFiles.Checked;
+
             _config.SaveSettings();
         }
         private void LoadSettings()
@@ -98,6 +101,8 @@ namespace Auri
             if (cbSaveTracks.Checked)
                 AddFilesToGrid(_config.Settings.ConverterSettings.TrackList.ToArray());
 
+            // перезапись аудио
+            cbRewriteFiles.Checked = _config.Settings.ConverterSettings.RewriteAudio;
         }
         private string[] LoadPresets(string format)
         {
@@ -263,7 +268,7 @@ namespace Auri
                 int preset = cmbQuality.SelectedIndex;
 
                 EncoderPreset encoderSettings = new EncoderPreset();
-                if (cmbQuality.Items[preset].ToString().ToLower() == "пользовательский")
+                if (cmbQuality.Items[preset].ToString().ToLower() == "пользовательское")
                     encoderSettings = _config.GetUserEncoderPreset(format);
                 else
                     encoderSettings = _config.GetEncoderPreset(format, preset);
@@ -319,7 +324,7 @@ namespace Auri
             progressBar.Value = 0;
             lblStatus.Text = $"Конвертация в {format}...";
 
-            _converter = new ConverterManager(_bass, _audioFiles.ToArray(), outputPath, txtPattern.Text, format, preset);
+            _converter = new ConverterManager(_config, _bass, _audioFiles.ToArray(), outputPath, txtPattern.Text, format, preset);
             _converter.OnProgress += (index, progress) =>
             {
                 if (_aborted)
@@ -405,7 +410,7 @@ namespace Auri
         {
             if (cmbQuality.SelectedIndex == -1)
                 cmbQuality.SelectedIndex = 0;
-            if (cmbQuality.Items[cmbQuality.SelectedIndex].ToString().ToLower().Contains("пользовательский"))
+            if (cmbQuality.Items[cmbQuality.SelectedIndex].ToString().ToLower().Contains("пользовательское"))
             {
                 if (!_config.Settings.ConverterSettings.AdvancedMode)
                 {
@@ -527,6 +532,11 @@ namespace Auri
             }
 
             StartConversion(format, encoderSettings, outputPath);
+        }
+
+        private void cbRewriteFiles_CheckedChanged(object sender, EventArgs e)
+        {
+            _config.Settings.ConverterSettings.RewriteAudio = cbRewriteFiles.Checked;
         }
     }
 }
