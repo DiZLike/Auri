@@ -85,15 +85,14 @@ namespace Auri.Managers
                         var file = _audioFiles[index];
                         string fileName = Path.GetFileNameWithoutExtension(file.FilePath);
                         string outputAudio = Path.Combine(_outputPath, fileName);
-
+                        IEncoder encoder = EncoderFactory.Create(_format, _bass, file);
+                        _encoders.Add(encoder);
                         if (_pattern != String.Empty)
                         {
                             var generator = new PathPatternService(_outputPath, outputAudio, _pattern);
-                            outputAudio = generator.GeneratePath(file.FilePath);
+                            outputAudio = generator.GeneratePath(file.FilePath, encoder.Extension);
                         }
-                        IEncoder encoder = EncoderFactory.Create(_format, _bass, file);
-                        _encoders.Add(encoder);
-                        var checkFile = outputAudio + encoder.Extension;
+                        var checkFile = outputAudio;
                         if (!_config.Settings.ConverterSettings.RewriteAudio && File.Exists(checkFile))
                         {
                             file.Working = false;
@@ -156,8 +155,7 @@ namespace Auri.Managers
                         bool isOk = encoder.Encode(outputAudio, _preset, 1, 1);
                         if (isOk)
                         {
-                            string fullOutputPath = outputAudio + encoder.Extension;
-                            _metaService.CopyMetadata(file.FilePath, fullOutputPath);
+                            _metaService.CopyMetadata(file.FilePath, outputAudio);
                         }
                         else
                             ExceptionManager.RaiseError(Error.ENCODE_FAILED, checkFile);

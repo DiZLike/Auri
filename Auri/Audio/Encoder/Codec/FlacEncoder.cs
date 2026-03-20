@@ -82,12 +82,12 @@ namespace Auri.Audio.Encoder.Codec
             EncoderFileName = FlacExecutable;
 
             var lossyWavFilePath = Path.Combine(outputFolder, StdinLossyWavFile);
-            return $"-{compressionLevel} -f \"{lossyWavFilePath}\" --output-name=\"{outputAudio}{Extension}\"";
+            return $"-{compressionLevel} -f \"{lossyWavFilePath}\" --output-name=\"{outputAudio}\"";
         }
 
         private string BuildStandardFlacArguments(int compressionLevel, string outputAudio)
         {
-            return $"-{compressionLevel} -f - --output-name=\"{outputAudio}{Extension}\"";
+            return $"-{compressionLevel} -f - --output-name=\"{outputAudio}\"";
         }
 
         private void CleanupTempFiles()

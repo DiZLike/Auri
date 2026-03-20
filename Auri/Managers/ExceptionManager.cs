@@ -32,6 +32,11 @@ namespace Auri.Managers
         FILE_ALREADY_EXISTS,
 
         /// <summary>
+        /// Ошибка получения расширения файла
+        /// </summary>
+        FILE_GET_EXTENSION_FAILED,
+
+        /// <summary>
         /// Указанная директория не существует
         /// </summary>
         DIRECTORY_NOT_FOUND,
@@ -239,6 +244,7 @@ namespace Auri.Managers
                 case Error.FILE_ACCESS_DENIED: return "Отсутствуют права доступа к файлу";
                 case Error.FILE_ALREADY_EXISTS: return "Файл уже существует в целевой папке";
                 case Error.FILE_TEMP_DELETE: return "Ошибка удаления временного файла";
+                case Error.FILE_GET_EXTENSION_FAILED: return "Ошибка получения расширения файла";
                 case Error.DIRECTORY_NOT_FOUND: return "Указанная директория не существует";
                 case Error.DIRECTORY_CREATE_FAILED: return "Не удалось создать директорию";
                 case Error.BASS_INIT_FAILED: return "Не удалось инициализировать BASS аудио движок";

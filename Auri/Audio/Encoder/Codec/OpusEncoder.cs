@@ -28,7 +28,7 @@ namespace Auri.Audio.Encoder.Codec
                    $"--comp {complexity} " +
                    $"--framesize {frameSize.ToString(CultureInfo.InvariantCulture)} " +
                    $"--downmix-{downmix} " +
-                   $"- \"{outputAudio}{Extension}\"";
+                   $"- \"{outputAudio}\"";
         }
     }
 }

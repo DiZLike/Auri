@@ -36,7 +36,7 @@ namespace Auri.Audio.Encoder.Codec
                    $"-q {quality} " +
                    $"--lowpass {settings.SampleRate / 2} " +
                    $"--resample {resample} " +
-                   $"- \"{outputAudio}{Extension}\"";
+                   $"- \"{outputAudio}\"";
         }
     }
 }

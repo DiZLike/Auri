@@ -1,5 +1,6 @@
 ﻿using Auri.Managers;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Enc;
@@ -9,6 +10,7 @@ namespace Auri.Services
     public class AudioEngineService
     {
         private bool _isInitialized;
+        private List<int> _pluginsHandle;
         private string _decPluginsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "decoders");
 
         public AudioEngineService()
@@ -38,11 +40,13 @@ namespace Auri.Services
                 ExceptionManager.RaiseError(Error.PLUGINS_FOLDER_MISSING);
                 return false;
             }
+            _pluginsHandle = new List<int>();
             foreach (var dll in dlls)
             {
                 int pHandle = Bass.BASS_PluginLoad(dll);
                 if (pHandle == 0)
-                    ExceptionManager.RaiseBassError(Error.PLUGIN_LOAD_FAILED);
+                    ExceptionManager.RaiseBassError(Error.PLUGIN_LOAD_FAILED, dll);
+                _pluginsHandle.Add(pHandle);
             }
             return true;
         }
@@ -63,6 +67,18 @@ namespace Auri.Services
                 // Важно освобождать ресурсы
                 Bass.BASS_StreamFree(stream);
             }
+        }
+        public void EngineFree()
+        {
+            // Очистка плагинов
+            if (_pluginsHandle != null && _pluginsHandle.Count > 0)
+            {
+                foreach (var plugin in _pluginsHandle)
+                    Bass.BASS_PluginFree(plugin);
+            }
+
+            // Очистка Bass
+            Bass.BASS_Free();
         }
     }
 }

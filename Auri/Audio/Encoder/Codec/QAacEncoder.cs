@@ -48,7 +48,7 @@ namespace Auri.Audio.Encoder.Codec
                    $"{heStr}" +
                    $"--quality {quality} " +
                    $"--rate {sampleRate} " +
-                   $"- -o \"{outputAudio}{Extension}\"";
+                   $"- -o \"{outputAudio}\"";
         }
     }
 }

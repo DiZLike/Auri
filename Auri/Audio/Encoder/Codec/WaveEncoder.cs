@@ -19,7 +19,7 @@ namespace Auri.Audio.Encoder.Codec
         public override bool Encode(string outputAudio, EncoderPreset settings, int pass, int totalPass)
         {
             int stream = _encoderService.CreateStream(_inputAudio.FilePath, settings.SampleRate, settings.Channels);
-            bool isOk = _encoderService.WriteWaveFile(stream, $"{outputAudio}{Extension}", settings.SampleRate, settings.Channels, settings.BitsPerSample);
+            bool isOk = _encoderService.WriteWaveFile(stream, $"{outputAudio}", settings.SampleRate, settings.Channels, settings.BitsPerSample);
             return isOk;
         }
     }

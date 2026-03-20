@@ -587,8 +587,12 @@ namespace Auri
         }
         private bool IsAllowedFile(string filePath)
         {
-            string[] allowedExtensions = { ".wav", ".mp3", ".opus" };
-            string extension = System.IO.Path.GetExtension(filePath).ToLower();
+            string[] allowedExtensions = {
+                ".wav", ".mp3", ".opus", ".aac", ".m4a", ".mp4",
+                ".ac3", ".mpc", ".ofr", ".ofs", ".spx", ".tta",
+                ".ape", ".flac", ".wma", ".wv", ".webm", ".alac"
+            };
+            string extension = Path.GetExtension(filePath).ToLower();
 
             return allowedExtensions.Contains(extension);
         }

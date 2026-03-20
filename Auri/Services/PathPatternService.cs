@@ -40,14 +40,14 @@ namespace Auri.Services
         /// </summary>
         /// <param name="audioFile">Путь к исходному аудиофайлу</param>
         /// <returns>Сгенерированный путь к файлу</returns>
-        public string GeneratePath(string audioFile)
+        public string GeneratePath(string audioFile, string extension)
         {
             if (!System.IO.File.Exists(audioFile))
                 throw new FileNotFoundException("Аудиофайл не найден", audioFile);
 
             using (var file = TagLib.File.Create(audioFile))
             {
-                return GeneratePath(file);
+                return GeneratePath(file, extension);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Auri.Services
         /// </summary>
         /// <param name="file">Открытый файл TagLib</param>
         /// <returns>Сгенерированный путь к файлу</returns>
-        public string GeneratePath(TagLib.File file)
+        public string GeneratePath(TagLib.File file, string extension)
         {
             if (file == null)
                 throw new ArgumentNullException(nameof(file));
@@ -64,11 +64,8 @@ namespace Auri.Services
             var tags = file.Tag;
             var properties = file.Properties;
 
-            // Получаем расширение выходного файла
-            string extension = Path.GetExtension(_outputFileName).TrimStart('.');
-
             // Создаем словарь со всеми доступными тегами
-            var tagValues = new System.Collections.Generic.Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            var tagValues = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
                 ["artist"] = GetFirstNonEmpty(tags.Performers, "Unknown Artist"),
                 ["album"] = tags.Album ?? "Unknown Album",
@@ -115,33 +112,6 @@ namespace Auri.Services
             }
 
             return fullPath;
-        }
-
-        /// <summary>
-        /// Генерирует имя файла на основе тегов (без пути)
-        /// </summary>
-        /// <param name="audioFile">Путь к исходному аудиофайлу</param>
-        /// <returns>Сгенерированное имя файла</returns>
-        public string GenerateFileName(string audioFile)
-        {
-            if (!System.IO.File.Exists(audioFile))
-                throw new FileNotFoundException("Аудиофайл не найден", audioFile);
-
-            using (var file = TagLib.File.Create(audioFile))
-            {
-                return GenerateFileName(file);
-            }
-        }
-
-        /// <summary>
-        /// Генерирует имя файла на основе тегов (без пути)
-        /// </summary>
-        /// <param name="file">Открытый файл TagLib</param>
-        /// <returns>Сгенерированное имя файла</returns>
-        public string GenerateFileName(TagLib.File file)
-        {
-            string fullPath = GeneratePath(file);
-            return Path.GetFileName(fullPath);
         }
 
         /// <summary>
