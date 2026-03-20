@@ -120,9 +120,6 @@
   <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="cmbMp3Channels.ToolTip" xml:space="preserve">
     <value>Stereo — полноценное стерео, два независимых канала (максимум качества).
 Joint Stereo — умный режим: убирает дублирование в похожих каналах, экономит место без потери качества.
@@ -138,15 +135,6 @@ Mono — один канал (речь, старые записи)</value>
 256 kbps — отличное качество, близкое к CD
 320 kbps — максимальное качество для MP3</value>
   </data>
-  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="cmbOpusBitrate.ToolTip" xml:space="preserve">
     <value>Объём данных, выделяемый на секунду звука.
 Выше битрейт = лучше качество, но больше размер файла.
@@ -155,9 +143,6 @@ Mono — один канал (речь, старые записи)</value>
 128 kbps — отличное качество, прозрачно для большинства людей (аналог MP3 256–320) 
 160–192 kbps — максимальное качество, выше уже нет смысла</value>
   </data>
-  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="tbQaacVbr.ToolTip" xml:space="preserve">
     <value>Насколько сильно может меняться битрейт (от 0 до 127).
 Выше значение - лучше качество.
@@ -174,13 +159,4 @@ Mono — один канал (речь, старые записи)</value>
 256 kbps — iTunes Plus (аналог ~320 MP3) 
 320 kbps — максимальное качество</value>
   </data>
-  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
 </root>

@@ -92,6 +92,11 @@ namespace Auri.Managers
         ENCODER_STOP_FAILED,
 
         /// <summary>
+        /// Отсутствует файл энкодера
+        /// </summary>
+        ENCODER_FILE_IS_MISSING,
+
+        /// <summary>
         /// Ошибка в процессе кодирования аудио файла
         /// </summary>
         ENCODE_FAILED,

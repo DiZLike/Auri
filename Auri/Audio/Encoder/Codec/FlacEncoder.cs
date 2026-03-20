@@ -10,7 +10,7 @@ namespace Auri.Audio.Encoder.Codec
         private const string LossyWavSubPath = "lossywav";
         private const string LossyWavExecutable = "lossyWAV.exe";
         private const string FlacSubPath = "flac";
-        private const string FlacExecutable = "flac";
+        private const string FlacExecutable = "flac.exe";
         private const string StdinLossyWavFile = "stdin.lossy.wav";
         private const int DefaultCompressionLevel = 8;
         private const string DefaultLossyWavQuality = "S";
@@ -82,7 +82,6 @@ namespace Auri.Audio.Encoder.Codec
             EncoderFileName = FlacExecutable;
 
             var lossyWavFilePath = Path.Combine(outputFolder, StdinLossyWavFile);
-
             return $"-{compressionLevel} -f \"{lossyWavFilePath}\" --output-name=\"{outputAudio}{Extension}\"";
         }
 
@@ -121,17 +120,30 @@ namespace Auri.Audio.Encoder.Codec
                 if (!useLossyWav)
                     return base.Encode(outputAudio, settings, pass, totalPass);
 
-                _lossyWavCompleted = base.Encode(outputAudio, settings, 1, 2);
+                // Сбрасываем флаг при начале кодирования
+                _lossyWavCompleted = false;
 
-                if (_lossyWavCompleted)
-                    return base.Encode(outputAudio, settings, 2, 2);
+                // Первый проход
+                bool firstPassSuccess = base.Encode(outputAudio, settings, 1, 2);
 
-                return false;
+                // Проверяем, не была ли операция прервана
+                if (!firstPassSuccess || _encoderService.IsAborted)
+                {
+                    return false;
+                }
+
+                _lossyWavCompleted = true;
+
+                // Второй проход
+                return base.Encode(outputAudio, settings, 2, 2);
             }
             finally
             {
-                if (useLossyWav)
+                // Очищаем временные файлы только если оба прохода завершены или был abort
+                if (useLossyWav && (_lossyWavCompleted || _encoderService.IsAborted))
+                {
                     CleanupTempFiles();
+                }
             }
         }
     }

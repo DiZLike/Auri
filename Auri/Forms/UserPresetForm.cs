@@ -487,11 +487,6 @@ namespace Auri.Forms
 
         #endregion
 
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void cbQaacHe_CheckedChanged(object sender, EventArgs e)
         {
             cmbQaacBitrate.Items.Clear();

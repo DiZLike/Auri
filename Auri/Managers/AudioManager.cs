@@ -30,16 +30,16 @@ namespace Auri.Managers
         private readonly string _outputPath;
         private readonly string _pattern;
         private readonly string _format;
-        private readonly EncoderPreset _settings;
+        private readonly EncoderPreset _preset;
 
         private float[] _fileProgress;
         private int _totalFiles;
         private int _completedFilesCount;
-        private bool _allCompleted;
+        private volatile bool _allCompleted;
         private bool _aborted;
         private ConcurrentBag<IEncoder> _encoders;
 
-        public AudioManager(ConfigManager config, AudioEngineService bass, AudioFile[] audioFiles, string outputPath, string pattern, string format, EncoderPreset settings)
+        public AudioManager(ConfigManager config, AudioEngineService bass, AudioFile[] audioFiles, string outputPath, string pattern, string format, EncoderPreset preset)
         {
             _config = config;
             _bass = bass;
@@ -49,7 +49,10 @@ namespace Auri.Managers
             _outputPath = outputPath;
             _pattern = pattern;
             _format = format.ToLower();
-            _settings = settings;
+            if (preset != null)
+                _preset = preset;
+            else
+                _preset = new EncoderPreset();
             _aborted = false;
             _encoders = new ConcurrentBag<IEncoder>();
 
@@ -120,7 +123,6 @@ namespace Auri.Managers
                                 overallProgress = total / _totalFiles;
                             }
 
-                            // Вызываем событие вне блокировки
                             OnOverallProgress?.Invoke((int)overallProgress);
                         };
                         encoder.OnComplete += (fileIndex, status) =>
@@ -151,7 +153,7 @@ namespace Auri.Managers
                             OnOverallProgress?.Invoke((int)overallProgress);
                         };
 
-                        bool isOk = encoder.Encode(outputAudio, _settings, 1, 1);
+                        bool isOk = encoder.Encode(outputAudio, _preset, 1, 1);
                         if (isOk)
                         {
                             string fullOutputPath = outputAudio + encoder.Extension;

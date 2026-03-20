@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Auri.Services
 {
+    using Auri.Managers;
     using System;
     using System.IO;
     using System.Text;
@@ -102,7 +103,15 @@ namespace Auri.Services
             string directory = Path.GetDirectoryName(fullPath);
             if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
             {
-                Directory.CreateDirectory(directory);
+                try
+                {
+                    Directory.CreateDirectory(directory);
+                }
+                catch (Exception ex)
+                {
+                    ExceptionManager.RaiseError(Error.DIRECTORY_CREATE_FAILED, ex.Message);
+                    return String.Empty;
+                }
             }
 
             return fullPath;

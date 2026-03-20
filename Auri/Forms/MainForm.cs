@@ -339,11 +339,14 @@ namespace Auri
             {
                 if (_aborted)
                     return;
-                if (index < dataGridViewFiles.Rows.Count)
+                this.BeginInvoke(new Action(() =>
                 {
-                    DataGridViewRow row = dataGridViewFiles.Rows[index];
-                    row.Cells[3].Value = $"{progress}%";
-                }
+                    if (index < dataGridViewFiles.Rows.Count)
+                    {
+                        DataGridViewRow row = dataGridViewFiles.Rows[index];
+                        row.Cells[3].Value = $"{progress}%";
+                    }
+                }));
             };
             _converter.OnOverallProgress += (overall) =>
             {
@@ -359,11 +362,14 @@ namespace Auri
             {
                 if (_aborted)
                     return;
-                if (index < dataGridViewFiles.Rows.Count)
+                this.BeginInvoke(new Action(() =>
                 {
-                    DataGridViewRow row = dataGridViewFiles.Rows[index];
-                    row.Cells[3].Value = $"Готово";
-                }
+                    if (index < dataGridViewFiles.Rows.Count)
+                    {
+                        DataGridViewRow row = dataGridViewFiles.Rows[index];
+                        row.Cells[3].Value = $"Готово";
+                    }
+                }));
             };
             _converter.OnAllComplete += (status) =>
             {
@@ -373,14 +379,21 @@ namespace Auri
                     btnConvert.Tag = "convert";
                     btnQuickConvert.Enabled = true;
                     btnConvert.BackColor = Color.FromArgb(76, 175, 80);
-                    Task.Delay(500).ContinueWith(_ =>
+
+                    // Используем Timer вместо Task.Delay + BeginInvoke
+                    var timer = new System.Windows.Forms.Timer();
+                    timer.Interval = 500;
+                    timer.Tick += (s, e) =>
                     {
-                        this.BeginInvoke(new Action(() =>
+                        timer.Stop();
+                        if (!_aborted) // Проверяем, не была ли операция прервана
                         {
                             progressBar.Value = 0;
                             lblStatus.Text = "Конвертация завершена";
-                        }));
-                    });
+                        }
+                        timer.Dispose();
+                    };
+                    timer.Start();
                 }));
             };
             _converter.OnAbort += () =>
@@ -391,17 +404,13 @@ namespace Auri
                     btnConvert.Tag = "convert";
                     btnQuickConvert.Enabled = true;
                     btnConvert.BackColor = Color.FromArgb(76, 175, 80);
-                    this.BeginInvoke(new Action(() =>
+                    progressBar.Value = 0;
+                    lblStatus.Text = "Конвертация отменена";
+                    for (int i = 0; i < dataGridViewFiles.Rows.Count; i++)
                     {
-                        progressBar.Value = 0;
-                        lblStatus.Text = "Конвертация отменена";
-                        for (int i = 0; i < dataGridViewFiles.Rows.Count; i++)
-                        {
-                            DataGridViewRow row = dataGridViewFiles.Rows[i];
-                            row.Cells[3].Value = $"Отменено";
-                        }
-
-                    }));
+                        DataGridViewRow row = dataGridViewFiles.Rows[i];
+                        row.Cells[3].Value = $"Отменено";
+                    }
                 }));
             };
             _converter.OnFileExists += (fileIndex) =>

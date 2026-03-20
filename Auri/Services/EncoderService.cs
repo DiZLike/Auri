@@ -1,7 +1,6 @@
 ﻿using Auri.Managers;
 using System;
 using System.IO;
-using System.Windows.Forms;
 using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Enc;
 using Un4seen.Bass.AddOn.Mix;
@@ -14,7 +13,8 @@ namespace Auri.Services
         public event Action<float> OnProgress;
         public event Action<bool> OnComplete;
         private AudioEngineService _bass;
-        private bool _isUserStopped;
+        private volatile bool _isUserStopped;
+        public bool IsAborted => _isUserStopped;
         public EncoderService(AudioEngineService bass)
         {
             _bass = bass;

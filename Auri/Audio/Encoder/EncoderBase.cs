@@ -43,6 +43,11 @@ namespace Auri.Audio.Encoder
 
                 _encoderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                     "encoders", EncoderSubPath, EncoderFileName);
+                if (!File.Exists(_encoderPath))
+                {
+                    ExceptionManager.RaiseError(Error.ENCODER_FILE_IS_MISSING, EncoderFileName);
+                    return false;
+                }
 
                 _streamHandle = _encoderService.CreateStream(
                     _inputAudio.FilePath, settings.SampleRate, settings.Channels);
