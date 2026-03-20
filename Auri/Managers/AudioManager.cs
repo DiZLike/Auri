@@ -95,7 +95,7 @@ namespace Auri.Managers
                         {
                             file.Working = false;
                             file.Completed = true;
-                            _fileProgress[file.Index]
+                            _fileProgress[file.Index] = 100f;
                             _completedFilesCount++;
                             ExceptionManager.RaiseError(Error.FILE_ALREADY_EXISTS, checkFile);
                             OnFileExists?.Invoke(file.Index);
