@@ -11,6 +11,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -45,7 +46,6 @@ namespace Auri
                 return;
             UserDialogs.ShowError("Ошибка", message);
         }
-
         private void SaveSettings()
         {
             // форма
@@ -128,7 +128,6 @@ namespace Auri
             tbThreadCount.Maximum = threads;
             tbThreadCount.Value = tbThreadCount.Maximum;
         }
-
         private void BtnAddFiles_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
@@ -144,7 +143,6 @@ namespace Auri
                 }
             }
         }
-
         private void AddFilesToGrid(string[] filePaths)
         {
             // Отключаем обновление DataGridView для ускорения
@@ -195,7 +193,6 @@ namespace Auri
                 dataGridViewFiles.ResumeLayout();
             }
         }
-
         private string FormatFileSize(long bytes)
         {
             string[] sizes = { "B", "KB", "MB", "GB" };
@@ -208,7 +205,6 @@ namespace Auri
             }
             return $"{len:0.##} {sizes[order]}";
         }
-
         private void BtnRemoveSelected_Click(object sender, EventArgs e)
         {
             if (dataGridViewFiles.SelectedRows.Count > 0)
@@ -241,7 +237,6 @@ namespace Auri
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-
         private void BtnClearAll_Click(object sender, EventArgs e)
         {
             if (dataGridViewFiles.Rows.Count > 0)
@@ -251,13 +246,11 @@ namespace Auri
                 UpdateStatus();
             }
         }
-
         private string GetSelectedFormat()
         {
             string selected = cmbOutputFormat.SelectedItem?.ToString() ?? "";
             return selected.Split(' ')[0]; // Берем только первую часть (MP3, WAV и т.д.)
         }
-
         private void BtnConvert_Click(object sender, EventArgs e)
         {
             if (btnConvert.Tag.ToString() == "convert")
@@ -309,7 +302,6 @@ namespace Auri
                 _converter.AbortAll();
             }
         }
-
         private void StartConversion(string format, EncoderPreset preset, string outputPath)
         {
             int threads = tbThreadCount.Value;
@@ -440,7 +432,6 @@ namespace Auri
 
             _converter.Convert(threads, _metaService);
         }
-
         private void UpdateStatus()
         {
             int count = dataGridViewFiles.Rows.Count;
@@ -448,7 +439,6 @@ namespace Auri
                 ? $"Загружено файлов: {count}"
                 : "Готов к работе";
         }
-
         private void cmbQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbQuality.SelectedIndex == -1)
@@ -472,7 +462,6 @@ namespace Auri
             else btnUserPreset.Enabled = false;
             _lastQualityIndex = cmbQuality.SelectedIndex;
         }
-
         private void cmbOutputFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
             cmbQuality.Items.Clear();
@@ -484,7 +473,6 @@ namespace Auri
                 index = cmbQuality.FindString("максимальное");
             cmbQuality.SelectedIndex = index;
         }
-
         private void txtOutputPath_MouseClick(object sender, MouseEventArgs e)
         {
             using (FolderBrowserDialog fbd = new FolderBrowserDialog())
@@ -499,12 +487,10 @@ namespace Auri
                 }
             }
         }
-
         private void btnOpenFolder_Click(object sender, EventArgs e)
         {
             Process.Start("explorer.exe", txtOutputPath.Text);
         }
-
         private void btnUserPreset_Click(object sender, EventArgs e)
         {
             string format = GetSelectedFormat();
@@ -517,12 +503,10 @@ namespace Auri
             };
             userPresetForm.ShowDialog();
         }
-
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveSettings();
         }
-
         private void btnPattern_Click(object sender, EventArgs e)
         {
             var patternForm = new PatternForm();
@@ -532,7 +516,6 @@ namespace Auri
             };
             patternForm.Show();
         }
-
         private void btnQuickConvert_Click(object sender, EventArgs e)
         {
             btnConvert.Tag = "abort";
@@ -576,10 +559,38 @@ namespace Auri
 
             StartConversion(format, encoderSettings, outputPath);
         }
-
         private void cbRewriteFiles_CheckedChanged(object sender, EventArgs e)
         {
             _config.Settings.ConverterSettings.RewriteAudio = cbRewriteFiles.Checked;
+        }
+        private void dataGridViewFiles_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (files.All(file => IsAllowedFile(file)))
+                    e.Effect = DragDropEffects.Copy;
+                else
+                    e.Effect = DragDropEffects.None;
+            }
+            else
+                e.Effect = DragDropEffects.None;
+        }
+        private void dataGridViewFiles_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                AddFilesToGrid(files);
+                UpdateStatus();
+            }
+        }
+        private bool IsAllowedFile(string filePath)
+        {
+            string[] allowedExtensions = { ".wav", ".mp3", ".opus" };
+            string extension = System.IO.Path.GetExtension(filePath).ToLower();
+
+            return allowedExtensions.Contains(extension);
         }
     }
 }

@@ -38,6 +38,7 @@
             this.panelControls = new System.Windows.Forms.Panel();
             this.btnQuickConvert = new System.Windows.Forms.Button();
             this.panelFormats = new System.Windows.Forms.Panel();
+            this.cbRewriteFiles = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tbThreadCount = new System.Windows.Forms.TrackBar();
@@ -49,7 +50,6 @@
             this.btnUserPreset = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.cbRewriteFiles = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.panelControls.SuspendLayout();
@@ -87,6 +87,7 @@
             // 
             // dataGridViewFiles
             // 
+            this.dataGridViewFiles.AllowDrop = true;
             this.dataGridViewFiles.AllowUserToAddRows = false;
             this.dataGridViewFiles.AllowUserToDeleteRows = false;
             this.dataGridViewFiles.AllowUserToResizeRows = false;
@@ -110,6 +111,8 @@
             this.dataGridViewFiles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewFiles.Size = new System.Drawing.Size(880, 354);
             this.dataGridViewFiles.TabIndex = 1;
+            this.dataGridViewFiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridViewFiles_DragDrop);
+            this.dataGridViewFiles.DragEnter += new System.Windows.Forms.DragEventHandler(this.dataGridViewFiles_DragEnter);
             // 
             // colFileName
             // 
@@ -315,6 +318,19 @@
             this.panelFormats.Size = new System.Drawing.Size(906, 147);
             this.panelFormats.TabIndex = 2;
             // 
+            // cbRewriteFiles
+            // 
+            this.cbRewriteFiles.AutoSize = true;
+            this.cbRewriteFiles.Location = new System.Drawing.Point(497, 99);
+            this.cbRewriteFiles.Name = "cbRewriteFiles";
+            this.cbRewriteFiles.Size = new System.Drawing.Size(131, 19);
+            this.cbRewriteFiles.TabIndex = 28;
+            this.cbRewriteFiles.Text = "Режим перезаписи";
+            this.toolTip1.SetToolTip(this.cbRewriteFiles, "Существующие файлы в целевой папке будут перезаписаны.\r\nБудьте внимательны: восст" +
+        "ановить старые файлы будет невозможно");
+            this.cbRewriteFiles.UseVisualStyleBackColor = true;
+            this.cbRewriteFiles.CheckedChanged += new System.EventHandler(this.cbRewriteFiles_CheckedChanged);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -420,19 +436,6 @@
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(889, 13);
             this.progressBar.TabIndex = 4;
-            // 
-            // cbRewriteFiles
-            // 
-            this.cbRewriteFiles.AutoSize = true;
-            this.cbRewriteFiles.Location = new System.Drawing.Point(497, 99);
-            this.cbRewriteFiles.Name = "cbRewriteFiles";
-            this.cbRewriteFiles.Size = new System.Drawing.Size(131, 19);
-            this.cbRewriteFiles.TabIndex = 28;
-            this.cbRewriteFiles.Text = "Режим перезаписи";
-            this.toolTip1.SetToolTip(this.cbRewriteFiles, "Существующие файлы в целевой папке будут перезаписаны.\r\nБудьте внимательны: восст" +
-        "ановить старые файлы будет невозможно");
-            this.cbRewriteFiles.UseVisualStyleBackColor = true;
-            this.cbRewriteFiles.CheckedChanged += new System.EventHandler(this.cbRewriteFiles_CheckedChanged);
             // 
             // MainForm
             // 
