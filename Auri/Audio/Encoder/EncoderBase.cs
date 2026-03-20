@@ -1,4 +1,5 @@
-﻿using Auri.Services;
+﻿using Auri.Managers;
+using Auri.Services;
 using System;
 using System.IO;
 
@@ -6,12 +7,11 @@ namespace Auri.Audio.Encoder
 {
     public abstract class EncoderBase : IEncoder
     {
-        public event Action<string> OnError;
         public event Action<int, float> OnProgress;
         public event Action<int, bool> OnComplete;
 
-        protected readonly BassAudioService _bass;
-        protected readonly EncodeService _encoderService;
+        protected readonly AudioEngineService _bass;
+        protected readonly EncoderService _encoderService;
         protected readonly AudioFile _inputAudio;
         protected int _streamHandle;
         protected int _encoderHandle;
@@ -20,10 +20,10 @@ namespace Auri.Audio.Encoder
         protected abstract string EncoderFileName { get; set; }
         public abstract string Extension { get; }
 
-        protected EncoderBase(BassAudioService bass, AudioFile inputAudio)
+        protected EncoderBase(AudioEngineService bass, AudioFile inputAudio)
         {
             _bass = bass;
-            _encoderService = new EncodeService(_bass);
+            _encoderService = new EncoderService(_bass);
             _inputAudio = inputAudio;
 
             _encoderService.OnProgress += (progress) =>
@@ -46,19 +46,31 @@ namespace Auri.Audio.Encoder
 
                 _streamHandle = _encoderService.CreateStream(
                     _inputAudio.FilePath, settings.SampleRate, settings.Channels);
+                if (_streamHandle == 0)
+                {
+                    _inputAudio.Working = false;
+                    return false; // Не удалось создать поток
+                }
+
                 _encoderHandle = _encoderService.CreateEncoder(
                     _streamHandle, _encoderPath, args, settings.BitsPerSample);
+                if (_encoderHandle == 0)
+                {
+                    _inputAudio.Working = false;
+                    return false; // Не удалось создать энкодер
+                }
 
-                _encoderService.StartEncode(_streamHandle, _encoderHandle, pass, totalPass);
+                bool success = _encoderService.StartEncode(_streamHandle, _encoderHandle, pass, totalPass);
 
                 _inputAudio.Working = false;
-                _inputAudio.Completed = true;
+                _inputAudio.Completed = success;
 
-                return true;
+                return success;
             }
             catch (Exception ex)
             {
-                OnError?.Invoke($"{GetType().Name} encoding error: {ex.Message}");
+                ExceptionManager.RaiseError(Error.ENCODE_FAILED, ex.Message);
+                _inputAudio.Working = false;
                 return false;
             }
         }

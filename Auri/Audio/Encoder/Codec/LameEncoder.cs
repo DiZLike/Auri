@@ -1,5 +1,6 @@
 ﻿using Auri.Services;
 using System;
+using System.Globalization;
 
 namespace Auri.Audio.Encoder.Codec
 {
@@ -9,7 +10,7 @@ namespace Auri.Audio.Encoder.Codec
         protected override string EncoderFileName { get; set; } = "lame.exe";
         public override string Extension { get; } = "mp3";
 
-        public LameEncoder(BassAudioService bass, AudioFile inputAudio)
+        public LameEncoder(AudioEngineService bass, AudioFile inputAudio)
             : base(bass, inputAudio)
         {
         }
@@ -28,7 +29,7 @@ namespace Auri.Audio.Encoder.Codec
             else // cbr по умолчанию
                 bitrate = $"-b {settings.Bitrate}";
 
-            string resample = (settings.SampleRate / 1000f).ToString().Replace(",", ".");
+            string resample = (settings.SampleRate / 1000f).ToString(CultureInfo.InvariantCulture);
 
             return $"{bitrate} " +
                    $"-m {channelMode} " +

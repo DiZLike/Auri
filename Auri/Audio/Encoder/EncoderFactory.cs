@@ -5,7 +5,7 @@ namespace Auri.Audio.Encoder
 {
     public static class EncoderFactory
     {
-        public static IEncoder Create(string format, BassAudioService bass, AudioFile inputAudio)
+        public static IEncoder Create(string format, AudioEngineService bass, AudioFile inputAudio)
         {
             switch (format.ToLower())
             {

@@ -1,4 +1,5 @@
-﻿using Auri.Services;
+﻿using Auri.Managers;
+using Auri.Services;
 using System;
 using System.IO;
 
@@ -22,7 +23,7 @@ namespace Auri.Audio.Encoder.Codec
         private bool _lossyWavCompleted;
         private string _tempLossyWavFolder;
 
-        public FlacEncoder(BassAudioService bass, AudioFile inputAudio)
+        public FlacEncoder(AudioEngineService bass, AudioFile inputAudio)
             : base(bass, inputAudio)
         {
         }
@@ -82,7 +83,7 @@ namespace Auri.Audio.Encoder.Codec
 
             var lossyWavFilePath = Path.Combine(outputFolder, StdinLossyWavFile);
 
-            return $"-{compressionLevel} -f \"{lossyWavFilePath}\" --output-name=\"{outputAudio}\"";
+            return $"-{compressionLevel} -f \"{lossyWavFilePath}\" --output-name=\"{outputAudio}{Extension}\"";
         }
 
         private string BuildStandardFlacArguments(int compressionLevel, string outputAudio)
@@ -97,6 +98,7 @@ namespace Auri.Audio.Encoder.Codec
 
             try
             {
+                // временная папка уникальна для каждого трека (т.е. потока)
                 var lossyWavFile = Path.Combine(_tempLossyWavFolder, StdinLossyWavFile);
                 if (File.Exists(lossyWavFile))
                     File.Delete(lossyWavFile);
@@ -106,7 +108,7 @@ namespace Auri.Audio.Encoder.Codec
             }
             catch
             {
-                // Игнорируем ошибки при удалении временных файлов
+                ExceptionManager.RaiseError(Error.FILE_TEMP_DELETE);
             }
         }
 

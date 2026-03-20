@@ -1,4 +1,5 @@
 ﻿using Auri.Services;
+using System.Globalization;
 
 namespace Auri.Audio.Encoder.Codec
 {
@@ -8,7 +9,7 @@ namespace Auri.Audio.Encoder.Codec
         protected override string EncoderFileName { get; set; } = "opusenc.exe";
         public override string Extension { get; } = "opus";
 
-        public OpusEncoder(BassAudioService bass, AudioFile inputAudio)
+        public OpusEncoder(AudioEngineService bass, AudioFile inputAudio)
             : base(bass, inputAudio)
         {
         }
@@ -25,7 +26,7 @@ namespace Auri.Audio.Encoder.Codec
                    $"--{mode} " +
                    $"--{content} " +
                    $"--comp {complexity} " +
-                   $"--framesize {frameSize.ToString().Replace(",", ".")} " +
+                   $"--framesize {frameSize.ToString(CultureInfo.InvariantCulture)} " +
                    $"--downmix-{downmix} " +
                    $"- \"{outputAudio}{Extension}\"";
         }

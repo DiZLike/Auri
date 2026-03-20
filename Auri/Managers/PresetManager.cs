@@ -7,11 +7,11 @@ using static Un4seen.Bass.Misc.BaseEncoder;
 
 namespace Auri.Managers
 {
-    public class EncoderPresetManager
+    public class PresetManager
     {
         private readonly string _configPath;
 
-        public EncoderPresetManager()
+        public PresetManager()
         {
             _configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "encoder_presets");
             Directory.CreateDirectory(_configPath);

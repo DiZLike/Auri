@@ -1,4 +1,5 @@
 ﻿using Auri.Audio;
+using Auri.Managers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,6 +47,7 @@ namespace Auri.Services
             }
             catch (Exception ex)
             {
+                ExceptionManager.RaiseError(Error.METADATA_COPY_FAILED, ex.Message);
                 return false;
             }
         }

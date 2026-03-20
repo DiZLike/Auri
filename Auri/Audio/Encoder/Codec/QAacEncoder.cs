@@ -12,7 +12,7 @@ namespace Auri.Audio.Encoder.Codec
         protected override string EncoderSubPath { get; set; } = "qaac";
         protected override string EncoderFileName { get; set; } = "qaac64.exe";
         public override string Extension { get; } = "m4a";
-        public QAacEncoder(BassAudioService bass, AudioFile inputAudio)
+        public QAacEncoder(AudioEngineService bass, AudioFile inputAudio)
             : base(bass, inputAudio)
         {
 

@@ -11,7 +11,6 @@ namespace Auri.Audio.Encoder
     {
         bool Encode(string outputAudio, EncoderPreset settings, int pass, int totalPass);
         void AbortEncode();
-        event Action<string> OnError;
         event Action<int, float> OnProgress;
         event Action<int, bool> OnComplete;
 

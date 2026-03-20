@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,8 +18,8 @@ namespace Auri
 {
     public partial class MainForm : Form
     {
-        private BassAudioService _bass;
-        private ConverterManager _converter;
+        private AudioEngineService _bass;
+        private AudioManager _converter;
         private List<AudioFile> _audioFiles;
         private ConfigManager _config;
         private MetaService _metaService;
@@ -28,14 +30,22 @@ namespace Auri
         public MainForm()
         {
             InitializeComponent();
-            //LoadDefaults();
-            _bass = new BassAudioService();
+            ExceptionManager.OnDetailedError += ExceptionManager_OnDetailedError;
+            _bass = new AudioEngineService();
             _config = new ConfigManager();
             _audioFiles = new List<AudioFile>();
             _metaService = new MetaService();
             InitializeThreadCountComboBox();
             LoadSettings();
         }
+
+        private void ExceptionManager_OnDetailedError(Error error, string message)
+        {
+            if (error == Error.FILE_ALREADY_EXISTS || error == Error.OPERATION_ABORTED)
+                return;
+            UserDialogs.ShowError("Ошибка", message);
+        }
+
         private void SaveSettings()
         {
             // форма
@@ -324,7 +334,7 @@ namespace Auri
             progressBar.Value = 0;
             lblStatus.Text = $"Конвертация в {format}...";
 
-            _converter = new ConverterManager(_config, _bass, _audioFiles.ToArray(), outputPath, txtPattern.Text, format, preset);
+            _converter = new AudioManager(_config, _bass, _audioFiles.ToArray(), outputPath, txtPattern.Text, format, preset);
             _converter.OnProgress += (index, progress) =>
             {
                 if (_aborted)
@@ -394,6 +404,30 @@ namespace Auri
                     }));
                 }));
             };
+            _converter.OnFileExists += (fileIndex) =>
+            {
+                
+                this.BeginInvoke(new Action(() =>
+                {
+                    if (fileIndex < dataGridViewFiles.Rows.Count)
+                    {
+                        DataGridViewRow row = dataGridViewFiles.Rows[fileIndex];
+                        row.Cells[3].Value = $"Файл существует";
+                    }
+
+                    bool allCompleted = _audioFiles.All(audioFile => audioFile.Completed == true);
+                    if (allCompleted)
+                    {
+                        btnConvert.Text = "Конвертировать";
+                        btnConvert.Tag = "convert";
+                        btnQuickConvert.Enabled = true;
+                        btnConvert.BackColor = Color.FromArgb(76, 175, 80);
+                        progressBar.Value = 0;
+                        lblStatus.Text = "Конвертация завершена";
+                    }
+
+                }));
+            };
 
             _converter.Convert(threads, _metaService);
         }
@@ -414,7 +448,7 @@ namespace Auri
             {
                 if (!_config.Settings.ConverterSettings.AdvancedMode)
                 {
-                    DialogResult dialogResult = AskDialog.ShowDialog("Предупреждение", "Данный режим предназначен для опытных пользователей.\n" +
+                    DialogResult dialogResult = UserDialogs.ShowDialog("Предупреждение", "Данный режим предназначен для опытных пользователей.\n" +
                         "Включить режим эксперта?");
                     if (dialogResult == DialogResult.Yes)
                         _config.Settings.ConverterSettings.AdvancedMode = true;

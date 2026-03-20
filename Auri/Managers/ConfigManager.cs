@@ -9,14 +9,14 @@ namespace Auri.Managers
 {
     public class ConfigManager
     {
-        private EncoderPresetManager _presets;
+        private PresetManager _presets;
         private readonly string _configPath;
         private AppSettings _settings;
 
         public AppSettings Settings => _settings;
         public ConfigManager()
         {
-            _presets = new EncoderPresetManager();
+            _presets = new PresetManager();
             _configPath = Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
                 "settings.json");
@@ -36,7 +36,7 @@ namespace Auri.Managers
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Ошибка сохранения настроек: {ex.Message}");
+                ExceptionManager.RaiseError(Error.CONFIG_SAVE_FAILED, ex.Message);
             }
         }
         private void LoadSettings()
@@ -51,8 +51,9 @@ namespace Auri.Managers
                 else
                     _settings = new AppSettings();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionManager.RaiseError(Error.CONFIG_LOAD_FAILED, ex.Message);
                 _settings = new AppSettings();
             }
         }
