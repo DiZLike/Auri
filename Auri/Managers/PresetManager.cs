@@ -16,28 +16,12 @@ namespace Auri.Managers
             _configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "encoder_presets");
             Directory.CreateDirectory(_configPath);
         }
-        public EncoderPreset GetPreset(string format, int presetIndex)
-        {
-            string lowerFormat = format.ToLower();
-
-            // Индекс 0xFF всегда означает пользовательский пресет для данного формата
-            if (presetIndex == 0xFF)
-            {
-                EncoderPreset customPreset = LoadCustomPreset(lowerFormat);
-                if (customPreset != null)
-                    return customPreset;
-            }
-
-            // Возвращаем стандартный пресет
-            EncoderPreset defaultPreset = GetDefaultPreset(lowerFormat, presetIndex);
-            return defaultPreset ?? new EncoderPreset();
-        }
         public void SaveCustomPreset(string format, EncoderPreset settings)
         {
             string filePath = Path.Combine(_configPath, $"{format.ToLower()}_custom.json");
             File.WriteAllText(filePath, JsonConvert.SerializeObject(settings, Formatting.Indented));
         }
-        public EncoderPreset LoadCustomPreset(string format)
+        public EncoderPreset GetCustomPreset(string format)
         {
             string filePath = Path.Combine(_configPath, $"{format.ToLower()}_custom.json");
             if (File.Exists(filePath))
@@ -45,6 +29,36 @@ namespace Auri.Managers
                 return JsonConvert.DeserializeObject<EncoderPreset>(File.ReadAllText(filePath));
             }
             return new EncoderPreset();
+        }
+        public EncoderPreset GetQuickStartPreset(string format)
+        {
+            string filePath = Path.Combine(_configPath, $"{format.ToLower()}_quickstart.json");
+            if (File.Exists(filePath))
+            {
+                return JsonConvert.DeserializeObject<EncoderPreset>(File.ReadAllText(filePath));
+            }
+            return null;
+        }
+        public void SaveQuickStartPreset(string format, EncoderPreset preset)
+        {
+            string filePath = Path.Combine(_configPath, $"{format.ToLower()}_quickstart.json");
+            File.WriteAllText(filePath, JsonConvert.SerializeObject(preset, Formatting.Indented));
+        }
+        public EncoderPreset GetPreset(string format, int presetIndex)
+        {
+            string lowerFormat = format.ToLower();
+
+            // Индекс 0xFF всегда означает пользовательский пресет для данного формата
+            if (presetIndex == 0xFF)
+            {
+                EncoderPreset customPreset = GetCustomPreset(lowerFormat);
+                if (customPreset != null)
+                    return customPreset;
+            }
+
+            // Возвращаем стандартный пресет
+            EncoderPreset defaultPreset = GetDefaultPreset(lowerFormat, presetIndex);
+            return defaultPreset ?? new EncoderPreset();
         }
         private EncoderPreset GetDefaultPreset(string format, int index)
         {

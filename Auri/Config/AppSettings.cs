@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Auri.Audio.Encoder;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -32,5 +33,10 @@ namespace Auri.Config
         public bool SaveTrackList { get; set; }
         public bool RewriteAudio { get; set; }
         public List<string> TrackList { get; set; } = new List<string>();
+
+        // Wizard
+        public bool QuickStartCompleted { get; set; }
+        public string QuickStartFormat { get; set; }
+        public EncoderPreset QuickStartPreset { get; set; }
     }
 }

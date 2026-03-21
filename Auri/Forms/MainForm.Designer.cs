@@ -352,7 +352,7 @@
             // tbThreadCount
             // 
             this.tbThreadCount.AutoSize = false;
-            this.tbThreadCount.BackColor = System.Drawing.Color.Snow;
+            this.tbThreadCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(250)))));
             this.tbThreadCount.LargeChange = 1;
             this.tbThreadCount.Location = new System.Drawing.Point(497, 30);
             this.tbThreadCount.Maximum = 9;

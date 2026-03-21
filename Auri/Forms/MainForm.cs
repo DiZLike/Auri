@@ -2,6 +2,7 @@
 using Auri.Audio.Encoder;
 using Auri.Forms;
 using Auri.Forms.Dialogs;
+using Auri.Forms.Wizard;
 using Auri.Managers;
 using Auri.Services;
 using System;
@@ -19,7 +20,7 @@ namespace Auri
 {
     public partial class MainForm : Form
     {
-        private AudioEngineService _bass;
+        private AudioEngineService _audioEngine;
         private AudioManager _converter;
         private List<AudioFile> _audioFiles;
         private ConfigManager _config;
@@ -32,12 +33,15 @@ namespace Auri
         {
             InitializeComponent();
             ExceptionManager.OnDetailedError += ExceptionManager_OnDetailedError;
-            _bass = new AudioEngineService();
+            _audioEngine = new AudioEngineService();
             _config = new ConfigManager();
             _audioFiles = new List<AudioFile>();
             _metaService = new MetaService();
             InitializeThreadCountComboBox();
             LoadSettings();
+
+            // Запуск мастера быстрого старта при первом запуске
+            RunQuickStartWizardIfNeeded();
         }
 
         private void ExceptionManager_OnDetailedError(Error error, string message)
@@ -61,58 +65,119 @@ namespace Auri
             _config.Settings.ConverterSettings.ThreadsCountIndex = tbThreadCount.Value;
             _config.Settings.ConverterSettings.OutputPath = txtOutputPath.Text;
             _config.Settings.ConverterSettings.PathPattern = txtPattern.Text;
-
-            // таблица треков
+            _config.Settings.ConverterSettings.RewriteAudio = cbRewriteFiles.Checked;
             _config.Settings.ConverterSettings.SaveTrackList = cbSaveTracks.Checked;
-            if (dataGridViewFiles.Rows.Count == 0 )
-                _config.Settings.ConverterSettings.TrackList.Clear();
 
-            if (cbSaveTracks.Checked)
+            // Всегда очищаем список перед обновлением
+            _config.Settings.ConverterSettings.TrackList.Clear();
+
+            // Сохраняем треки только если включено и есть данные
+            if (cbSaveTracks.Checked && dataGridViewFiles.Rows.Count > 0)
             {
-                _config.Settings.ConverterSettings.TrackList.Clear();
                 foreach (DataGridViewRow row in dataGridViewFiles.Rows)
                 {
-                    if (row.Tag != null)
+                    if (row.Tag is string filePath && File.Exists(filePath))
                     {
-                        string filePath = row.Tag.ToString();
                         _config.Settings.ConverterSettings.TrackList.Add(filePath);
                     }
                 }
             }
 
-            // перезапись аудио
-            _config.Settings.ConverterSettings.RewriteAudio = cbRewriteFiles.Checked;
-
             _config.SaveSettings();
         }
         private void LoadSettings()
         {
-            // форма
-            this.Location = new Point(_config.Settings.FormSettings.FormX, _config.Settings.FormSettings.FormY);
-            this.Size = new Size(_config.Settings.FormSettings.FormWidth, _config.Settings.FormSettings.FormHeight);
-            this.WindowState = _config.Settings.FormSettings.WindowState;
+            try
+            {
+                if (_config.NoConfigured)
+                {
+                    SetDefaultSettings();
+                    return;
+                }
 
-            // конвертер
-            cmbOutputFormat.SelectedIndex = _config.Settings.ConverterSettings.OutputFormatIndex;
-            cmbQuality.SelectedIndex = _config.Settings.ConverterSettings.QualityIndex;
+                // форма с проверкой видимости
+                var screen = Screen.FromPoint(new Point(_config.Settings.FormSettings.FormX,
+                                                         _config.Settings.FormSettings.FormY));
+                if (screen.WorkingArea.Contains(_config.Settings.FormSettings.FormX,
+                                                _config.Settings.FormSettings.FormY))
+                {
+                    this.Location = new Point(_config.Settings.FormSettings.FormX,
+                                             _config.Settings.FormSettings.FormY);
+                }
 
-            if (_config.Settings.ConverterSettings.ThreadsCountIndex < tbThreadCount.Maximum)
-                tbThreadCount.Value = _config.Settings.ConverterSettings.ThreadsCountIndex;
-            else
-                tbThreadCount.Value = tbThreadCount.Maximum;
+                this.Size = new Size(_config.Settings.FormSettings.FormWidth,
+                                    _config.Settings.FormSettings.FormHeight);
 
-            txtOutputPath.Text = _config.Settings.ConverterSettings.OutputPath;
-            if (txtOutputPath.Text == String.Empty)
-                txtOutputPath.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic),"Auri");
-            txtPattern.Text = _config.Settings.ConverterSettings.PathPattern;
+                // Сначала WindowState, потом остальное
+                this.WindowState = _config.Settings.FormSettings.WindowState;
 
-            // таблица треков
-            cbSaveTracks.Checked = _config.Settings.ConverterSettings.SaveTrackList;
-            if (cbSaveTracks.Checked)
-                AddFilesToGrid(_config.Settings.ConverterSettings.TrackList.ToArray());
+                // конвертер с валидацией
+                if (_config.Settings.ConverterSettings.OutputFormatIndex >= 0 &&
+                    _config.Settings.ConverterSettings.OutputFormatIndex < cmbOutputFormat.Items.Count)
+                {
+                    cmbOutputFormat.SelectedIndex = _config.Settings.ConverterSettings.OutputFormatIndex;
+                }
 
-            // перезапись аудио
-            cbRewriteFiles.Checked = _config.Settings.ConverterSettings.RewriteAudio;
+                if (_config.Settings.ConverterSettings.QualityIndex >= 0 &&
+                    _config.Settings.ConverterSettings.QualityIndex < cmbQuality.Items.Count)
+                {
+                    cmbQuality.SelectedIndex = _config.Settings.ConverterSettings.QualityIndex;
+                }
+
+                // Валидация количества потоков
+                int threadsCount = _config.Settings.ConverterSettings.ThreadsCountIndex;
+                if (threadsCount < tbThreadCount.Minimum)
+                    tbThreadCount.Value = tbThreadCount.Minimum;
+                else if (threadsCount > tbThreadCount.Maximum)
+                    tbThreadCount.Value = tbThreadCount.Maximum;
+                else
+                    tbThreadCount.Value = threadsCount;
+
+                txtOutputPath.Text = string.IsNullOrEmpty(_config.Settings.ConverterSettings.OutputPath)
+                    ? GetDefaultOutputPath()
+                    : _config.Settings.ConverterSettings.OutputPath;
+
+                txtPattern.Text = _config.Settings.ConverterSettings.PathPattern;
+                cbRewriteFiles.Checked = _config.Settings.ConverterSettings.RewriteAudio;
+                cbSaveTracks.Checked = _config.Settings.ConverterSettings.SaveTrackList;
+
+                // таблица треков
+                if (cbSaveTracks.Checked && _config.Settings.ConverterSettings.TrackList?.Any() == true)
+                {
+                    var existingFiles = _config.Settings.ConverterSettings.TrackList
+                        .Where(File.Exists)
+                        .ToArray();
+
+                    if (existingFiles.Any())
+                    {
+                        AddFilesToGrid(existingFiles);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Применение значений по умолчанию
+                SetDefaultSettings();
+            }
+        }
+
+        private string GetDefaultOutputPath()
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "Auri");
+        }
+
+        private void SetDefaultSettings()
+        {
+            cmbOutputFormat.SelectedIndex = 0;
+            int index = cmbQuality.FindString("высокое");
+            if (index == -1)
+                index = cmbQuality.FindString("максимальное");
+            cmbQuality.SelectedIndex = index;
+            tbThreadCount.Value = tbThreadCount.Maximum / 2;
+            txtOutputPath.Text = GetDefaultOutputPath();
+            txtPattern.Text = "[filename].[format]";
+            cbRewriteFiles.Checked = false;
+            cbSaveTracks.Checked = false;
         }
         private string[] LoadPresets(string format)
         {
@@ -133,7 +198,24 @@ namespace Auri
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.Multiselect = true;
-                ofd.Filter = "Аудио файлы|*.mp3;*.opus;*.wav;*.flac;*.aac;*.ogg;*.m4a;*.wma;*.aiff|Все файлы|*.*";
+                ofd.Filter =
+                    "Все поддерживаемые форматы|*.wav;*.wave;*.mp3;*.opus;*.aac;*.m4a;*.mp4;*.ac3;*.mpc;*.spx;*.tta;*.ape;*.flac;*.wma;*.wv;*.webm;*.alac|" +
+                    "WAV (без сжатия)|*.wav;*.wave|" +
+                    "MP3|*.mp3|" +
+                    "Opus|*.opus|" +
+                    "AAC / M4A|*.aac;*.m4a|" +
+                    "MP4|*.mp4|" +
+                    "AC3|*.ac3|" +
+                    "Musepack|*.mpc|" +
+                    "Speex|*.spx|" +
+                    "True Audio|*.tta|" +
+                    "Monkey's Audio|*.ape|" +
+                    "FLAC|*.flac|" +
+                    "WMA|*.wma|" +
+                    "WavPack|*.wv|" +
+                    "WebM|*.webm|" +
+                    "ALAC|*.alac|" +
+                    "Все файлы|*.*";
                 ofd.Title = "Выберите аудиофайлы для конвертации";
 
                 if (ofd.ShowDialog() == DialogResult.OK)
@@ -326,7 +408,7 @@ namespace Auri
             progressBar.Value = 0;
             lblStatus.Text = $"Конвертация в {format}...";
 
-            _converter = new AudioManager(_config, _bass, _audioFiles.ToArray(), outputPath, txtPattern.Text, format, preset);
+            _converter = new AudioManager(_config, _audioEngine, _audioFiles.ToArray(), outputPath, txtPattern.Text, format, preset);
             _converter.OnProgress += (index, progress) =>
             {
                 if (_aborted)
@@ -506,6 +588,7 @@ namespace Auri
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveSettings();
+            _audioEngine?.EngineFree();
         }
         private void btnPattern_Click(object sender, EventArgs e)
         {
@@ -588,13 +671,35 @@ namespace Auri
         private bool IsAllowedFile(string filePath)
         {
             string[] allowedExtensions = {
-                ".wav", ".mp3", ".opus", ".aac", ".m4a", ".mp4",
-                ".ac3", ".mpc", ".ofr", ".ofs", ".spx", ".tta",
+                ".wav", ".wave", ".mp3", ".opus", ".aac", ".m4a", ".mp4",
+                ".ac3", ".mpc", ".spx", ".tta",
                 ".ape", ".flac", ".wma", ".wv", ".webm", ".alac"
-            };
+};
             string extension = Path.GetExtension(filePath).ToLower();
 
             return allowedExtensions.Contains(extension);
+        }
+        private void RunQuickStartWizardIfNeeded()
+        {
+            var wizard = new QuickStartWizard(_config);
+            if (wizard.NeedsSetup())
+            {
+                var result = wizard.ShowWizard();
+                if (result != null)
+                {
+                    // Сохраняем пресет для быстрой конвертации
+                    _config.SaveQuickStartPreset(result.Format, result.Preset);
+
+                    // Обновляем интерфейс
+                    //int formatIndex = cmbOutputFormat.FindString(result.Format.ToUpper());
+                    //if (formatIndex >= 0)
+                    //{
+                    //    cmbOutputFormat.SelectedIndex = formatIndex;
+                    //}
+
+                    lblStatus.Text = $"Мастер завершен. Рекомендовано: {result.FormatDisplayName}";
+                }
+            }
         }
     }
 }

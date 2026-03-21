@@ -16,7 +16,7 @@ namespace Auri.Services
         public AudioEngineService()
         {
             if (!InitializeBass())
-                return;
+                throw new InvalidOperationException("BASS initialization failed");
             PluginsLoad();
         }
         private bool InitializeBass()

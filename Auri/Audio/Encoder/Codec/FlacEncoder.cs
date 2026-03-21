@@ -20,7 +20,7 @@ namespace Auri.Audio.Encoder.Codec
         protected override string EncoderSubPath { get; set; } = FlacSubPath;
         protected override string EncoderFileName { get; set; } = FlacExecutable;
 
-        private bool _lossyWavCompleted;
+        private volatile bool _lossyWavCompleted;
         private string _tempLossyWavFolder;
 
         public FlacEncoder(AudioEngineService bass, AudioFile inputAudio)
@@ -105,9 +105,9 @@ namespace Auri.Audio.Encoder.Codec
                 if (Directory.GetFiles(_tempLossyWavFolder).Length == 0)
                     Directory.Delete(_tempLossyWavFolder);
             }
-            catch
+            catch (Exception ex)
             {
-                ExceptionManager.RaiseError(Error.FILE_TEMP_DELETE);
+                ExceptionManager.RaiseError(Error.FILE_TEMP_DELETE, ex.Message);
             }
         }
 

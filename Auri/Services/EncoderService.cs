@@ -44,7 +44,10 @@ namespace Auri.Services
         {
             int mixerHandel = BassMix.BASS_Mixer_StreamCreate(targetSampleRate, targetChannels, BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_SAMPLE_FLOAT);
             if (mixerHandel == 0)
+            { 
                 ExceptionManager.RaiseBassError(Error.MIXER_CREATE_FAILED);
+                return 0;
+            }
 
             bool isError = !BassMix.BASS_Mixer_StreamAddChannel(mixerHandel, sourceStream, BASSFlag.BASS_DEFAULT);
             if (isError)

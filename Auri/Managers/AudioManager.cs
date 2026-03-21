@@ -32,16 +32,17 @@ namespace Auri.Managers
         private readonly string _format;
         private readonly EncoderPreset _preset;
 
-        private float[] _fileProgress;
+        private volatile float[] _fileProgress;
         private int _totalFiles;
         private int _completedFilesCount;
-        private int _allCompleted; // Используем int для Interlocked
-        private volatile int _aborted; // Используем int для атомарных операций
+        private bool _allCompleted;
+        private bool _aborted;
 
         private ConcurrentBag<IEncoder> _encoders;
 
-        // Объекты синхронизации для разных целей
+        // Объекты синхронизации
         private readonly object _progressLock = new object();
+        private readonly object _stateLock = new object();
         private readonly object _completeEventLock = new object();
 
         public AudioManager(ConfigManager config, AudioEngineService bass, AudioFile[] audioFiles, string outputPath, string pattern, string format, EncoderPreset preset)
@@ -59,8 +60,8 @@ namespace Auri.Managers
             else
                 _preset = new EncoderPreset();
 
-            _aborted = 0;
-            _allCompleted = 0;
+            _aborted = false;
+            _allCompleted = false;
             _encoders = new ConcurrentBag<IEncoder>();
 
             if (!Directory.Exists(outputPath))
@@ -71,12 +72,14 @@ namespace Auri.Managers
         {
             Task.Factory.StartNew(() =>
             {
-                // Атомарный сброс счетчиков
-                Interlocked.Exchange(ref _completedFilesCount, 0);
-                Interlocked.Exchange(ref _allCompleted, 0);
-                Interlocked.Exchange(ref _aborted, 0);
+                // Сброс состояния под блокировкой
+                lock (_stateLock)
+                {
+                    _completedFilesCount = 0;
+                    _allCompleted = false;
+                    _aborted = false;
+                }
 
-                // Потокобезопасный сброс массива прогресса
                 lock (_progressLock)
                 {
                     _fileProgress = new float[_totalFiles];
@@ -89,20 +92,21 @@ namespace Auri.Managers
                     MaxDegreeOfParallelism = threads
                 }, index =>
                 {
-                    // Сохраняем индекс для использования в замыканиях
                     int fileIndex = index;
 
                     try
                     {
-                        // Атомарная проверка флага отмены
-                        if (Interlocked.CompareExchange(ref _aborted, 0, 0) == 1)
-                            return;
+                        // Проверка флага отмены под блокировкой
+                        lock (_stateLock)
+                        {
+                            if (_aborted)
+                                return;
+                        }
 
                         var file = _audioFiles[fileIndex];
                         string fileName = Path.GetFileNameWithoutExtension(file.FilePath);
                         string outputAudio = Path.Combine(_outputPath, fileName);
 
-                        // Создаем энкодер и сразу добавляем в коллекцию
                         IEncoder encoder = EncoderFactory.Create(_format, _bass, file);
                         _encoders.Add(encoder);
 
@@ -118,27 +122,25 @@ namespace Auri.Managers
                             file.Working = false;
                             file.Completed = true;
 
-                            // Потокобезопасное обновление прогресса
                             lock (_progressLock)
                             {
                                 _fileProgress[fileIndex] = 100f;
                             }
 
-                            // Атомарный инкремент счетчика завершенных файлов
-                            Interlocked.Increment(ref _completedFilesCount);
+                            lock (_stateLock)
+                            {
+                                _completedFilesCount++;
+                            }
 
                             ExceptionManager.RaiseError(Error.FILE_ALREADY_EXISTS, checkFile);
                             OnFileExists?.Invoke(fileIndex);
 
-                            // Проверяем, не завершены ли все файлы
                             CheckAllCompleted();
                             return;
                         }
 
-                        // Исправленные замыкания - используем локальную переменную fileIndex
                         encoder.OnProgress += (idx, progress) =>
                         {
-                            // Проверяем, что событие относится к текущему файлу
                             if (idx != fileIndex)
                                 return;
 
@@ -148,7 +150,6 @@ namespace Auri.Managers
                             {
                                 _fileProgress[fileIndex] = progress;
 
-                                // Оптимизированный подсчет общего прогресса
                                 float total = 0;
                                 for (int i = 0; i < _fileProgress.Length; i++)
                                 {
@@ -161,36 +162,37 @@ namespace Auri.Managers
 
                         encoder.OnComplete += (idx, status) =>
                         {
-                            // Проверяем, что событие относится к текущему файлу
                             if (idx != fileIndex)
                                 return;
 
-                            // Проверяем, не было ли уже глобальное завершение
-                            if (Interlocked.CompareExchange(ref _allCompleted, 0, 0) == 1)
-                                return;
+                            bool shouldTriggerAllComplete = false;
 
-                            // Вызываем событие завершения файла
-                            OnComplete?.Invoke(fileIndex, status);
-
-                            lock (_progressLock)
+                            lock (_stateLock)
                             {
-                                _fileProgress[fileIndex] = 100;
-                            }
+                                if (_allCompleted)
+                                    return;
 
-                            // Атомарный инкремент и проверка завершения всех файлов
-                            int completed = Interlocked.Increment(ref _completedFilesCount);
+                                OnComplete?.Invoke(fileIndex, status);
 
-                            if (completed == _totalFiles)
-                            {
-                                // Пытаемся атомарно установить флаг глобального завершения
-                                if (Interlocked.CompareExchange(ref _allCompleted, 1, 0) == 0)
+                                lock (_progressLock)
                                 {
-                                    // Успешно установили флаг, вызываем событие
-                                    OnAllComplete?.Invoke(true);
+                                    _fileProgress[fileIndex] = 100;
+                                }
+
+                                _completedFilesCount++;
+
+                                if (_completedFilesCount == _totalFiles && !_allCompleted)
+                                {
+                                    _allCompleted = true;
+                                    shouldTriggerAllComplete = true;
                                 }
                             }
 
-                            // Обновляем общий прогресс
+                            if (shouldTriggerAllComplete)
+                            {
+                                OnAllComplete?.Invoke(true);
+                            }
+
                             lock (_progressLock)
                             {
                                 float total = 0;
@@ -216,8 +218,10 @@ namespace Auri.Managers
                     catch (Exception ex)
                     {
                         ExceptionManager.RaiseError(Error.ENCODE_FAILED, ex.Message);
-                        // Атомарная установка флага отмены
-                        Interlocked.Exchange(ref _aborted, 1);
+                        lock (_stateLock)
+                        {
+                            _aborted = true;
+                        }
                     }
                 });
             });
@@ -225,25 +229,32 @@ namespace Auri.Managers
 
         private void CheckAllCompleted()
         {
-            // Проверяем, завершены ли все файлы
-            int completed = Interlocked.CompareExchange(ref _completedFilesCount, 0, 0);
-            if (completed == _totalFiles)
+            bool shouldTrigger = false;
+
+            lock (_stateLock)
             {
-                // Пытаемся атомарно установить флаг глобального завершения
-                if (Interlocked.CompareExchange(ref _allCompleted, 1, 0) == 0)
+                if (_completedFilesCount == _totalFiles && !_allCompleted)
                 {
-                    OnAllComplete?.Invoke(true);
+                    _allCompleted = true;
+                    shouldTrigger = true;
                 }
+            }
+
+            if (shouldTrigger)
+            {
+                OnAllComplete?.Invoke(true);
             }
         }
 
         public void AbortAll()
         {
-            // Атомарная установка флага отмены
-            Interlocked.Exchange(ref _aborted, 1);
+            lock (_stateLock)
+            {
+                _aborted = true;
+            }
+
             OnAbort?.Invoke();
 
-            // Потокобезопасное копирование энкодеров для остановки
             var encodersToAbort = _encoders?.ToList() ?? new List<IEncoder>();
             foreach (var encoder in encodersToAbort)
             {

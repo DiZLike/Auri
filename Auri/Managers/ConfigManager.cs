@@ -14,6 +14,7 @@ namespace Auri.Managers
         private AppSettings _settings;
 
         public AppSettings Settings => _settings;
+        public bool NoConfigured {  get; set; }
         public ConfigManager()
         {
             _presets = new PresetManager();
@@ -49,7 +50,10 @@ namespace Auri.Managers
                     _settings = JsonConvert.DeserializeObject<AppSettings>(json);
                 }
                 else
+                {
+                    NoConfigured = true;
                     _settings = new AppSettings();
+                }
             }
             catch (Exception ex)
             {
@@ -71,7 +75,13 @@ namespace Auri.Managers
         {
             _presets.SaveCustomPreset(format, settings);
         }
-
-
+        public EncoderPreset GetQuickStartPreset(string format)
+        {
+            return _presets.GetQuickStartPreset(format);
+        }
+        public void SaveQuickStartPreset(string format, EncoderPreset preset)
+        {
+            _presets.SaveQuickStartPreset(format, preset);
+        }
     }
 }
