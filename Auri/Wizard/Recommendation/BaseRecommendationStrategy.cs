@@ -19,7 +19,7 @@ namespace Auri.Wizard.Recommendation
                 Bitrate = 0,
                 CustomParams = new Dictionary<string, object>
                 {
-                    ["CompressionLevel"] = 5
+                    ["CompressionLevel"] = 8
                 }
             };
         }
@@ -48,8 +48,8 @@ namespace Auri.Wizard.Recommendation
                 Bitrate = bitrate,
                 CustomParams = new Dictionary<string, object>
                 {
-                    ["Mode"] = "vbr",
-                    ["Quality"] = bitrate >= 192 ? 2 : 1
+                    ["Mode"] = "cvbr",
+                    ["Quality"] = 2
                 }
             };
         }
@@ -63,7 +63,7 @@ namespace Auri.Wizard.Recommendation
                 Bitrate = bitrate,
                 CustomParams = new Dictionary<string, object>
                 {
-                    ["Application"] = "audio",
+                    ["Content"] = "music",
                     ["Complexity"] = 10
                 }
             };
