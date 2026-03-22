@@ -10,7 +10,7 @@
     <Compile Update="Forms\UserPresetForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\Wizard\QuickStartWizardForm.cs">
+    <Compile Update="Wizard\QuickStartWizardForm.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

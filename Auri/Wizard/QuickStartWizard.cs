@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Auri.Forms.Wizard
+namespace Auri.Wizard
 {
     public class QuickStartWizard
     {

@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "F:\\!Evgeny\\git\\Auri\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{95D12041-C4A8-1333-4067-9E6B6F39AB12}|Auri\\Auri.csproj|f:\\!evgeny\\git\\auri\\auri\\auri.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{95D12041-C4A8-1333-4067-9E6B6F39AB12}|Auri\\Auri.csproj|solutionrelative:auri\\auri.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+      "AbsoluteMoniker": "D:0:0:{95D12041-C4A8-1333-4067-9E6B6F39AB12}|Auri\\Auri.csproj|f:\\!evgeny\\git\\auri\\auri\\wizard\\recommendation\\strategy\\maxcompatibilitystrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{95D12041-C4A8-1333-4067-9E6B6F39AB12}|Auri\\Auri.csproj|solutionrelative:auri\\wizard\\recommendation\\strategy\\maxcompatibilitystrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95D12041-C4A8-1333-4067-9E6B6F39AB12}|Auri\\Auri.csproj|f:\\!evgeny\\git\\auri\\auri\\wizard\\recommendation\\strategy\\applestrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{95D12041-C4A8-1333-4067-9E6B6F39AB12}|Auri\\Auri.csproj|solutionrelative:auri\\wizard\\recommendation\\strategy\\applestrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,13 +23,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Auri",
-              "DocumentMoniker": "F:\\!Evgeny\\git\\Auri\\Auri\\Auri.csproj",
-              "RelativeDocumentMoniker": "Auri\\Auri.csproj",
-              "ToolTip": "F:\\!Evgeny\\git\\Auri\\Auri\\Auri.csproj",
-              "RelativeToolTip": "Auri\\Auri.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-03-21T10:37:35.199Z",
+              "Title": "MaxCompatibilityStrategy.cs",
+              "DocumentMoniker": "F:\\!Evgeny\\git\\Auri\\Auri\\Wizard\\Recommendation\\Strategy\\MaxCompatibilityStrategy.cs",
+              "RelativeDocumentMoniker": "Auri\\Wizard\\Recommendation\\Strategy\\MaxCompatibilityStrategy.cs",
+              "ToolTip": "F:\\!Evgeny\\git\\Auri\\Auri\\Wizard\\Recommendation\\Strategy\\MaxCompatibilityStrategy.cs",
+              "RelativeToolTip": "Auri\\Wizard\\Recommendation\\Strategy\\MaxCompatibilityStrategy.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-22T15:57:05.583Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppleStrategy.cs",
+              "DocumentMoniker": "F:\\!Evgeny\\git\\Auri\\Auri\\Wizard\\Recommendation\\Strategy\\AppleStrategy.cs",
+              "RelativeDocumentMoniker": "Auri\\Wizard\\Recommendation\\Strategy\\AppleStrategy.cs",
+              "ToolTip": "F:\\!Evgeny\\git\\Auri\\Auri\\Wizard\\Recommendation\\Strategy\\AppleStrategy.cs",
+              "RelativeToolTip": "Auri\\Wizard\\Recommendation\\Strategy\\AppleStrategy.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-22T15:56:38.032Z",
               "EditorCaption": ""
             }
           ]

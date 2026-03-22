@@ -5,6 +5,7 @@ using Auri.Forms.Dialogs;
 using Auri.Forms.Wizard;
 using Auri.Managers;
 using Auri.Services;
+using Auri.Wizard;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -337,17 +338,17 @@ namespace Auri
         {
             if (btnConvert.Tag.ToString() == "convert")
             {
-                _aborted = false;
-                btnConvert.Text = "Остановить";
-                btnConvert.Tag = "abort";
-                btnQuickConvert.Enabled = false;
-                btnConvert.BackColor = Color.Red;
                 if (dataGridViewFiles.Rows.Count == 0)
                 {
                     MessageBox.Show("Добавьте файлы для конвертации", "Информация",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
+                _aborted = false;
+                btnConvert.Text = "Остановить";
+                btnConvert.Tag = "abort";
+                btnQuickConvert.Enabled = false;
+                btnConvert.BackColor = Color.Red;
 
                 string format = GetSelectedFormat();
                 int preset = cmbQuality.SelectedIndex;

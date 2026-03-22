@@ -1,6 +1,6 @@
 ﻿using Auri.Audio.Encoder;
 
-namespace Auri.Forms.Wizard
+namespace Auri.Wizard
 {
     public class QuickStartResult
     {

@@ -1,33 +1,23 @@
 {
   "FormSettings": {
-    "FormX": 523,
-    "FormY": 216,
+    "FormX": 514,
+    "FormY": 241,
     "FormWidth": 922,
     "FormHeight": 637,
     "WindowState": 0
   },
   "ConverterSettings": {
     "AdvancedMode": false,
-    "OutputFormatIndex": 1,
-    "QualityIndex": 2,
+    "OutputFormatIndex": 0,
+    "QualityIndex": 3,
     "ThreadsCountIndex": 6,
     "OutputPath": "D:\\MyMusic\\Auri",
     "PathPattern": "[filename].[format]",
     "SaveTrackList": false,
     "RewriteAudio": false,
     "TrackList": [],
-    "QuickStartCompleted": true,
-    "QuickStartFormat": "mp3",
-    "QuickStartPreset": {
-      "SampleRate": 44100,
-      "Channels": 2,
-      "Bitrate": 128,
-      "BitsPerSample": 16,
-      "CustomParams": {
-        "Mode": "cbr",
-        "ChannelMode": "j",
-        "Quality": 2
-      }
-    }
+    "QuickStartCompleted": false,
+    "QuickStartFormat": null,
+    "QuickStartPreset": null
   }
 }
