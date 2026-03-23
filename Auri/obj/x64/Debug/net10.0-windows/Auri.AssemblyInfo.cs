@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Auri")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e346cce61a42d3c8e01f4e68bb762f49bdd68a2a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4876c4427b7838e9e641a44f3629ad70fe2459d1")]
 [assembly: System.Reflection.AssemblyProductAttribute("Auri")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Auri")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

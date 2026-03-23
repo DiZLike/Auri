@@ -608,15 +608,21 @@ namespace Auri
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            if (_config.Settings.ConverterSettings.QuickStartPreset == null)
+            {
+                MessageBox.Show("Для быстрой конвертации необходимо прости мастер настройки", "Информация",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string format = _config.Settings.ConverterSettings.QuickStartFormat;
+            EncoderPreset encoderPreset = _config.Settings.ConverterSettings.QuickStartPreset;
+
             btnConvert.Tag = "abort";
             btnQuickConvert.Enabled = false;
             _aborted = false;
             btnConvert.Text = "Остановить";
             btnConvert.BackColor = Color.Red;
-
-            string format = _config.Settings.ConverterSettings.QuickStartFormat;
-            EncoderPreset encoderPreset = _config.Settings.ConverterSettings.QuickStartPreset;
-
 
             string outputPath = txtOutputPath.Text;
 
