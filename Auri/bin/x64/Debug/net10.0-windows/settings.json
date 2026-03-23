@@ -1,37 +1,39 @@
 {
   "FormSettings": {
-    "FormX": 542,
-    "FormY": 256,
+    "FormX": 485,
+    "FormY": 199,
     "FormWidth": 922,
     "FormHeight": 637,
     "WindowState": 0
   },
   "ConverterSettings": {
-    "AdvancedMode": false,
-    "OutputFormatIndex": 0,
-    "QualityIndex": 3,
-    "ThreadsCountIndex": 6,
+    "AdvancedMode": true,
+    "OutputFormatIndex": 2,
+    "QualityIndex": 6,
+    "ThreadsCountIndex": 8,
     "OutputPath": "C:\\Users\\Evgeny\\Music\\Auri",
     "PathPattern": "[filename].[format]",
     "SaveTrackList": true,
-    "RewriteAudio": true,
+    "RewriteAudio": false,
     "TrackList": [
-      "C:\\Users\\Evgeny\\Music\\Instr 1.mp3"
+      "C:\\Users\\Evgeny\\Music\\Buttville - The Descent.mp3",
+      "C:\\Users\\Evgeny\\Music\\Instr 1.mp3",
+      "C:\\Users\\Evgeny\\Music\\Алгоритмы Света.mp3"
     ],
     "QuickStartCompleted": true,
-    "QuickStartFormat": "mp3",
+    "QuickStartFormat": "qaac",
     "QuickStartPreset": {
       "SampleRate": 44100,
       "Channels": 2,
       "Bitrate": 0,
       "BitsPerSample": 16,
-      "Format": "MP3",
+      "Format": "QAAC",
       "CustomParams": {
-        "AvgBitrate": 125,
-        "VbrBitrate": 6,
+        "AvgBitrate": 235,
+        "VbrBitrate": 109,
         "Mode": "vbr",
-        "ChannelMode": "j",
-        "Quality": 0
+        "He": false,
+        "Quality": 2
       }
     }
   }

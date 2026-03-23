@@ -64,7 +64,10 @@
             быстраяКонвертацияToolStripMenuItem = new ToolStripMenuItem();
             помощьToolStripMenuItem = new ToolStripMenuItem();
             мастерНастройкиToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator2 = new ToolStripSeparator();
+            справкаToolStripMenuItem = new ToolStripMenuItem();
             оПрограммеToolStripMenuItem = new ToolStripMenuItem();
+            проверитьОбновлениеToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dataGridViewFiles).BeginInit();
             statusStrip.SuspendLayout();
             panelControls.SuspendLayout();
@@ -521,7 +524,7 @@
             // 
             // помощьToolStripMenuItem
             // 
-            помощьToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { мастерНастройкиToolStripMenuItem, оПрограммеToolStripMenuItem });
+            помощьToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { мастерНастройкиToolStripMenuItem, проверитьОбновлениеToolStripMenuItem, toolStripSeparator2, справкаToolStripMenuItem, оПрограммеToolStripMenuItem });
             помощьToolStripMenuItem.Name = "помощьToolStripMenuItem";
             помощьToolStripMenuItem.Size = new Size(68, 20);
             помощьToolStripMenuItem.Text = "Помощь";
@@ -529,15 +532,35 @@
             // мастерНастройкиToolStripMenuItem
             // 
             мастерНастройкиToolStripMenuItem.Name = "мастерНастройкиToolStripMenuItem";
-            мастерНастройкиToolStripMenuItem.Size = new Size(180, 22);
+            мастерНастройкиToolStripMenuItem.Size = new Size(204, 22);
             мастерНастройкиToolStripMenuItem.Text = "Мастер настройки";
             мастерНастройкиToolStripMenuItem.Click += мастерНастройкиToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(201, 6);
+            // 
+            // справкаToolStripMenuItem
+            // 
+            справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
+            справкаToolStripMenuItem.Size = new Size(204, 22);
+            справкаToolStripMenuItem.Text = "Справка";
+            справкаToolStripMenuItem.Click += справкаToolStripMenuItem_Click;
             // 
             // оПрограммеToolStripMenuItem
             // 
             оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            оПрограммеToolStripMenuItem.Size = new Size(180, 22);
+            оПрограммеToolStripMenuItem.Size = new Size(204, 22);
             оПрограммеToolStripMenuItem.Text = "О программе";
+            оПрограммеToolStripMenuItem.Click += оПрограммеToolStripMenuItem_Click;
+            // 
+            // проверитьОбновлениеToolStripMenuItem
+            // 
+            проверитьОбновлениеToolStripMenuItem.Name = "проверитьОбновлениеToolStripMenuItem";
+            проверитьОбновлениеToolStripMenuItem.Size = new Size(204, 22);
+            проверитьОбновлениеToolStripMenuItem.Text = "Проверить обновление";
+            проверитьОбновлениеToolStripMenuItem.Click += проверитьОбновлениеToolStripMenuItem_Click;
             // 
             // MainForm
             // 
@@ -616,5 +639,8 @@
         private ToolStripMenuItem помощьToolStripMenuItem;
         private ToolStripMenuItem мастерНастройкиToolStripMenuItem;
         private ToolStripMenuItem оПрограммеToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem справкаToolStripMenuItem;
+        private ToolStripMenuItem проверитьОбновлениеToolStripMenuItem;
     }
 }

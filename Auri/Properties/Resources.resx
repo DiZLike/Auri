@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -117,46 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <data name="cmbMp3Channels.ToolTip" xml:space="preserve">
-    <value>Stereo — полноценное стерео, два независимых канала (максимум качества).
-Joint Stereo — умный режим: убирает дублирование в похожих каналах, экономит место без потери качества.
-Forced Joint Stereo — принудительное «склеивание» каналов, возможны искажения. Лучше не включать.
-Mono — один канал (речь, старые записи)</value>
-  </data>
-  <data name="cmbMp3Bitrate.ToolTip" xml:space="preserve">
-    <value>Объём данных, выделяемый на секунду звука.
-Выше битрейт = лучше качество, но больше размер файла.
-96 kbps — для речи (аудиокниги, подкасты)
-128 kbps — минимально приемлемо для музыки
-192 kbps — хорошо для музыки (золотая середина)
-256 kbps — отличное качество, близкое к CD
-320 kbps — максимальное качество для MP3</value>
-  </data>
-  <data name="cmbOpusBitrate.ToolTip" xml:space="preserve">
-    <value>Объём данных, выделяемый на секунду звука.
-Выше битрейт = лучше качество, но больше размер файла.
-32–64 kbps — приемлемо для речи (подкасты, аудиокниги)
-96 kbps — хорошее качество для музыки (звучит как MP3 ~160–192)
-128 kbps — отличное качество, прозрачно для большинства людей (аналог MP3 256–320) 
-160–192 kbps — максимальное качество, выше уже нет смысла</value>
-  </data>
-  <data name="tbQaacVbr.ToolTip" xml:space="preserve">
-    <value>Насколько сильно может меняться битрейт (от 0 до 127).
-Выше значение - лучше качество.
-64 — ~128 kbps (хорошо)
-91 — ~160–192 kbps (отлично, значение по умолчанию)
-100–109 — ~256 kbps
-127 — ~320 kbps</value>
-  </data>
-  <data name="cmbQaacBitrate.ToolTip" xml:space="preserve">
-    <value>Объём данных, выделяемый на секунду звука.
-Выше битрейт = лучше качество, но больше размер файла.
-96–128 kbps — хорошее качество для фонового прослушивания
-160–192 kbps — отличное качество, прозрачно для большинства 
-256 kbps — iTunes Plus (аналог ~320 MP3) 
-320 kbps — максимальное качество</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="auri" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\auri.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

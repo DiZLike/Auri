@@ -427,9 +427,8 @@ namespace Auri.Forms
             }
 
             if (index >= 0)
-            {
                 comboBox.SelectedIndex = index;
-            }
+            else comboBox.SelectedIndex = 0;
         }
         private void SelectTabByFormat(string format)
         {

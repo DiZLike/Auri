@@ -18,21 +18,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainForm.cs",
-              "DocumentMoniker": "D:\\Evgeny\\git\\Auri\\Auri\\Forms\\MainForm.cs",
-              "RelativeDocumentMoniker": "Auri\\Forms\\MainForm.cs",
-              "ToolTip": "D:\\Evgeny\\git\\Auri\\Auri\\Forms\\MainForm.cs",
-              "RelativeToolTip": "Auri\\Forms\\MainForm.cs",
-              "ViewState": "AgIAAJUCAAAAAAAAAADwv7gCAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-23T08:26:59.865Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -42,8 +29,21 @@
               "ToolTip": "D:\\Evgeny\\git\\Auri\\Auri\\Forms\\MainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "RelativeToolTip": "Auri\\Forms\\MainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-23T08:20:20.769Z",
+              "WhenOpened": "2026-03-23T10:23:29.614Z",
               "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainForm.cs",
+              "DocumentMoniker": "D:\\Evgeny\\git\\Auri\\Auri\\Forms\\MainForm.cs",
+              "RelativeDocumentMoniker": "Auri\\Forms\\MainForm.cs",
+              "ToolTip": "D:\\Evgeny\\git\\Auri\\Auri\\Forms\\MainForm.cs",
+              "RelativeToolTip": "Auri\\Forms\\MainForm.cs",
+              "ViewState": "AgIAAMUCAAAAAAAAAAArwPICAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-23T10:13:12.891Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -15,8 +15,8 @@ namespace Auri.Services
             try
             {
                 string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                _logFilePath = Path.Combine(appDirectory, "debug.log");
-                _errorLogFilePath = Path.Combine(appDirectory, "error.log");
+                _logFilePath = Path.Combine(appDirectory, "logs", "debug.log");
+                _errorLogFilePath = Path.Combine(appDirectory, "logs", "error.log");
 
                 // Основной лог всегда перезаписываем при запуске
                 File.WriteAllText(_logFilePath, $"=== Лог начат {DateTime.Now} ===\n");
