@@ -2,19 +2,19 @@
 {
     public class RecommendationContext
     {
-        public string Usage { get; set; }      // "mobile", "pc", "home", "apple", "max_compat"
-        public string Quality { get; set; }    // "best", "balanced", "compact"
-        public string Special { get; set; }    // "high_efficiency", "streaming", "none"
+        public StrategyType Usage { get; set; }      // "mobile", "pc", "home", "apple", "max_compat"
+        public StrategyQuality Quality { get; set; }    // "best", "balanced", "compact"
+        public StrategySpecial Special { get; set; }    // "high_efficiency", "streaming", "none"
 
-        public RecommendationContext(string usage, string quality, string special)
+        public RecommendationContext(StrategyType usage, StrategyQuality quality, StrategySpecial special)
         {
             Usage = usage;
             Quality = quality;
             Special = special;
         }
 
-        public bool IsUsage(string type) => Usage == type;
-        public bool IsQuality(string level) => Quality == level;
-        public bool IsSpecial(string need) => Special == need;
+        public bool IsUsage(StrategyType type) => Usage == type;
+        public bool IsQuality(StrategyQuality level) => Quality == level;
+        public bool IsSpecial(StrategySpecial need) => Special == need;
     }
 }

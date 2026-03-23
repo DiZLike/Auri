@@ -20,12 +20,15 @@ namespace Auri.Audio.Encoder.Codec
             string mode = settings.CustomParams?["Mode"] as string ?? "cbr";
             string channelMode = settings.CustomParams?["ChannelMode"] as string ?? "j";
             int quality = Convert.ToInt32(settings.CustomParams?["Quality"] ?? 0);
+            int vbr = 0;
+            if (mode == "vbr")
+                vbr = Convert.ToInt32(settings.CustomParams?["VbrBitrate"] ?? 0);
 
             string bitrate;
             if (mode == "abr")
                 bitrate = $"--abr {settings.Bitrate}";
             else if (mode == "vbr")
-                bitrate = $"-V {settings.Bitrate}";
+                bitrate = $"-V {vbr}";
             else // cbr по умолчанию
                 bitrate = $"-b {settings.Bitrate}";
 

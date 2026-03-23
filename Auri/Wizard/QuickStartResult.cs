@@ -4,9 +4,9 @@ namespace Auri.Wizard
 {
     public class QuickStartResult
     {
-        public string Format { get; set; }
-        public string FormatDisplayName { get; set; }
-        public string Description { get; set; }
-        public EncoderPreset Preset { get; set; }
+        public required string Format { get; set; }
+        public required string FormatDisplayName { get; set; }
+        public required string Description { get; set; }
+        public required EncoderPreset Preset { get; set; }
     }
 }

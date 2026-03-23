@@ -2,30 +2,46 @@
 {
     public class HomeAudioStrategy : BaseRecommendationStrategy
     {
-        public override int Priority => 30;
+        public override int Priority => 10;
 
         public override bool CanApply(RecommendationContext context) =>
-            context.IsUsage("home");
+            context.IsUsage(StrategyType.HOME);
 
         public override QuickStartResult Apply(RecommendationContext context)
         {
-            int bitrate = (context.Quality, context.Special) switch
+            if (context.Quality == StrategyQuality.BEST
+                && context.Special == StrategySpecial.NONE)
+                return new QuickStartResult
+                {
+                    Format = "flac",
+                    FormatDisplayName = "FLAC",
+                    Preset = CreateFlacPreset(8),
+                    Description = GetFlacDescription(8)
+                };
+
+            (int tvbrValue, string tvbrDescription) = (context.Quality, context.Special) switch
             {
-                ("best", "high_efficiency") => 192,
-                ("balanced", "high_efficiency") => 128,
-                ("compact", "high_efficiency") => 96,
-                ("best", _) => 320,
-                ("balanced", _) => 192,
-                ("compact", _) => 160,
-                _ => 0
+                (StrategyQuality.BALANCED, StrategySpecial.NONE) => (118, "~285–320"),
+                (StrategyQuality.COMPACT, StrategySpecial.NONE) => (109, "~225–245"),
+
+                (StrategyQuality.BEST, StrategySpecial.MEDIUM_COMPRESS) => (109, "~225–245"),
+                (StrategyQuality.BALANCED, StrategySpecial.MEDIUM_COMPRESS) => (100, "~195–215"),
+                (StrategyQuality.COMPACT, StrategySpecial.MEDIUM_COMPRESS) => (91, "~165–185"),
+
+                (StrategyQuality.BEST, StrategySpecial.HIGH_COMPRESS) => (100, "~195–215"),
+                (StrategyQuality.BALANCED, StrategySpecial.HIGH_COMPRESS) => (91, "~165–185"),
+                (StrategyQuality.COMPACT, StrategySpecial.HIGH_COMPRESS) => (82, "~135–155"),
+
+                // значение по умолчанию — ~165–185 kbps (QAAC default)
+                _ => (91, "~165–185")
             };
 
             return new QuickStartResult
             {
-                Format = "aac",
-                FormatDisplayName = "AAC",
-                Preset = CreateAacPreset(bitrate),
-                Description = GetAacDescription(bitrate)
+                Format = "qaac",
+                FormatDisplayName = "M4A",
+                Preset = CreateAacPreset(tvbrValue, tvbrDescription),
+                Description = GetAacDescription(tvbrDescription)
             };
         }
     }

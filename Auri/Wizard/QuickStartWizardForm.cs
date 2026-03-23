@@ -11,9 +11,9 @@ namespace Auri.Forms.Wizard
         private readonly List<IRecommendationStrategy> _strategies;
 
         // Выбор пользователя
-        private string _usageType;      // "mobile", "pc", "home", "apple", "max_compat"
-        private string _qualityPriority; // "best", "balanced", "compact"
-        private string _specialNeed;     // "high_efficiency", "streaming", "none"
+        private StrategyType _usageType;            // "mobile", "pc", "home", "apple", "max_compat"
+        private StrategyQuality _qualityPriority;   // "best", "balanced", "compact"
+        private StrategySpecial _specialNeed;       // "high_compress", "medium_compress", "none"
 
         public QuickStartResult Result { get; private set; }
 
@@ -27,7 +27,8 @@ namespace Auri.Forms.Wizard
                 new MaxCompatibilityStrategy(),
                 new AppleStrategy(),
                 new HomeAudioStrategy(),
-                new DefaultOpusStrategy()
+                new MobileStrategy(),
+                new DesktopStrategy()
             }.OrderBy(s => s.Priority).ToList();
 
             SetupEventHandlers();
@@ -38,7 +39,6 @@ namespace Auri.Forms.Wizard
         {
             _btnBack.Click += BtnBack_Click;
             _btnNext.Click += BtnNext_Click;
-            _btnFinish.Click += BtnFinish_Click;
         }
 
         private void ShowStep(int step)
@@ -61,10 +61,17 @@ namespace Auri.Forms.Wizard
                     break;
             }
 
+            // Обновляем текст кнопки
             if (step < 3)
+            {
                 _lblStepInfo.Text = $"Шаг {step + 1} из 3";
+                _btnNext.Text = "Далее →";
+            }
             else
+            {
                 _lblStepInfo.Text = "Готово";
+                _btnNext.Text = "Завершить";
+            }
         }
 
         private void ShowStep0_Usage()
@@ -74,31 +81,18 @@ namespace Auri.Forms.Wizard
             var group = new GroupBox
             {
                 Location = new Point(20, 40),
-                Size = new Size(460, 290),
+                Size = new Size(460, 240), // Уменьшено с 290 до 210
                 BackColor = Color.White,
                 FlatStyle = FlatStyle.Flat
             };
 
-            _rbMobileDevice = CreateRadioButton("📱 На телефоне\n(экономия места, для прогулок и поездок)", 10, 20, true);
-            _rbPCPlayer = CreateRadioButton("💻 На компьютере / ноутбуке\n(универсальность, любое программное обеспечение)", 10, 75);
-            _rbHomeAudio = CreateRadioButton("🏠 На домашней аудиосистеме\n(колонки, ресивер, максимальное качество)", 10, 130);
-            _rbAppleDevice = CreateRadioButton("🍎 В экосистеме Apple\n(iPhone, iPad, Mac, AirPods)", 10, 185);
-            _rbMaxCompatibility = CreateRadioButton("🚗 Старые устройства / автомагнитола\n(максимальная совместимость, MP3)", 10, 240);
+            _rbMobileDevice = CreateRadioButton("📱 На телефоне\n(экономия места, для прогулок и поездок)", 10, 10, true);
+            _rbPCPlayer = CreateRadioButton("💻 На компьютере / ноутбуке\n(универсальность, любое программное обеспечение)", 10, 55);
+            _rbHomeAudio = CreateRadioButton("🏠 На домашней аудиосистеме\n(колонки, ресивер, максимальное качество)", 10, 100);
+            _rbAppleDevice = CreateRadioButton("🍎 В экосистеме Apple\n(iPhone, iPad, Mac, AirPods)", 10, 145);
+            _rbMaxCompatibility = CreateRadioButton("🚗 Старые устройства / автомагнитола\n(максимальная совместимость, MP3)", 10, 190);
 
-            var radios = new[] { _rbMobileDevice, _rbPCPlayer, _rbHomeAudio, _rbAppleDevice, _rbMaxCompatibility };
-            foreach (var radio in radios)
-            {
-                radio.CheckedChanged += (s, e) =>
-                {
-                    if (_rbMobileDevice.Checked) _usageType = "mobile";
-                    else if (_rbPCPlayer.Checked) _usageType = "pc";
-                    else if (_rbHomeAudio.Checked) _usageType = "home";
-                    else if (_rbAppleDevice.Checked) _usageType = "apple";
-                    else if (_rbMaxCompatibility.Checked) _usageType = "max_compat";
-                };
-            }
-
-            group.Controls.AddRange(radios);
+            group.Controls.AddRange(new[] { _rbMobileDevice, _rbPCPlayer, _rbHomeAudio, _rbAppleDevice, _rbMaxCompatibility });
             _stepPanel.Controls.Add(lblQuestion);
             _stepPanel.Controls.Add(group);
         }
@@ -110,27 +104,16 @@ namespace Auri.Forms.Wizard
             var group = new GroupBox
             {
                 Location = new Point(20, 40),
-                Size = new Size(460, 180),
+                Size = new Size(460, 240), // Уменьшено с 180 до 130
                 BackColor = Color.White,
                 FlatStyle = FlatStyle.Flat
             };
 
-            _rbBestQuality = CreateRadioButton("🎵 Максимальное качество звука\n(размер файла не имеет значения)", 10, 20);
-            _rbGoodBalance = CreateRadioButton("⚖️ Сбалансированный подход\n(хорошее качество и приемлемый размер)", 10, 75, true);
-            _rbSmallSize = CreateRadioButton("💾 Минимальный размер файлов\n(экономия места на диске)", 10, 130);
+            _rbBestQuality = CreateRadioButton("🎵 Максимальное качество звука\n(размер файла не имеет значения)", 10, 10);
+            _rbGoodBalance = CreateRadioButton("⚖️ Сбалансированный подход\n(хорошее качество и приемлемый размер)", 10, 55, true);
+            _rbSmallSize = CreateRadioButton("💾 Минимальный размер файлов\n(экономия места на диске)", 10, 100);
 
-            var radios = new[] { _rbBestQuality, _rbGoodBalance, _rbSmallSize };
-            foreach (var radio in radios)
-            {
-                radio.CheckedChanged += (s, e) =>
-                {
-                    if (_rbBestQuality.Checked) _qualityPriority = "best";
-                    else if (_rbGoodBalance.Checked) _qualityPriority = "balanced";
-                    else if (_rbSmallSize.Checked) _qualityPriority = "compact";
-                };
-            }
-
-            group.Controls.AddRange(radios);
+            group.Controls.AddRange(new[] { _rbBestQuality, _rbGoodBalance, _rbSmallSize });
             _stepPanel.Controls.Add(lblQuestion);
             _stepPanel.Controls.Add(group);
         }
@@ -142,27 +125,16 @@ namespace Auri.Forms.Wizard
             var group = new GroupBox
             {
                 Location = new Point(20, 40),
-                Size = new Size(460, 180),
+                Size = new Size(460, 240), // Уменьшено с 180 до 130
                 BackColor = Color.White,
                 FlatStyle = FlatStyle.Flat
             };
 
-            _rbHighEfficiency = CreateRadioButton("⚡ Высокая эффективность сжатия\n(минимальный размер при нормальном качестве)", 10, 20);
-            _rbStreaming = CreateRadioButton("⚡ Средняя эффективность сжатия\n(средний размер при хорошем качестве)", 10, 75);
-            _rbNoSpecial = CreateRadioButton("✅ Нет особых требований\n(стандартное использование)", 10, 130, true);
+            _rbHighEfficiency = CreateRadioButton("⚡ Высокая эффективность сжатия\n(минимальный размер при нормальном качестве)", 10, 10);
+            _rbMediumEfficiency = CreateRadioButton("⚡ Средняя эффективность сжатия\n(средний размер при хорошем качестве)", 10, 55);
+            _rbNoSpecial = CreateRadioButton("✅ Нет особых требований\n(стандартное использование)", 10, 100, true);
 
-            var radios = new[] { _rbHighEfficiency, _rbStreaming, _rbNoSpecial };
-            foreach (var radio in radios)
-            {
-                radio.CheckedChanged += (s, e) =>
-                {
-                    if (_rbHighEfficiency.Checked) _specialNeed = "high_efficiency";
-                    else if (_rbStreaming.Checked) _specialNeed = "streaming";
-                    else if (_rbNoSpecial.Checked) _specialNeed = "none";
-                };
-            }
-
-            group.Controls.AddRange(radios);
+            group.Controls.AddRange(new[] { _rbHighEfficiency, _rbMediumEfficiency, _rbNoSpecial });
             _stepPanel.Controls.Add(lblQuestion);
             _stepPanel.Controls.Add(group);
         }
@@ -176,15 +148,12 @@ namespace Auri.Forms.Wizard
             var infoPanel = new Panel
             {
                 Location = new Point(20, 50),
-                Size = new Size(460, 280),
+                Size = new Size(460, 240),
                 BackColor = Color.FromArgb(248, 249, 250)
             };
 
             Label lblFormat = CreateInfoLabel($"🎵 Формат: {recommendation.FormatDisplayName}", 15, 15, true, Color.FromArgb(76, 175, 80), 11);
             Label lblDescription = CreateInfoLabel(recommendation.Description, 15, 55, false, Color.Black, 9);
-
-            string qualityInfo = GetQualityInfo(recommendation.Preset, recommendation.Format);
-            Label lblQuality = CreateInfoLabel(qualityInfo, 15, 130, false, Color.DarkGreen, 9);
 
             Label lblNote = CreateInfoLabel(
                 "─────────────────────────────\n" +
@@ -192,7 +161,7 @@ namespace Auri.Forms.Wizard
                 "✓ Вы сможете изменить их позже в главном окне программы",
                 15, 180, false, Color.Gray, 8);
 
-            infoPanel.Controls.AddRange(new Control[] { lblFormat, lblDescription, lblQuality, lblNote });
+            infoPanel.Controls.AddRange([lblFormat, lblDescription, lblNote]);
 
             _stepPanel.Controls.Add(lblTitle);
             _stepPanel.Controls.Add(infoPanel);
@@ -203,9 +172,9 @@ namespace Auri.Forms.Wizard
         private QuickStartResult GenerateRecommendation()
         {
             var context = new RecommendationContext(
-                _usageType ?? "mixed",
-                _qualityPriority ?? "balanced",
-                _specialNeed ?? "none"
+                _usageType,
+                _qualityPriority,
+                _specialNeed
             );
 
             var strategy = _strategies.FirstOrDefault(s => s.CanApply(context));
@@ -214,23 +183,6 @@ namespace Auri.Forms.Wizard
                 throw new InvalidOperationException("No applicable recommendation strategy found");
 
             return strategy.Apply(context);
-        }
-
-        private string GetQualityInfo(EncoderPreset preset, string format)
-        {
-            if (format == "flac")
-                return "📊 Качество: Без потерь (FLAC)";
-
-            if (preset.Bitrate > 0)
-            {
-                if (preset.Bitrate >= 256)
-                    return $"📊 Качество: Высокое ({preset.Bitrate} kbps)";
-                if (preset.Bitrate >= 128)
-                    return $"📊 Качество: Среднее ({preset.Bitrate} kbps)";
-                return $"📊 Качество: Экономичное ({preset.Bitrate} kbps)";
-            }
-
-            return "📊 Качество: Стандартное";
         }
 
         // Вспомогательные методы для создания UI
@@ -252,7 +204,7 @@ namespace Auri.Forms.Wizard
             {
                 Text = text,
                 Location = new Point(x, y),
-                Size = new Size(440, text.Contains("\n") ? 45 : 30),
+                Size = new Size(440, text.Contains("\n") ? 40 : 25), // Уменьшено с 45/30 до 40/25
                 Font = new Font("Segoe UI", 9),
                 BackColor = Color.White,
                 Checked = isChecked
@@ -281,18 +233,22 @@ namespace Auri.Forms.Wizard
                 ShowStep(_currentStep);
             }
 
-            _btnNext.Visible = true;
-            _btnFinish.Visible = false;
             _btnBack.Enabled = _currentStep != 0;
         }
 
         private void BtnNext_Click(object sender, EventArgs e)
         {
-            if (!IsCurrentStepValid())
+            // Если на последнем шаге - завершаем
+            if (_currentStep == 3)
             {
-                ShowWarning();
+                DialogResult = DialogResult.OK;
+                Close();
                 return;
             }
+
+            // Проверяем и сохраняем выбор пользователя на текущем шаге
+            if (!SaveCurrentStepSelection())
+                return;
 
             if (_currentStep < 3)
             {
@@ -300,36 +256,65 @@ namespace Auri.Forms.Wizard
                 ShowStep(_currentStep);
             }
 
-            if (_currentStep == 3)
-            {
-                _btnNext.Visible = false;
-                _btnFinish.Visible = true;
-            }
-
             _btnBack.Enabled = true;
         }
 
-        private bool IsCurrentStepValid()
+        /// <summary>
+        /// Сохраняет выбор пользователя на текущем шаге
+        /// </summary>
+        /// <returns>true, если выбор сделан, иначе false</returns>
+        private bool SaveCurrentStepSelection()
         {
             switch (_currentStep)
             {
                 case 0:
-                    return _rbMobileDevice?.Checked == true ||
-                           _rbPCPlayer?.Checked == true ||
-                           _rbHomeAudio?.Checked == true ||
-                           _rbAppleDevice?.Checked == true ||
-                           _rbMaxCompatibility?.Checked == true;
+                    if (_rbMobileDevice.Checked)
+                        _usageType = StrategyType.MOBILE;
+                    else if (_rbPCPlayer.Checked)
+                        _usageType = StrategyType.DESKTOP;
+                    else if (_rbHomeAudio.Checked)
+                        _usageType = StrategyType.HOME;
+                    else if (_rbAppleDevice.Checked)
+                        _usageType = StrategyType.APPLE;
+                    else if (_rbMaxCompatibility.Checked)
+                        _usageType = StrategyType.MAX_COMPACT;
+                    else
+                    {
+                        ShowWarning();
+                        return false;
+                    }
+                    break;
+
                 case 1:
-                    return _rbBestQuality?.Checked == true ||
-                           _rbGoodBalance?.Checked == true ||
-                           _rbSmallSize?.Checked == true;
+                    if (_rbBestQuality.Checked)
+                        _qualityPriority = StrategyQuality.BEST;
+                    else if (_rbGoodBalance.Checked)
+                        _qualityPriority = StrategyQuality.BALANCED;
+                    else if (_rbSmallSize.Checked)
+                        _qualityPriority = StrategyQuality.COMPACT;
+                    else
+                    {
+                        ShowWarning();
+                        return false;
+                    }
+                    break;
+
                 case 2:
-                    return _rbHighEfficiency?.Checked == true ||
-                           _rbStreaming?.Checked == true ||
-                           _rbNoSpecial?.Checked == true;
-                default:
-                    return true;
+                    if (_rbHighEfficiency.Checked)
+                        _specialNeed = StrategySpecial.HIGH_COMPRESS;
+                    else if (_rbMediumEfficiency.Checked)
+                        _specialNeed = StrategySpecial.MEDIUM_COMPRESS;
+                    else if (_rbNoSpecial.Checked)
+                        _specialNeed = StrategySpecial.NONE;
+                    else
+                    {
+                        ShowWarning();
+                        return false;
+                    }
+                    break;
             }
+
+            return true;
         }
 
         private void ShowWarning()
@@ -339,12 +324,6 @@ namespace Auri.Forms.Wizard
                 "Выбор не сделан",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
-        }
-
-        private void BtnFinish_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.OK;
-            Close();
         }
     }
 }

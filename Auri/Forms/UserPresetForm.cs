@@ -116,25 +116,43 @@ namespace Auri.Forms
             if (preset == null) return;
 
             SetComboBoxValue(cmbMp3Frequency, preset.SampleRate.ToString());
+
             if (preset.CustomParams.ContainsKey("Mode"))
             {
-                SetComboBoxValue(cmbMp3Mode, preset.CustomParams["Mode"].ToString());
-                if (preset.CustomParams["Mode"].ToString() != "vbr")
-                    SetComboBoxValue(cmbMp3Bitrate, preset.Bitrate.ToString());
-                else
-                    cmbMp3Bitrate.SelectedIndex = preset.Bitrate;
-            }
-            else cmbMp3Mode.SelectedIndex = 0;
+                string mode = preset.CustomParams["Mode"].ToString();
+                SetComboBoxValue(cmbMp3Mode, mode);
 
-            
+                // Проверяем, VBR это или нет
+                if (mode == "vbr")
+                {
+                    // Для VBR используем ключ "Vbr" для хранения индекса качества
+                    if (preset.CustomParams.ContainsKey("VbrBitrate"))
+                    {
+                        cmbMp3Bitrate.SelectedIndex = ConvertToInt(preset.CustomParams["VbrBitrate"]);
+                    }
+                }
+                else
+                {
+                    // Для CBR парсим битрейт как число
+                    SetComboBoxValue(cmbMp3Bitrate, preset.Bitrate.ToString());
+                }
+            }
+            else
+            {
+                cmbMp3Mode.SelectedIndex = 0;
+            }
 
             if (preset.CustomParams.ContainsKey("ChannelMode"))
                 SetComboBoxValue(cmbMp3Channels, mp3ChannelModeMap[preset.CustomParams["ChannelMode"].ToString()]);
-            else cmbMp3Channels.SelectedIndex = 0;
+            else
+                cmbMp3Channels.SelectedIndex = 0;
+
             if (preset.CustomParams.ContainsKey("Quality"))
                 tbMp3Quality.Value = ConvertToInt(preset.CustomParams["Quality"]);
-            else tbMp3Quality.Value = 0;
+            else
+                tbMp3Quality.Value = 0;
         }
+
         private void SaveMp3Preset()
         {
             Dictionary<string, string> mp3ChannelModeMap = new Dictionary<string, string>
@@ -145,6 +163,7 @@ namespace Auri.Forms
                 { "Dual Channels", "d" },
                 { "Mono", "m" }
             };
+
             try
             {
                 EncoderPreset preset = new EncoderPreset
@@ -154,14 +173,24 @@ namespace Auri.Forms
                     Channels = cmbMp3Channels.SelectedItem?.ToString() == "Mono" ? 1 : 2
                 };
 
-                // режим битрейта
+                // Очищаем и заполняем CustomParams
                 preset.CustomParams?.Clear();
-                preset.CustomParams["Mode"] = cmbMp3Mode.SelectedItem.ToString().ToLower();
 
-                // стерео режим
+                // Режим битрейта (vbr или cbr)
+                string mode = cmbMp3Mode.SelectedItem.ToString().ToLower();
+                preset.CustomParams["Mode"] = mode;
+
+                // Стерео режим
                 preset.CustomParams["ChannelMode"] = mp3ChannelModeMap[cmbMp3Channels.SelectedItem.ToString()];
 
+                // Качество
                 preset.CustomParams["Quality"] = tbMp3Quality.Value;
+
+                // Для VBR сохраняем индекс качества в отдельный ключ "Vbr"
+                if (mode == "vbr")
+                {
+                    preset.CustomParams["VbrBitrate"] = cmbMp3Bitrate.SelectedIndex;
+                }
 
                 EncoderPresetChanged?.Invoke(preset);
             }
@@ -171,14 +200,15 @@ namespace Auri.Forms
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private int GetMp3Bitrate()
         {
             if (cmbMp3Bitrate.SelectedItem == null) return 0;
 
-            // Для VBR режима битрейт - это индекс элемента
-            if (cmbMp3Mode.SelectedIndex > 1)
+            // Для VBR режима возвращаем 0, так как битрейт не используется
+            if (cmbMp3Mode.SelectedItem?.ToString().ToLower() == "vbr")
             {
-                return cmbMp3Bitrate.SelectedIndex;
+                return 0;
             }
 
             // Для CBR режима парсим число

@@ -185,7 +185,7 @@ namespace Auri
             string presetPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "encoder_presets");
             string presetFile = Path.Combine(presetPath, $"{format.ToLower()}_presets.txt");
             if (!File.Exists(presetFile))
-                return new string[] {String.Empty};
+                return new string[] { String.Empty };
             return File.ReadAllLines(presetFile);
         }
         private void InitializeThreadCountComboBox()
@@ -490,7 +490,7 @@ namespace Auri
             };
             _converter.OnFileExists += (fileIndex) =>
             {
-                
+
                 this.BeginInvoke(new Action(() =>
                 {
                     if (fileIndex < dataGridViewFiles.Rows.Count)
@@ -602,26 +602,20 @@ namespace Auri
         }
         private void btnQuickConvert_Click(object sender, EventArgs e)
         {
-            btnConvert.Tag = "abort";
-            btnQuickConvert.Enabled = false;
-            _aborted = false;
-            btnConvert.Text = "Остановить";
-            btnConvert.BackColor = Color.Red;
             if (dataGridViewFiles.Rows.Count == 0)
             {
                 MessageBox.Show("Добавьте файлы для конвертации", "Информация",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            btnConvert.Tag = "abort";
+            btnQuickConvert.Enabled = false;
+            _aborted = false;
+            btnConvert.Text = "Остановить";
+            btnConvert.BackColor = Color.Red;
 
-            string format = "mp3";
-            EncoderPreset encoderSettings = new EncoderPreset();
-            encoderSettings.SampleRate = 44100;
-            encoderSettings.Bitrate = 192;
-            encoderSettings.Channels = 2;
-            encoderSettings.CustomParams["Mode"] = "cbr";
-            encoderSettings.CustomParams["ChannelMode"] = "j";
-            encoderSettings.CustomParams["Quality"] = 0;
+            string format = _config.Settings.ConverterSettings.QuickStartFormat;
+            EncoderPreset encoderPreset = _config.Settings.ConverterSettings.QuickStartPreset;
 
 
             string outputPath = txtOutputPath.Text;
@@ -641,7 +635,7 @@ namespace Auri
                 }
             }
 
-            StartConversion(format, encoderSettings, outputPath);
+            StartConversion(format, encoderPreset, outputPath);
         }
         private void cbRewriteFiles_CheckedChanged(object sender, EventArgs e)
         {
@@ -691,16 +685,29 @@ namespace Auri
                     // Сохраняем пресет для быстрой конвертации
                     _config.SaveQuickStartPreset(result.Format, result.Preset);
 
-                    // Обновляем интерфейс
-                    //int formatIndex = cmbOutputFormat.FindString(result.Format.ToUpper());
-                    //if (formatIndex >= 0)
-                    //{
-                    //    cmbOutputFormat.SelectedIndex = formatIndex;
-                    //}
-
                     lblStatus.Text = $"Мастер завершен. Рекомендовано: {result.FormatDisplayName}";
                 }
             }
+            if (_config.Settings.ConverterSettings.QuickStartPreset != null)
+            {
+                string presetInfo = _config.Settings.ConverterSettings.QuickStartPreset.ToString();
+                toolTip1.SetToolTip(btnQuickConvert,
+                    $"Мгновенно конвертировать файлы в формат выбранный мастером быстрого старта.\n" +
+                    $"Удобно для быстрой обработки без лишних настроек\n\n" +
+                    $"Текущий пресет:\n" +
+                    $"{presetInfo}");
+            }
+        }
+
+        private void выйтиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void мастерНастройкиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _config.Settings.ConverterSettings.QuickStartCompleted = false;
+            RunQuickStartWizardIfNeeded();
         }
     }
 }

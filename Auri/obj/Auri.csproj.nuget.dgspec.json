@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "F:\\!Evgeny\\git\\Auri\\Auri\\Auri.csproj": {}
+    "D:\\Evgeny\\git\\Auri\\Auri\\Auri.csproj": {}
   },
   "projects": {
-    "F:\\!Evgeny\\git\\Auri\\Auri\\Auri.csproj": {
+    "D:\\Evgeny\\git\\Auri\\Auri\\Auri.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\!Evgeny\\git\\Auri\\Auri\\Auri.csproj",
+        "projectUniqueName": "D:\\Evgeny\\git\\Auri\\Auri\\Auri.csproj",
         "projectName": "Auri",
-        "projectPath": "F:\\!Evgeny\\git\\Auri\\Auri\\Auri.csproj",
-        "packagesPath": "C:\\Users\\diz91\\.nuget\\packages\\",
-        "outputPath": "F:\\!Evgeny\\git\\Auri\\Auri\\obj\\",
+        "projectPath": "D:\\Evgeny\\git\\Auri\\Auri\\Auri.csproj",
+        "packagesPath": "C:\\Users\\Evgeny\\.nuget\\packages\\",
+        "outputPath": "D:\\Evgeny\\git\\Auri\\Auri\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\diz91\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Evgeny\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net10.0-windows7.0": {
@@ -74,7 +78,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

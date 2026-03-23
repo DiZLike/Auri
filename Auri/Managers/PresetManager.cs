@@ -168,8 +168,11 @@ namespace Auri.Managers
             {
                 SampleRate = 44100,
                 Channels = 2,
-                Bitrate = bitrate
             };
+            if (mode == "vbr")
+                preset.CustomParams["VbrBitrate"] = bitrate;
+            else preset.Bitrate = bitrate;
+
             preset.CustomParams["Mode"] = mode;
             preset.CustomParams["ChannelMode"] = channelMode;
             preset.CustomParams["Quality"] = 0;

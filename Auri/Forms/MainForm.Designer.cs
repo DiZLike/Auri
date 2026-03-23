@@ -15,453 +15,558 @@
 
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.btnAddFiles = new System.Windows.Forms.Button();
-            this.btnConvert = new System.Windows.Forms.Button();
-            this.dataGridViewFiles = new System.Windows.Forms.DataGridView();
-            this.colFileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFormat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblOutputFormat = new System.Windows.Forms.Label();
-            this.cmbOutputFormat = new System.Windows.Forms.ComboBox();
-            this.lblOutputFolder = new System.Windows.Forms.Label();
-            this.txtOutputPath = new System.Windows.Forms.TextBox();
-            this.btnOpenFolder = new System.Windows.Forms.Button();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btnRemoveSelected = new System.Windows.Forms.Button();
-            this.btnClearAll = new System.Windows.Forms.Button();
-            this.lblQuality = new System.Windows.Forms.Label();
-            this.cmbQuality = new System.Windows.Forms.ComboBox();
-            this.panelControls = new System.Windows.Forms.Panel();
-            this.btnQuickConvert = new System.Windows.Forms.Button();
-            this.panelFormats = new System.Windows.Forms.Panel();
-            this.cbRewriteFiles = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tbThreadCount = new System.Windows.Forms.TrackBar();
-            this.btnPattern = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtPattern = new System.Windows.Forms.TextBox();
-            this.cbSaveTracks = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.btnUserPreset = new System.Windows.Forms.Button();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).BeginInit();
-            this.statusStrip.SuspendLayout();
-            this.panelControls.SuspendLayout();
-            this.panelFormats.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbThreadCount)).BeginInit();
-            this.SuspendLayout();
+            btnAddFiles = new Button();
+            btnConvert = new Button();
+            dataGridViewFiles = new DataGridView();
+            colFileName = new DataGridViewTextBoxColumn();
+            colFormat = new DataGridViewTextBoxColumn();
+            colSize = new DataGridViewTextBoxColumn();
+            colStatus = new DataGridViewTextBoxColumn();
+            lblOutputFormat = new Label();
+            cmbOutputFormat = new ComboBox();
+            lblOutputFolder = new Label();
+            txtOutputPath = new TextBox();
+            btnOpenFolder = new Button();
+            statusStrip = new StatusStrip();
+            lblStatus = new ToolStripStatusLabel();
+            btnRemoveSelected = new Button();
+            btnClearAll = new Button();
+            lblQuality = new Label();
+            cmbQuality = new ComboBox();
+            panelControls = new Panel();
+            btnQuickConvert = new Button();
+            panelFormats = new Panel();
+            cbRewriteFiles = new CheckBox();
+            label4 = new Label();
+            label3 = new Label();
+            tbThreadCount = new TrackBar();
+            btnPattern = new Button();
+            label2 = new Label();
+            txtPattern = new TextBox();
+            cbSaveTracks = new CheckBox();
+            label1 = new Label();
+            btnUserPreset = new Button();
+            progressBar = new ProgressBar();
+            toolTip1 = new ToolTip(components);
+            menuStrip1 = new MenuStrip();
+            файлToolStripMenuItem = new ToolStripMenuItem();
+            toolStripMenuItem1 = new ToolStripMenuItem();
+            удалитьВыбранныеToolStripMenuItem = new ToolStripMenuItem();
+            очиститьВсёToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator1 = new ToolStripSeparator();
+            выйтиToolStripMenuItem = new ToolStripMenuItem();
+            конвертерToolStripMenuItem = new ToolStripMenuItem();
+            конвертироватьToolStripMenuItem = new ToolStripMenuItem();
+            быстраяКонвертацияToolStripMenuItem = new ToolStripMenuItem();
+            помощьToolStripMenuItem = new ToolStripMenuItem();
+            мастерНастройкиToolStripMenuItem = new ToolStripMenuItem();
+            оПрограммеToolStripMenuItem = new ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewFiles).BeginInit();
+            statusStrip.SuspendLayout();
+            panelControls.SuspendLayout();
+            panelFormats.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)tbThreadCount).BeginInit();
+            menuStrip1.SuspendLayout();
+            SuspendLayout();
             // 
             // btnAddFiles
             // 
-            this.btnAddFiles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddFiles.Location = new System.Drawing.Point(13, 15);
-            this.btnAddFiles.Name = "btnAddFiles";
-            this.btnAddFiles.Size = new System.Drawing.Size(146, 30);
-            this.btnAddFiles.TabIndex = 0;
-            this.btnAddFiles.Text = "➕ Добавить файлы";
-            this.toolTip1.SetToolTip(this.btnAddFiles, "Добавить аудиофайлы для конвертации. Можно выбрать несколько файлов сразу");
-            this.btnAddFiles.UseVisualStyleBackColor = true;
-            this.btnAddFiles.Click += new System.EventHandler(this.BtnAddFiles_Click);
+            btnAddFiles.FlatStyle = FlatStyle.Flat;
+            btnAddFiles.Location = new Point(13, 15);
+            btnAddFiles.Name = "btnAddFiles";
+            btnAddFiles.Size = new Size(146, 30);
+            btnAddFiles.TabIndex = 0;
+            btnAddFiles.Text = "➕ Добавить файлы";
+            toolTip1.SetToolTip(btnAddFiles, "Добавить аудиофайлы для конвертации. Можно выбрать несколько файлов сразу");
+            btnAddFiles.UseVisualStyleBackColor = true;
+            btnAddFiles.Click += BtnAddFiles_Click;
             // 
             // btnConvert
             // 
-            this.btnConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnConvert.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
-            this.btnConvert.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnConvert.ForeColor = System.Drawing.Color.White;
-            this.btnConvert.Location = new System.Drawing.Point(586, 14);
-            this.btnConvert.Name = "btnConvert";
-            this.btnConvert.Size = new System.Drawing.Size(153, 32);
-            this.btnConvert.TabIndex = 3;
-            this.btnConvert.Tag = "convert";
-            this.btnConvert.Text = "▶ Конвертировать";
-            this.toolTip1.SetToolTip(this.btnConvert, "Запустить конвертацию всех файлов из списка с выбранными настройками");
-            this.btnConvert.UseVisualStyleBackColor = false;
-            this.btnConvert.Click += new System.EventHandler(this.BtnConvert_Click);
+            btnConvert.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnConvert.BackColor = Color.FromArgb(76, 175, 80);
+            btnConvert.FlatStyle = FlatStyle.Flat;
+            btnConvert.ForeColor = Color.White;
+            btnConvert.Location = new Point(650, 14);
+            btnConvert.Name = "btnConvert";
+            btnConvert.Size = new Size(153, 32);
+            btnConvert.TabIndex = 3;
+            btnConvert.Tag = "convert";
+            btnConvert.Text = "▶ Конвертировать";
+            toolTip1.SetToolTip(btnConvert, "Запустить конвертацию всех файлов из списка с выбранными настройками");
+            btnConvert.UseVisualStyleBackColor = false;
+            btnConvert.Click += BtnConvert_Click;
             // 
             // dataGridViewFiles
             // 
-            this.dataGridViewFiles.AllowDrop = true;
-            this.dataGridViewFiles.AllowUserToAddRows = false;
-            this.dataGridViewFiles.AllowUserToDeleteRows = false;
-            this.dataGridViewFiles.AllowUserToResizeRows = false;
-            this.dataGridViewFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridViewFiles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridViewFiles.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridViewFiles.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridViewFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colFileName,
-            this.colFormat,
-            this.colSize,
-            this.colStatus});
-            this.dataGridViewFiles.Location = new System.Drawing.Point(13, 66);
-            this.dataGridViewFiles.Name = "dataGridViewFiles";
-            this.dataGridViewFiles.ReadOnly = true;
-            this.dataGridViewFiles.RowHeadersVisible = false;
-            this.dataGridViewFiles.RowTemplate.Height = 25;
-            this.dataGridViewFiles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewFiles.Size = new System.Drawing.Size(880, 354);
-            this.dataGridViewFiles.TabIndex = 1;
-            this.dataGridViewFiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridViewFiles_DragDrop);
-            this.dataGridViewFiles.DragEnter += new System.Windows.Forms.DragEventHandler(this.dataGridViewFiles_DragEnter);
+            dataGridViewFiles.AllowDrop = true;
+            dataGridViewFiles.AllowUserToAddRows = false;
+            dataGridViewFiles.AllowUserToDeleteRows = false;
+            dataGridViewFiles.AllowUserToResizeRows = false;
+            dataGridViewFiles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewFiles.BackgroundColor = Color.White;
+            dataGridViewFiles.BorderStyle = BorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridViewFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewFiles.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewFiles.Columns.AddRange(new DataGridViewColumn[] { colFileName, colFormat, colSize, colStatus });
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dataGridViewFiles.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewFiles.Location = new Point(13, 93);
+            dataGridViewFiles.Name = "dataGridViewFiles";
+            dataGridViewFiles.ReadOnly = true;
+            dataGridViewFiles.RowHeadersVisible = false;
+            dataGridViewFiles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewFiles.Size = new Size(944, 400);
+            dataGridViewFiles.TabIndex = 1;
+            dataGridViewFiles.DragDrop += dataGridViewFiles_DragDrop;
+            dataGridViewFiles.DragEnter += dataGridViewFiles_DragEnter;
             // 
             // colFileName
             // 
-            this.colFileName.FillWeight = 65F;
-            this.colFileName.HeaderText = "Имя файла";
-            this.colFileName.Name = "colFileName";
-            this.colFileName.ReadOnly = true;
+            colFileName.FillWeight = 65F;
+            colFileName.HeaderText = "Имя файла";
+            colFileName.Name = "colFileName";
+            colFileName.ReadOnly = true;
             // 
             // colFormat
             // 
-            this.colFormat.FillWeight = 80F;
-            this.colFormat.HeaderText = "Исходный формат";
-            this.colFormat.Name = "colFormat";
-            this.colFormat.ReadOnly = true;
+            colFormat.FillWeight = 80F;
+            colFormat.HeaderText = "Исходный формат";
+            colFormat.Name = "colFormat";
+            colFormat.ReadOnly = true;
             // 
             // colSize
             // 
-            this.colSize.FillWeight = 20F;
-            this.colSize.HeaderText = "Размер";
-            this.colSize.Name = "colSize";
-            this.colSize.ReadOnly = true;
+            colSize.FillWeight = 20F;
+            colSize.HeaderText = "Размер";
+            colSize.Name = "colSize";
+            colSize.ReadOnly = true;
             // 
             // colStatus
             // 
-            this.colStatus.FillWeight = 20F;
-            this.colStatus.HeaderText = "Состояние";
-            this.colStatus.Name = "colStatus";
-            this.colStatus.ReadOnly = true;
+            colStatus.FillWeight = 20F;
+            colStatus.HeaderText = "Состояние";
+            colStatus.Name = "colStatus";
+            colStatus.ReadOnly = true;
             // 
             // lblOutputFormat
             // 
-            this.lblOutputFormat.AutoSize = true;
-            this.lblOutputFormat.Location = new System.Drawing.Point(18, 12);
-            this.lblOutputFormat.Name = "lblOutputFormat";
-            this.lblOutputFormat.Size = new System.Drawing.Size(96, 15);
-            this.lblOutputFormat.TabIndex = 0;
-            this.lblOutputFormat.Text = "Формат вывода:";
+            lblOutputFormat.AutoSize = true;
+            lblOutputFormat.Location = new Point(18, 12);
+            lblOutputFormat.Name = "lblOutputFormat";
+            lblOutputFormat.Size = new Size(96, 15);
+            lblOutputFormat.TabIndex = 0;
+            lblOutputFormat.Text = "Формат вывода:";
             // 
             // cmbOutputFormat
             // 
-            this.cmbOutputFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbOutputFormat.FormattingEnabled = true;
-            this.cmbOutputFormat.Items.AddRange(new object[] {
-            "MP3 (популярный, хорошее сжатие, среднее качество)",
-            "Opus (современный, лучшее качество, отличное сжатие)",
-            "QAAC (формат Apple, отличное сжатие)",
-            "FLAC (качество без потерь, много места)",
-            "WAV (без сжатия, очень много места)"});
-            this.cmbOutputFormat.Location = new System.Drawing.Point(124, 9);
-            this.cmbOutputFormat.Name = "cmbOutputFormat";
-            this.cmbOutputFormat.Size = new System.Drawing.Size(364, 23);
-            this.cmbOutputFormat.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.cmbOutputFormat, "В какой формат преобразовывать файлы");
-            this.cmbOutputFormat.SelectedIndexChanged += new System.EventHandler(this.cmbOutputFormat_SelectedIndexChanged);
+            cmbOutputFormat.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbOutputFormat.FormattingEnabled = true;
+            cmbOutputFormat.Items.AddRange(new object[] { "MP3 (популярный, хорошее сжатие, среднее качество)", "Opus (современный, лучшее качество, отличное сжатие)", "QAAC (формат Apple, отличное сжатие)", "FLAC (качество без потерь, много места)", "WAV (без сжатия, очень много места)" });
+            cmbOutputFormat.Location = new Point(124, 9);
+            cmbOutputFormat.Name = "cmbOutputFormat";
+            cmbOutputFormat.Size = new Size(364, 23);
+            cmbOutputFormat.TabIndex = 1;
+            toolTip1.SetToolTip(cmbOutputFormat, "В какой формат преобразовывать файлы");
+            cmbOutputFormat.SelectedIndexChanged += cmbOutputFormat_SelectedIndexChanged;
             // 
             // lblOutputFolder
             // 
-            this.lblOutputFolder.AutoSize = true;
-            this.lblOutputFolder.Location = new System.Drawing.Point(18, 70);
-            this.lblOutputFolder.Name = "lblOutputFolder";
-            this.lblOutputFolder.Size = new System.Drawing.Size(87, 15);
-            this.lblOutputFolder.TabIndex = 4;
-            this.lblOutputFolder.Text = "Папка вывода:";
+            lblOutputFolder.AutoSize = true;
+            lblOutputFolder.Location = new Point(18, 70);
+            lblOutputFolder.Name = "lblOutputFolder";
+            lblOutputFolder.Size = new Size(87, 15);
+            lblOutputFolder.TabIndex = 4;
+            lblOutputFolder.Text = "Папка вывода:";
             // 
             // txtOutputPath
             // 
-            this.txtOutputPath.Location = new System.Drawing.Point(124, 67);
-            this.txtOutputPath.Name = "txtOutputPath";
-            this.txtOutputPath.ReadOnly = true;
-            this.txtOutputPath.Size = new System.Drawing.Size(288, 23);
-            this.txtOutputPath.TabIndex = 5;
-            this.toolTip1.SetToolTip(this.txtOutputPath, "Куда сохранять сконвертированные файлы. Нажмите на поле, чтобы изменить папку");
-            this.txtOutputPath.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtOutputPath_MouseClick);
+            txtOutputPath.Location = new Point(124, 67);
+            txtOutputPath.Name = "txtOutputPath";
+            txtOutputPath.ReadOnly = true;
+            txtOutputPath.Size = new Size(288, 23);
+            txtOutputPath.TabIndex = 5;
+            toolTip1.SetToolTip(txtOutputPath, "Куда сохранять сконвертированные файлы. Нажмите на поле, чтобы изменить папку");
+            txtOutputPath.MouseClick += txtOutputPath_MouseClick;
             // 
             // btnOpenFolder
             // 
-            this.btnOpenFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenFolder.Location = new System.Drawing.Point(425, 65);
-            this.btnOpenFolder.Name = "btnOpenFolder";
-            this.btnOpenFolder.Size = new System.Drawing.Size(63, 25);
-            this.btnOpenFolder.TabIndex = 6;
-            this.btnOpenFolder.Text = "Откр.";
-            this.btnOpenFolder.UseVisualStyleBackColor = true;
-            this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
+            btnOpenFolder.FlatStyle = FlatStyle.Flat;
+            btnOpenFolder.Location = new Point(425, 65);
+            btnOpenFolder.Name = "btnOpenFolder";
+            btnOpenFolder.Size = new Size(63, 25);
+            btnOpenFolder.TabIndex = 6;
+            btnOpenFolder.Text = "Откр.";
+            btnOpenFolder.UseVisualStyleBackColor = true;
+            btnOpenFolder.Click += btnOpenFolder_Click;
             // 
             // statusStrip
             // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblStatus});
-            this.statusStrip.Location = new System.Drawing.Point(0, 576);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(906, 22);
-            this.statusStrip.TabIndex = 3;
+            statusStrip.Items.AddRange(new ToolStripItem[] { lblStatus });
+            statusStrip.Location = new Point(0, 649);
+            statusStrip.Name = "statusStrip";
+            statusStrip.Size = new Size(970, 22);
+            statusStrip.TabIndex = 3;
             // 
             // lblStatus
             // 
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(88, 17);
-            this.lblStatus.Text = "Готов к работе";
-            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(88, 17);
+            lblStatus.Text = "Готов к работе";
+            lblStatus.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // btnRemoveSelected
             // 
-            this.btnRemoveSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRemoveSelected.Location = new System.Drawing.Point(165, 15);
-            this.btnRemoveSelected.Name = "btnRemoveSelected";
-            this.btnRemoveSelected.Size = new System.Drawing.Size(146, 30);
-            this.btnRemoveSelected.TabIndex = 1;
-            this.btnRemoveSelected.Text = "🗑 Удалить выбранные";
-            this.toolTip1.SetToolTip(this.btnRemoveSelected, "Убрать из списка выделенные файлы");
-            this.btnRemoveSelected.UseVisualStyleBackColor = true;
-            this.btnRemoveSelected.Click += new System.EventHandler(this.BtnRemoveSelected_Click);
+            btnRemoveSelected.FlatStyle = FlatStyle.Flat;
+            btnRemoveSelected.Location = new Point(165, 15);
+            btnRemoveSelected.Name = "btnRemoveSelected";
+            btnRemoveSelected.Size = new Size(146, 30);
+            btnRemoveSelected.TabIndex = 1;
+            btnRemoveSelected.Text = "🗑 Удалить выбранные";
+            toolTip1.SetToolTip(btnRemoveSelected, "Убрать из списка выделенные файлы");
+            btnRemoveSelected.UseVisualStyleBackColor = true;
+            btnRemoveSelected.Click += BtnRemoveSelected_Click;
             // 
             // btnClearAll
             // 
-            this.btnClearAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClearAll.Location = new System.Drawing.Point(317, 15);
-            this.btnClearAll.Name = "btnClearAll";
-            this.btnClearAll.Size = new System.Drawing.Size(146, 30);
-            this.btnClearAll.TabIndex = 2;
-            this.btnClearAll.Text = "🗑 Очистить всё";
-            this.toolTip1.SetToolTip(this.btnClearAll, "Полностью очистить список файлов");
-            this.btnClearAll.UseVisualStyleBackColor = true;
-            this.btnClearAll.Click += new System.EventHandler(this.BtnClearAll_Click);
+            btnClearAll.FlatStyle = FlatStyle.Flat;
+            btnClearAll.Location = new Point(317, 15);
+            btnClearAll.Name = "btnClearAll";
+            btnClearAll.Size = new Size(146, 30);
+            btnClearAll.TabIndex = 2;
+            btnClearAll.Text = "🗑 Очистить всё";
+            toolTip1.SetToolTip(btnClearAll, "Полностью очистить список файлов");
+            btnClearAll.UseVisualStyleBackColor = true;
+            btnClearAll.Click += BtnClearAll_Click;
             // 
             // lblQuality
             // 
-            this.lblQuality.AutoSize = true;
-            this.lblQuality.Location = new System.Drawing.Point(18, 41);
-            this.lblQuality.Name = "lblQuality";
-            this.lblQuality.Size = new System.Drawing.Size(60, 15);
-            this.lblQuality.TabIndex = 2;
-            this.lblQuality.Text = "Качество:";
+            lblQuality.AutoSize = true;
+            lblQuality.Location = new Point(18, 41);
+            lblQuality.Name = "lblQuality";
+            lblQuality.Size = new Size(60, 15);
+            lblQuality.TabIndex = 2;
+            lblQuality.Text = "Качество:";
             // 
             // cmbQuality
             // 
-            this.cmbQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbQuality.FormattingEnabled = true;
-            this.cmbQuality.Location = new System.Drawing.Point(124, 38);
-            this.cmbQuality.Name = "cmbQuality";
-            this.cmbQuality.Size = new System.Drawing.Size(288, 23);
-            this.cmbQuality.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.cmbQuality, "Предустановленные настройки качества для выбранного формата");
-            this.cmbQuality.SelectedIndexChanged += new System.EventHandler(this.cmbQuality_SelectedIndexChanged);
+            cmbQuality.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbQuality.FormattingEnabled = true;
+            cmbQuality.Location = new Point(124, 38);
+            cmbQuality.Name = "cmbQuality";
+            cmbQuality.Size = new Size(288, 23);
+            cmbQuality.TabIndex = 3;
+            toolTip1.SetToolTip(cmbQuality, "Предустановленные настройки качества для выбранного формата");
+            cmbQuality.SelectedIndexChanged += cmbQuality_SelectedIndexChanged;
             // 
             // panelControls
             // 
-            this.panelControls.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(250)))));
-            this.panelControls.Controls.Add(this.btnQuickConvert);
-            this.panelControls.Controls.Add(this.btnClearAll);
-            this.panelControls.Controls.Add(this.btnRemoveSelected);
-            this.panelControls.Controls.Add(this.btnAddFiles);
-            this.panelControls.Controls.Add(this.btnConvert);
-            this.panelControls.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelControls.Location = new System.Drawing.Point(0, 0);
-            this.panelControls.Name = "panelControls";
-            this.panelControls.Padding = new System.Windows.Forms.Padding(10);
-            this.panelControls.Size = new System.Drawing.Size(906, 60);
-            this.panelControls.TabIndex = 0;
+            panelControls.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panelControls.BackColor = Color.FromArgb(245, 245, 250);
+            panelControls.Controls.Add(btnQuickConvert);
+            panelControls.Controls.Add(btnClearAll);
+            panelControls.Controls.Add(btnRemoveSelected);
+            panelControls.Controls.Add(btnAddFiles);
+            panelControls.Controls.Add(btnConvert);
+            panelControls.Location = new Point(0, 27);
+            panelControls.Name = "panelControls";
+            panelControls.Padding = new Padding(10);
+            panelControls.Size = new Size(970, 60);
+            panelControls.TabIndex = 0;
             // 
             // btnQuickConvert
             // 
-            this.btnQuickConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnQuickConvert.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
-            this.btnQuickConvert.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuickConvert.ForeColor = System.Drawing.Color.White;
-            this.btnQuickConvert.Location = new System.Drawing.Point(745, 14);
-            this.btnQuickConvert.Name = "btnQuickConvert";
-            this.btnQuickConvert.Size = new System.Drawing.Size(148, 32);
-            this.btnQuickConvert.TabIndex = 4;
-            this.btnQuickConvert.Text = "⚡Быстрая конвертация";
-            this.toolTip1.SetToolTip(this.btnQuickConvert, "Мгновенно конвертировать файлы в формат выбранный мастером быстрого старта.\r\nУдоб" +
-        "но для быстрой обработки без лишних настроек");
-            this.btnQuickConvert.UseVisualStyleBackColor = false;
-            this.btnQuickConvert.Click += new System.EventHandler(this.btnQuickConvert_Click);
+            btnQuickConvert.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnQuickConvert.BackColor = Color.FromArgb(76, 175, 80);
+            btnQuickConvert.FlatStyle = FlatStyle.Flat;
+            btnQuickConvert.ForeColor = Color.White;
+            btnQuickConvert.Location = new Point(809, 14);
+            btnQuickConvert.Name = "btnQuickConvert";
+            btnQuickConvert.Size = new Size(148, 32);
+            btnQuickConvert.TabIndex = 4;
+            btnQuickConvert.Text = "⚡Быстрая конвертация";
+            toolTip1.SetToolTip(btnQuickConvert, "Мгновенно конвертировать файлы в формат выбранный мастером быстрого старта.\r\nУдобно для быстрой обработки без лишних настроек");
+            btnQuickConvert.UseVisualStyleBackColor = false;
+            btnQuickConvert.Click += btnQuickConvert_Click;
             // 
             // panelFormats
             // 
-            this.panelFormats.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelFormats.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(250)))));
-            this.panelFormats.Controls.Add(this.cbRewriteFiles);
-            this.panelFormats.Controls.Add(this.label4);
-            this.panelFormats.Controls.Add(this.label3);
-            this.panelFormats.Controls.Add(this.tbThreadCount);
-            this.panelFormats.Controls.Add(this.btnPattern);
-            this.panelFormats.Controls.Add(this.label2);
-            this.panelFormats.Controls.Add(this.txtPattern);
-            this.panelFormats.Controls.Add(this.cbSaveTracks);
-            this.panelFormats.Controls.Add(this.label1);
-            this.panelFormats.Controls.Add(this.btnUserPreset);
-            this.panelFormats.Controls.Add(this.progressBar);
-            this.panelFormats.Controls.Add(this.lblQuality);
-            this.panelFormats.Controls.Add(this.cmbQuality);
-            this.panelFormats.Controls.Add(this.lblOutputFormat);
-            this.panelFormats.Controls.Add(this.cmbOutputFormat);
-            this.panelFormats.Controls.Add(this.lblOutputFolder);
-            this.panelFormats.Controls.Add(this.txtOutputPath);
-            this.panelFormats.Controls.Add(this.btnOpenFolder);
-            this.panelFormats.Location = new System.Drawing.Point(0, 426);
-            this.panelFormats.Name = "panelFormats";
-            this.panelFormats.Padding = new System.Windows.Forms.Padding(15);
-            this.panelFormats.Size = new System.Drawing.Size(906, 147);
-            this.panelFormats.TabIndex = 2;
+            panelFormats.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panelFormats.BackColor = Color.FromArgb(245, 245, 250);
+            panelFormats.Controls.Add(cbRewriteFiles);
+            panelFormats.Controls.Add(label4);
+            panelFormats.Controls.Add(label3);
+            panelFormats.Controls.Add(tbThreadCount);
+            panelFormats.Controls.Add(btnPattern);
+            panelFormats.Controls.Add(label2);
+            panelFormats.Controls.Add(txtPattern);
+            panelFormats.Controls.Add(cbSaveTracks);
+            panelFormats.Controls.Add(label1);
+            panelFormats.Controls.Add(btnUserPreset);
+            panelFormats.Controls.Add(progressBar);
+            panelFormats.Controls.Add(lblQuality);
+            panelFormats.Controls.Add(cmbQuality);
+            panelFormats.Controls.Add(lblOutputFormat);
+            panelFormats.Controls.Add(cmbOutputFormat);
+            panelFormats.Controls.Add(lblOutputFolder);
+            panelFormats.Controls.Add(txtOutputPath);
+            panelFormats.Controls.Add(btnOpenFolder);
+            panelFormats.Location = new Point(0, 499);
+            panelFormats.Name = "panelFormats";
+            panelFormats.Padding = new Padding(15);
+            panelFormats.Size = new Size(970, 147);
+            panelFormats.TabIndex = 2;
             // 
             // cbRewriteFiles
             // 
-            this.cbRewriteFiles.AutoSize = true;
-            this.cbRewriteFiles.Location = new System.Drawing.Point(497, 99);
-            this.cbRewriteFiles.Name = "cbRewriteFiles";
-            this.cbRewriteFiles.Size = new System.Drawing.Size(131, 19);
-            this.cbRewriteFiles.TabIndex = 28;
-            this.cbRewriteFiles.Text = "Режим перезаписи";
-            this.toolTip1.SetToolTip(this.cbRewriteFiles, "Существующие файлы в целевой папке будут перезаписаны.\r\nБудьте внимательны: восст" +
-        "ановить старые файлы будет невозможно");
-            this.cbRewriteFiles.UseVisualStyleBackColor = true;
-            this.cbRewriteFiles.CheckedChanged += new System.EventHandler(this.cbRewriteFiles_CheckedChanged);
+            cbRewriteFiles.AutoSize = true;
+            cbRewriteFiles.Location = new Point(497, 99);
+            cbRewriteFiles.Name = "cbRewriteFiles";
+            cbRewriteFiles.Size = new Size(131, 19);
+            cbRewriteFiles.TabIndex = 28;
+            cbRewriteFiles.Text = "Режим перезаписи";
+            toolTip1.SetToolTip(cbRewriteFiles, "Существующие файлы в целевой папке будут перезаписаны.\r\nБудьте внимательны: восстановить старые файлы будет невозможно");
+            cbRewriteFiles.UseVisualStyleBackColor = true;
+            cbRewriteFiles.CheckedChanged += cbRewriteFiles_CheckedChanged;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(609, 49);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(94, 15);
-            this.label4.TabIndex = 27;
-            this.label4.Text = "Максимальный";
+            label4.AutoSize = true;
+            label4.Location = new Point(609, 49);
+            label4.Name = "label4";
+            label4.Size = new Size(94, 15);
+            label4.TabIndex = 27;
+            label4.Text = "Максимальный";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(494, 49);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(87, 15);
-            this.label3.TabIndex = 26;
-            this.label3.Text = "Экономичный";
+            label3.AutoSize = true;
+            label3.Location = new Point(494, 49);
+            label3.Name = "label3";
+            label3.Size = new Size(87, 15);
+            label3.TabIndex = 26;
+            label3.Text = "Экономичный";
             // 
             // tbThreadCount
             // 
-            this.tbThreadCount.AutoSize = false;
-            this.tbThreadCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(250)))));
-            this.tbThreadCount.LargeChange = 1;
-            this.tbThreadCount.Location = new System.Drawing.Point(497, 30);
-            this.tbThreadCount.Maximum = 9;
-            this.tbThreadCount.Minimum = 1;
-            this.tbThreadCount.Name = "tbThreadCount";
-            this.tbThreadCount.Size = new System.Drawing.Size(204, 21);
-            this.tbThreadCount.TabIndex = 25;
-            this.toolTip1.SetToolTip(this.tbThreadCount, "Сколько ядер процессора использовать для конвертации.\r\nЭкономичный – меньше нагру" +
-        "зки на компьютер\r\nМаксимальный – быстрее, но компьютер может тормозить");
-            this.tbThreadCount.Value = 1;
+            tbThreadCount.AutoSize = false;
+            tbThreadCount.BackColor = Color.FromArgb(245, 245, 250);
+            tbThreadCount.LargeChange = 1;
+            tbThreadCount.Location = new Point(497, 30);
+            tbThreadCount.Maximum = 9;
+            tbThreadCount.Minimum = 1;
+            tbThreadCount.Name = "tbThreadCount";
+            tbThreadCount.Size = new Size(204, 21);
+            tbThreadCount.TabIndex = 25;
+            toolTip1.SetToolTip(tbThreadCount, "Сколько ядер процессора использовать для конвертации.\r\nЭкономичный – меньше нагрузки на компьютер\r\nМаксимальный – быстрее, но компьютер может тормозить");
+            tbThreadCount.Value = 1;
             // 
             // btnPattern
             // 
-            this.btnPattern.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPattern.Location = new System.Drawing.Point(425, 96);
-            this.btnPattern.Name = "btnPattern";
-            this.btnPattern.Size = new System.Drawing.Size(63, 25);
-            this.btnPattern.TabIndex = 13;
-            this.btnPattern.Text = "Шаблон";
-            this.toolTip1.SetToolTip(this.btnPattern, "Выбора переменных при создании структуры папок (исполнитель, альбом, трек и т.д.)" +
-        "");
-            this.btnPattern.UseVisualStyleBackColor = true;
-            this.btnPattern.Click += new System.EventHandler(this.btnPattern_Click);
+            btnPattern.FlatStyle = FlatStyle.Flat;
+            btnPattern.Location = new Point(425, 96);
+            btnPattern.Name = "btnPattern";
+            btnPattern.Size = new Size(63, 25);
+            btnPattern.TabIndex = 13;
+            btnPattern.Text = "Шаблон";
+            toolTip1.SetToolTip(btnPattern, "Выбора переменных при создании структуры папок (исполнитель, альбом, трек и т.д.)");
+            btnPattern.UseVisualStyleBackColor = true;
+            btnPattern.Click += btnPattern_Click;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(18, 99);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(102, 15);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "Структура папок:";
+            label2.AutoSize = true;
+            label2.Location = new Point(18, 99);
+            label2.Name = "label2";
+            label2.Size = new Size(102, 15);
+            label2.TabIndex = 12;
+            label2.Text = "Структура папок:";
             // 
             // txtPattern
             // 
-            this.txtPattern.Location = new System.Drawing.Point(124, 96);
-            this.txtPattern.Name = "txtPattern";
-            this.txtPattern.Size = new System.Drawing.Size(288, 23);
-            this.txtPattern.TabIndex = 11;
-            this.toolTip1.SetToolTip(this.txtPattern, "Формат создания структуры папок");
+            txtPattern.Location = new Point(124, 96);
+            txtPattern.Name = "txtPattern";
+            txtPattern.Size = new Size(288, 23);
+            txtPattern.TabIndex = 11;
+            toolTip1.SetToolTip(txtPattern, "Формат создания структуры папок");
             // 
             // cbSaveTracks
             // 
-            this.cbSaveTracks.AutoSize = true;
-            this.cbSaveTracks.Location = new System.Drawing.Point(497, 70);
-            this.cbSaveTracks.Name = "cbSaveTracks";
-            this.cbSaveTracks.Size = new System.Drawing.Size(170, 19);
-            this.cbSaveTracks.TabIndex = 10;
-            this.cbSaveTracks.Text = "Сохранять список файлов";
-            this.toolTip1.SetToolTip(this.cbSaveTracks, "После закрытия программы сохранить список файлов в текстовый файл (рядом с програ" +
-        "ммой)");
-            this.cbSaveTracks.UseVisualStyleBackColor = true;
+            cbSaveTracks.AutoSize = true;
+            cbSaveTracks.Location = new Point(497, 70);
+            cbSaveTracks.Name = "cbSaveTracks";
+            cbSaveTracks.Size = new Size(170, 19);
+            cbSaveTracks.TabIndex = 10;
+            cbSaveTracks.Text = "Сохранять список файлов";
+            toolTip1.SetToolTip(cbSaveTracks, "После закрытия программы сохранить список файлов в текстовый файл (рядом с программой)");
+            cbSaveTracks.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(494, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(166, 15);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Режим производительности:";
+            label1.AutoSize = true;
+            label1.Location = new Point(494, 12);
+            label1.Name = "label1";
+            label1.Size = new Size(166, 15);
+            label1.TabIndex = 9;
+            label1.Text = "Режим производительности:";
             // 
             // btnUserPreset
             // 
-            this.btnUserPreset.Enabled = false;
-            this.btnUserPreset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUserPreset.Location = new System.Drawing.Point(425, 36);
-            this.btnUserPreset.Name = "btnUserPreset";
-            this.btnUserPreset.Size = new System.Drawing.Size(63, 25);
-            this.btnUserPreset.TabIndex = 7;
-            this.btnUserPreset.Text = "Настр.";
-            this.toolTip1.SetToolTip(this.btnUserPreset, "Открывает окно с ручными настройками параметров кодека для тонкой подстройки");
-            this.btnUserPreset.UseVisualStyleBackColor = true;
-            this.btnUserPreset.Click += new System.EventHandler(this.btnUserPreset_Click);
+            btnUserPreset.Enabled = false;
+            btnUserPreset.FlatStyle = FlatStyle.Flat;
+            btnUserPreset.Location = new Point(425, 36);
+            btnUserPreset.Name = "btnUserPreset";
+            btnUserPreset.Size = new Size(63, 25);
+            btnUserPreset.TabIndex = 7;
+            btnUserPreset.Text = "Настр.";
+            toolTip1.SetToolTip(btnUserPreset, "Открывает окно с ручными настройками параметров кодека для тонкой подстройки");
+            btnUserPreset.UseVisualStyleBackColor = true;
+            btnUserPreset.Click += btnUserPreset_Click;
             // 
             // progressBar
             // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(12, 126);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(889, 13);
-            this.progressBar.TabIndex = 4;
+            progressBar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            progressBar.Location = new Point(12, 126);
+            progressBar.Name = "progressBar";
+            progressBar.Size = new Size(953, 13);
+            progressBar.TabIndex = 4;
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem, конвертерToolStripMenuItem, помощьToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(970, 24);
+            menuStrip1.TabIndex = 4;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // файлToolStripMenuItem
+            // 
+            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem1, удалитьВыбранныеToolStripMenuItem, очиститьВсёToolStripMenuItem, toolStripSeparator1, выйтиToolStripMenuItem });
+            файлToolStripMenuItem.Name = "файлToolStripMenuItem";
+            файлToolStripMenuItem.Size = new Size(48, 20);
+            файлToolStripMenuItem.Text = "Файл";
+            // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(185, 22);
+            toolStripMenuItem1.Text = "Добавить файлы";
+            toolStripMenuItem1.Click += BtnAddFiles_Click;
+            // 
+            // удалитьВыбранныеToolStripMenuItem
+            // 
+            удалитьВыбранныеToolStripMenuItem.Name = "удалитьВыбранныеToolStripMenuItem";
+            удалитьВыбранныеToolStripMenuItem.Size = new Size(185, 22);
+            удалитьВыбранныеToolStripMenuItem.Text = "Удалить выбранные";
+            удалитьВыбранныеToolStripMenuItem.Click += BtnRemoveSelected_Click;
+            // 
+            // очиститьВсёToolStripMenuItem
+            // 
+            очиститьВсёToolStripMenuItem.Name = "очиститьВсёToolStripMenuItem";
+            очиститьВсёToolStripMenuItem.Size = new Size(185, 22);
+            очиститьВсёToolStripMenuItem.Text = "Очистить всё";
+            очиститьВсёToolStripMenuItem.Click += BtnClearAll_Click;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(182, 6);
+            // 
+            // выйтиToolStripMenuItem
+            // 
+            выйтиToolStripMenuItem.Name = "выйтиToolStripMenuItem";
+            выйтиToolStripMenuItem.Size = new Size(185, 22);
+            выйтиToolStripMenuItem.Text = "Выйти";
+            выйтиToolStripMenuItem.Click += выйтиToolStripMenuItem_Click;
+            // 
+            // конвертерToolStripMenuItem
+            // 
+            конвертерToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { конвертироватьToolStripMenuItem, быстраяКонвертацияToolStripMenuItem });
+            конвертерToolStripMenuItem.Name = "конвертерToolStripMenuItem";
+            конвертерToolStripMenuItem.Size = new Size(77, 20);
+            конвертерToolStripMenuItem.Text = "Конвертер";
+            // 
+            // конвертироватьToolStripMenuItem
+            // 
+            конвертироватьToolStripMenuItem.Name = "конвертироватьToolStripMenuItem";
+            конвертироватьToolStripMenuItem.Size = new Size(193, 22);
+            конвертироватьToolStripMenuItem.Text = "Конвертировать";
+            конвертироватьToolStripMenuItem.Click += BtnConvert_Click;
+            // 
+            // быстраяКонвертацияToolStripMenuItem
+            // 
+            быстраяКонвертацияToolStripMenuItem.Name = "быстраяКонвертацияToolStripMenuItem";
+            быстраяКонвертацияToolStripMenuItem.Size = new Size(193, 22);
+            быстраяКонвертацияToolStripMenuItem.Text = "Быстрая конвертация";
+            быстраяКонвертацияToolStripMenuItem.Click += btnQuickConvert_Click;
+            // 
+            // помощьToolStripMenuItem
+            // 
+            помощьToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { мастерНастройкиToolStripMenuItem, оПрограммеToolStripMenuItem });
+            помощьToolStripMenuItem.Name = "помощьToolStripMenuItem";
+            помощьToolStripMenuItem.Size = new Size(68, 20);
+            помощьToolStripMenuItem.Text = "Помощь";
+            // 
+            // мастерНастройкиToolStripMenuItem
+            // 
+            мастерНастройкиToolStripMenuItem.Name = "мастерНастройкиToolStripMenuItem";
+            мастерНастройкиToolStripMenuItem.Size = new Size(180, 22);
+            мастерНастройкиToolStripMenuItem.Text = "Мастер настройки";
+            мастерНастройкиToolStripMenuItem.Click += мастерНастройкиToolStripMenuItem_Click;
+            // 
+            // оПрограммеToolStripMenuItem
+            // 
+            оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
+            оПрограммеToolStripMenuItem.Size = new Size(180, 22);
+            оПрограммеToolStripMenuItem.Text = "О программе";
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(906, 598);
-            this.Controls.Add(this.dataGridViewFiles);
-            this.Controls.Add(this.panelControls);
-            this.Controls.Add(this.panelFormats);
-            this.Controls.Add(this.statusStrip);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(800, 500);
-            this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Auri";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).EndInit();
-            this.statusStrip.ResumeLayout(false);
-            this.statusStrip.PerformLayout();
-            this.panelControls.ResumeLayout(false);
-            this.panelFormats.ResumeLayout(false);
-            this.panelFormats.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbThreadCount)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(970, 671);
+            Controls.Add(dataGridViewFiles);
+            Controls.Add(panelControls);
+            Controls.Add(panelFormats);
+            Controls.Add(statusStrip);
+            Controls.Add(menuStrip1);
+            Font = new Font("Segoe UI", 9F);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(800, 500);
+            Name = "MainForm";
+            StartPosition = FormStartPosition.Manual;
+            Text = "Auri";
+            FormClosing += MainForm_FormClosing;
+            ((System.ComponentModel.ISupportInitialize)dataGridViewFiles).EndInit();
+            statusStrip.ResumeLayout(false);
+            statusStrip.PerformLayout();
+            panelControls.ResumeLayout(false);
+            panelFormats.ResumeLayout(false);
+            panelFormats.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)tbThreadCount).EndInit();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
@@ -498,5 +603,18 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox cbRewriteFiles;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem файлToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem1;
+        private ToolStripMenuItem удалитьВыбранныеToolStripMenuItem;
+        private ToolStripMenuItem очиститьВсёToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem выйтиToolStripMenuItem;
+        private ToolStripMenuItem конвертерToolStripMenuItem;
+        private ToolStripMenuItem конвертироватьToolStripMenuItem;
+        private ToolStripMenuItem быстраяКонвертацияToolStripMenuItem;
+        private ToolStripMenuItem помощьToolStripMenuItem;
+        private ToolStripMenuItem мастерНастройкиToolStripMenuItem;
+        private ToolStripMenuItem оПрограммеToolStripMenuItem;
     }
 }

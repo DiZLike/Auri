@@ -1,7 +1,7 @@
 {
   "FormSettings": {
-    "FormX": 514,
-    "FormY": 241,
+    "FormX": 542,
+    "FormY": 256,
     "FormWidth": 922,
     "FormHeight": 637,
     "WindowState": 0
@@ -11,13 +11,28 @@
     "OutputFormatIndex": 0,
     "QualityIndex": 3,
     "ThreadsCountIndex": 6,
-    "OutputPath": "D:\\MyMusic\\Auri",
+    "OutputPath": "C:\\Users\\Evgeny\\Music\\Auri",
     "PathPattern": "[filename].[format]",
-    "SaveTrackList": false,
-    "RewriteAudio": false,
-    "TrackList": [],
-    "QuickStartCompleted": false,
-    "QuickStartFormat": null,
-    "QuickStartPreset": null
+    "SaveTrackList": true,
+    "RewriteAudio": true,
+    "TrackList": [
+      "C:\\Users\\Evgeny\\Music\\Instr 1.mp3"
+    ],
+    "QuickStartCompleted": true,
+    "QuickStartFormat": "mp3",
+    "QuickStartPreset": {
+      "SampleRate": 44100,
+      "Channels": 2,
+      "Bitrate": 0,
+      "BitsPerSample": 16,
+      "Format": "MP3",
+      "CustomParams": {
+        "AvgBitrate": 125,
+        "VbrBitrate": 6,
+        "Mode": "vbr",
+        "ChannelMode": "j",
+        "Quality": 0
+      }
+    }
   }
 }
