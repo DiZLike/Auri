@@ -3,11 +3,15 @@
   "WorkspaceRootPath": "D:\\Evgeny\\git\\Auri\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{95D12041-C4A8-1333-4067-9E6B6F39AB12}|Auri\\Auri.csproj|d:\\evgeny\\git\\auri\\auri\\app.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{95D12041-C4A8-1333-4067-9E6B6F39AB12}|Auri\\Auri.csproj|solutionrelative:auri\\app.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{95D12041-C4A8-1333-4067-9E6B6F39AB12}|Auri\\Auri.csproj|d:\\evgeny\\git\\auri\\auri\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{95D12041-C4A8-1333-4067-9E6B6F39AB12}|Auri\\Auri.csproj|solutionrelative:auri\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{95D12041-C4A8-1333-4067-9E6B6F39AB12}|Auri\\Auri.csproj|d:\\evgeny\\git\\auri\\auri\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{95D12041-C4A8-1333-4067-9E6B6F39AB12}|Auri\\Auri.csproj|D:\\Evgeny\\git\\Auri\\auri\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{95D12041-C4A8-1333-4067-9E6B6F39AB12}|Auri\\Auri.csproj|solutionrelative:auri\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
@@ -27,31 +31,44 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "app.manifest",
+              "DocumentMoniker": "D:\\Evgeny\\git\\Auri\\Auri\\app.manifest",
+              "RelativeDocumentMoniker": "Auri\\app.manifest",
+              "ToolTip": "D:\\Evgeny\\git\\Auri\\Auri\\app.manifest",
+              "RelativeToolTip": "Auri\\app.manifest",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001203|",
+              "WhenOpened": "2026-03-23T11:10:17.148Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "MainForm.cs",
               "DocumentMoniker": "D:\\Evgeny\\git\\Auri\\Auri\\Forms\\MainForm.cs",
               "RelativeDocumentMoniker": "Auri\\Forms\\MainForm.cs",
               "ToolTip": "D:\\Evgeny\\git\\Auri\\Auri\\Forms\\MainForm.cs",
               "RelativeToolTip": "Auri\\Forms\\MainForm.cs",
-              "ViewState": "AgIAAFACAAAAAAAAAAApwFYCAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAFACAAAAAAAAAAApwHACAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-23T10:48:42.453Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "DocumentIndex": 2,
+              "Title": "MainForm.cs [Design]",
               "DocumentMoniker": "D:\\Evgeny\\git\\Auri\\Auri\\Forms\\MainForm.cs",
               "RelativeDocumentMoniker": "Auri\\Forms\\MainForm.cs",
-              "ToolTip": "D:\\Evgeny\\git\\Auri\\Auri\\Forms\\MainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
-              "RelativeToolTip": "Auri\\Forms\\MainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "ToolTip": "D:\\Evgeny\\git\\Auri\\Auri\\Forms\\MainForm.cs [Design]",
+              "RelativeToolTip": "Auri\\Forms\\MainForm.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-23T10:48:32.777Z",
-              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Evgeny\\git\\Auri\\Auri\\Program.cs",
               "RelativeDocumentMoniker": "Auri\\Program.cs",
@@ -59,8 +76,7 @@
               "RelativeToolTip": "Auri\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-23T10:43:50.563Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-23T10:43:50.563Z"
             }
           ]
         }
