@@ -16,6 +16,7 @@
         private void InitializeComponent()
         {
             panelMain = new Panel();
+            linkLabel1 = new LinkLabel();
             pictureBoxIcon = new PictureBox();
             lblTitle = new Label();
             lblVersion = new Label();
@@ -27,7 +28,6 @@
             lblFeatures = new Label();
             lnkGitHub = new LinkLabel();
             btnOK = new Button();
-            linkLabel1 = new LinkLabel();
             panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxIcon).BeginInit();
             SuspendLayout();
@@ -52,6 +52,18 @@
             panelMain.Name = "panelMain";
             panelMain.Size = new Size(450, 420);
             panelMain.TabIndex = 0;
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.Font = new Font("Segoe UI", 9F);
+            linkLabel1.Location = new Point(20, 385);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(69, 15);
+            linkLabel1.TabIndex = 11;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "Поддержка";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // pictureBoxIcon
             // 
@@ -166,18 +178,6 @@
             btnOK.Text = "OK";
             btnOK.UseVisualStyleBackColor = true;
             btnOK.Click += btnOK_Click;
-            // 
-            // linkLabel1
-            // 
-            linkLabel1.AutoSize = true;
-            linkLabel1.Font = new Font("Segoe UI", 9F);
-            linkLabel1.Location = new Point(20, 385);
-            linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(69, 15);
-            linkLabel1.TabIndex = 11;
-            linkLabel1.TabStop = true;
-            linkLabel1.Text = "Поддержка";
-            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // AboutForm
             // 

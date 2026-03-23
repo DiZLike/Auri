@@ -206,3 +206,6 @@ D:\Evgeny\git\Auri\Auri\obj\x64\Debug\net10.0-windows\ref\Auri.dll
 D:\Evgeny\git\Auri\Auri\obj\x64\Debug\net10.0-windows\Auri.Forms.AboutForm.resources
 D:\Evgeny\git\Auri\Auri\obj\x64\Debug\net10.0-windows\Auri.Properties.Resources.resources
 D:\Evgeny\git\Auri\Auri\bin\x64\Debug\net10.0-windows\help\index.html
+F:\!Evgeny\git\Auri\Auri\bin\x64\Debug\net10.0-windows\help\index.html
+F:\!Evgeny\git\Auri\Auri\obj\x64\Debug\net10.0-windows\Auri.Forms.AboutForm.resources
+F:\!Evgeny\git\Auri\Auri\obj\x64\Debug\net10.0-windows\Auri.Properties.Resources.resources

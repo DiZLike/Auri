@@ -129,14 +129,14 @@ namespace Auri.Wizard.Recommendation
         protected string GetOpusDescription(int bitrate)
         {
             if (bitrate >= 192)
-                return "Opus 192 kbps — современный формат с максимальным качеством.";
+                return $"Opus {bitrate} kbps — современный формат с максимальным качеством.";
             if (bitrate >= 128)
-                return "Opus 128 kbps — оптимальное соотношение качества и размера. Универсальный современный формат.";
+                return $"Opus {bitrate} kbps — оптимальное соотношение качества и размера. Универсальный современный формат.";
             if (bitrate >= 96)
-                return "Opus 96 kbps — идеален для мобильных устройств. Отличное качество при экономии места.";
+                return $"Opus {bitrate} kbps — идеален для мобильных устройств. Отличное качество при экономии места.";
             if (bitrate >= 64)
-                return "Opus 64 kbps — невероятно эффективный формат. Отличное качество при минимальном размере файла.";
-            return "Opus 48 kbps — максимальная экономия места. Идеально для подкастов и речи, музыка звучит достойно.";
+                return $"Opus {bitrate} kbps — невероятно эффективный формат. Отличное качество при минимальном размере файла.";
+            return $"Opus {bitrate} kbps — максимальная экономия места. Идеально для подкастов и речи, музыка звучит достойно.";
         }
         protected string GetFlacDescription(int compressionLevel)
         {

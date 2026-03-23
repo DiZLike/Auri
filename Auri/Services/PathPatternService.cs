@@ -111,7 +111,7 @@ namespace Auri.Services
                 }
             }
 
-            return fullPath;
+            return $"{fullPath}.{extension}";
         }
 
         /// <summary>

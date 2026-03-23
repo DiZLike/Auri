@@ -64,10 +64,10 @@
             быстраяКонвертацияToolStripMenuItem = new ToolStripMenuItem();
             помощьToolStripMenuItem = new ToolStripMenuItem();
             мастерНастройкиToolStripMenuItem = new ToolStripMenuItem();
+            проверитьОбновлениеToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator2 = new ToolStripSeparator();
             справкаToolStripMenuItem = new ToolStripMenuItem();
             оПрограммеToolStripMenuItem = new ToolStripMenuItem();
-            проверитьОбновлениеToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dataGridViewFiles).BeginInit();
             statusStrip.SuspendLayout();
             panelControls.SuspendLayout();
@@ -282,6 +282,7 @@
             // 
             // panelControls
             // 
+            panelControls.AllowDrop = true;
             panelControls.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelControls.BackColor = Color.FromArgb(245, 245, 250);
             panelControls.Controls.Add(btnQuickConvert);
@@ -294,6 +295,8 @@
             panelControls.Padding = new Padding(10);
             panelControls.Size = new Size(970, 60);
             panelControls.TabIndex = 0;
+            panelControls.DragDrop += dataGridViewFiles_DragDrop;
+            panelControls.DragEnter += dataGridViewFiles_DragEnter;
             // 
             // btnQuickConvert
             // 
@@ -454,6 +457,7 @@
             // 
             // menuStrip1
             // 
+            menuStrip1.AllowDrop = true;
             menuStrip1.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem, конвертерToolStripMenuItem, помощьToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
@@ -536,6 +540,13 @@
             мастерНастройкиToolStripMenuItem.Text = "Мастер настройки";
             мастерНастройкиToolStripMenuItem.Click += мастерНастройкиToolStripMenuItem_Click;
             // 
+            // проверитьОбновлениеToolStripMenuItem
+            // 
+            проверитьОбновлениеToolStripMenuItem.Name = "проверитьОбновлениеToolStripMenuItem";
+            проверитьОбновлениеToolStripMenuItem.Size = new Size(204, 22);
+            проверитьОбновлениеToolStripMenuItem.Text = "Проверить обновление";
+            проверитьОбновлениеToolStripMenuItem.Click += проверитьОбновлениеToolStripMenuItem_Click;
+            // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
@@ -555,15 +566,9 @@
             оПрограммеToolStripMenuItem.Text = "О программе";
             оПрограммеToolStripMenuItem.Click += оПрограммеToolStripMenuItem_Click;
             // 
-            // проверитьОбновлениеToolStripMenuItem
-            // 
-            проверитьОбновлениеToolStripMenuItem.Name = "проверитьОбновлениеToolStripMenuItem";
-            проверитьОбновлениеToolStripMenuItem.Size = new Size(204, 22);
-            проверитьОбновлениеToolStripMenuItem.Text = "Проверить обновление";
-            проверитьОбновлениеToolStripMenuItem.Click += проверитьОбновлениеToolStripMenuItem_Click;
-            // 
             // MainForm
             // 
+            AllowDrop = true;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(970, 671);
@@ -579,6 +584,8 @@
             StartPosition = FormStartPosition.Manual;
             Text = "Auri";
             FormClosing += MainForm_FormClosing;
+            DragDrop += dataGridViewFiles_DragDrop;
+            DragEnter += dataGridViewFiles_DragEnter;
             ((System.ComponentModel.ISupportInitialize)dataGridViewFiles).EndInit();
             statusStrip.ResumeLayout(false);
             statusStrip.PerformLayout();

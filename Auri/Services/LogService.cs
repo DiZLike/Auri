@@ -15,6 +15,9 @@ namespace Auri.Services
             try
             {
                 string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                if (!Directory.Exists(Path.Combine(appDirectory, "logs")))
+                    Directory.CreateDirectory(Path.Combine(appDirectory, "logs"));
+                    
                 _logFilePath = Path.Combine(appDirectory, "logs", "debug.log");
                 _errorLogFilePath = Path.Combine(appDirectory, "logs", "error.log");
 

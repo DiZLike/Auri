@@ -2,20 +2,10 @@
 using Auri.Audio.Encoder;
 using Auri.Forms;
 using Auri.Forms.Dialogs;
-using Auri.Forms.Wizard;
 using Auri.Managers;
 using Auri.Services;
 using Auri.Wizard;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Auri
 {
@@ -33,6 +23,7 @@ namespace Auri
         public MainForm()
         {
             InitializeComponent();
+
             ExceptionManager.OnDetailedError += ExceptionManager_OnDetailedError;
             _audioEngine = new AudioEngineService();
             _config = new ConfigManager();
@@ -176,7 +167,7 @@ namespace Auri
             cmbQuality.SelectedIndex = index;
             tbThreadCount.Value = tbThreadCount.Maximum / 2;
             txtOutputPath.Text = GetDefaultOutputPath();
-            txtPattern.Text = "[filename].[format]";
+            txtPattern.Text = "[filename]";
             cbRewriteFiles.Checked = false;
             cbSaveTracks.Checked = false;
         }
@@ -336,6 +327,9 @@ namespace Auri
         }
         private void BtnConvert_Click(object sender, EventArgs e)
         {
+            var ttt = dataGridViewFiles;
+
+
             if (btnConvert.Tag.ToString() == "convert")
             {
                 if (dataGridViewFiles.Rows.Count == 0)
