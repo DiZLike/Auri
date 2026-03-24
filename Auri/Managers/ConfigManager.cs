@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq.Expressions;
 
 namespace Auri.Managers
 {
@@ -18,12 +19,27 @@ namespace Auri.Managers
         public ConfigManager()
         {
             _presets = new PresetManager();
-            _configPath = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "settings.json");
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            _configPath = Path.Combine(documentsPath, "Auri", "settings.json");
             LoadSettings();
         }
-
+        public bool ResetSettings()
+        {
+            if (Directory.Exists(Path.GetDirectoryName(_configPath)))
+            {
+                try
+                {
+                    Directory.Delete(Path.GetDirectoryName(_configPath), true);
+                    _settings = new AppSettings();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
         public void SaveSettings()
         {
             try

@@ -6,6 +6,7 @@ using Auri.Managers;
 using Auri.Services;
 using Auri.Wizard;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace Auri
 {
@@ -19,10 +20,11 @@ namespace Auri
 
         private int _lastQualityIndex;
         private bool _aborted;
-
+        private bool _isReset;
         public MainForm()
         {
             InitializeComponent();
+            SetTitle();
 
             ExceptionManager.OnDetailedError += ExceptionManager_OnDetailedError;
             _audioEngine = new AudioEngineService();
@@ -35,6 +37,14 @@ namespace Auri
             // Запуск мастера быстрого старта при первом запуске
             RunQuickStartWizardIfNeeded();
         }
+        private void SetTitle()
+        {
+            Version version = Assembly.GetExecutingAssembly().GetName().Version;
+            string versionString = version != null
+                ? $"{version.Major}.{version.Minor}.{version.Build}"
+                : "1.0.0";
+            this.Text = $"Auri {versionString}";
+        }
 
         private void ExceptionManager_OnDetailedError(Error error, string message)
         {
@@ -44,6 +54,8 @@ namespace Auri
         }
         private void SaveSettings()
         {
+            if (_isReset)
+                return;
             // форма
             _config.Settings.FormSettings.FormY = this.Location.Y;
             _config.Settings.FormSettings.FormX = this.Location.X;
@@ -146,7 +158,7 @@ namespace Auri
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Применение значений по умолчанию
                 SetDefaultSettings();
@@ -750,6 +762,23 @@ namespace Auri
                 MessageBox.Show($"Не удалось открыть ссылку: {ex.Message}", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void сбросНастроекToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = UserDialogs.ShowDialog("Предупреждение", "Сбросить настройки до стандартных значений?");
+            if (result == DialogResult.No) return;
+
+            _isReset = _config.ResetSettings();
+            if (_isReset)
+            {
+                MessageBox.Show("Настройки сброшены! Необходимо перезапустить программу", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Application.Exit();
+            }
+            else
+                MessageBox.Show("Настройки отсутствуют или файлы заняты программой!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

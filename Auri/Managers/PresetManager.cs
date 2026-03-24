@@ -13,7 +13,8 @@ namespace Auri.Managers
 
         public PresetManager()
         {
-            _configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "encoder_presets");
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            _configPath = Path.Combine(documentsPath, "Auri", "Presets");
             Directory.CreateDirectory(_configPath);
         }
         public void SaveCustomPreset(string format, EncoderPreset settings)

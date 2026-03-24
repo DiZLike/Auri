@@ -68,6 +68,8 @@
             toolStripSeparator2 = new ToolStripSeparator();
             справкаToolStripMenuItem = new ToolStripMenuItem();
             оПрограммеToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator3 = new ToolStripSeparator();
+            сбросНастроекToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dataGridViewFiles).BeginInit();
             statusStrip.SuspendLayout();
             panelControls.SuspendLayout();
@@ -507,7 +509,7 @@
             // 
             // конвертерToolStripMenuItem
             // 
-            конвертерToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { конвертироватьToolStripMenuItem, быстраяКонвертацияToolStripMenuItem });
+            конвертерToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { конвертироватьToolStripMenuItem, быстраяКонвертацияToolStripMenuItem, toolStripSeparator3, сбросНастроекToolStripMenuItem });
             конвертерToolStripMenuItem.Name = "конвертерToolStripMenuItem";
             конвертерToolStripMenuItem.Size = new Size(77, 20);
             конвертерToolStripMenuItem.Text = "Конвертер";
@@ -565,6 +567,18 @@
             оПрограммеToolStripMenuItem.Size = new Size(204, 22);
             оПрограммеToolStripMenuItem.Text = "О программе";
             оПрограммеToolStripMenuItem.Click += оПрограммеToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new Size(190, 6);
+            // 
+            // сбросНастроекToolStripMenuItem
+            // 
+            сбросНастроекToolStripMenuItem.Name = "сбросНастроекToolStripMenuItem";
+            сбросНастроекToolStripMenuItem.Size = new Size(193, 22);
+            сбросНастроекToolStripMenuItem.Text = "Сброс настроек";
+            сбросНастроекToolStripMenuItem.Click += сбросНастроекToolStripMenuItem_Click;
             // 
             // MainForm
             // 
@@ -649,5 +663,7 @@
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripMenuItem справкаToolStripMenuItem;
         private ToolStripMenuItem проверитьОбновлениеToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator3;
+        private ToolStripMenuItem сбросНастроекToolStripMenuItem;
     }
 }

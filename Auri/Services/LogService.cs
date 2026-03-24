@@ -14,12 +14,14 @@ namespace Auri.Services
         {
             try
             {
-                string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                if (!Directory.Exists(Path.Combine(appDirectory, "logs")))
-                    Directory.CreateDirectory(Path.Combine(appDirectory, "logs"));
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string logsPath = Path.Combine(documentsPath, "Auri", "Log");
+
+                if (!Directory.Exists(logsPath))
+                    Directory.CreateDirectory(logsPath);
                     
-                _logFilePath = Path.Combine(appDirectory, "logs", "debug.log");
-                _errorLogFilePath = Path.Combine(appDirectory, "logs", "error.log");
+                _logFilePath = Path.Combine(logsPath, "debug.log");
+                _errorLogFilePath = Path.Combine(logsPath, "error.log");
 
                 // Основной лог всегда перезаписываем при запуске
                 File.WriteAllText(_logFilePath, $"=== Лог начат {DateTime.Now} ===\n");
