@@ -1,8 +1,0 @@
-C:\Users\diz91\source\repos\Auri\Auri\obj\Debug\net10.0-windows\Auri.MainForm.resources
-C:\Users\diz91\source\repos\Auri\Auri\obj\Debug\net10.0-windows\Auri.Forms.PatternForm.resources
-C:\Users\diz91\source\repos\Auri\Auri\obj\Debug\net10.0-windows\Auri.Forms.UserPresetForm.resources
-C:\Users\diz91\source\repos\Auri\Auri\obj\Debug\net10.0-windows\Auri.csproj.GenerateResource.cache
-C:\Users\diz91\source\repos\Auri\Auri\obj\Debug\net10.0-windows\Auri.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\diz91\source\repos\Auri\Auri\obj\Debug\net10.0-windows\Auri.AssemblyInfoInputs.cache
-C:\Users\diz91\source\repos\Auri\Auri\obj\Debug\net10.0-windows\Auri.AssemblyInfo.cs
-C:\Users\diz91\source\repos\Auri\Auri\obj\Debug\net10.0-windows\Auri.csproj.CoreCompileInputs.cache
