@@ -18,8 +18,8 @@ namespace Auri.Audio.Encoder.Codec
         {
             string mode = settings.CustomParams?["Mode"] as string ?? "vbr";
             string content = settings.CustomParams?["Content"] as string ?? "music";
-            string complexity = settings.CustomParams?["Complexity"] as string ?? "10";
-            string frameSize = settings.CustomParams?["Framesize"] as string ?? "20";
+            int complexity = Convert.ToInt32(settings.CustomParams?["Complexity"]) as int? ?? 10;
+            int frameSize = Convert.ToInt32(settings.CustomParams?["Framesize"]) as int? ?? 20;
             string downmix = settings.Channels > 1 ? "stereo" : "mono";
 
             return $"--bitrate {settings.Bitrate} " +

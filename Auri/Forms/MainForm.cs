@@ -7,6 +7,7 @@ using Auri.Services;
 using Auri.Wizard;
 using System.Diagnostics;
 using System.Reflection;
+using Un4seen.Bass;
 
 namespace Auri
 {
@@ -31,6 +32,9 @@ namespace Auri
             _config = new ConfigManager();
             _audioFiles = new List<AudioFile>();
             _metaService = new MetaService();
+
+            Test();
+
             InitializeThreadCountComboBox();
             LoadSettings();
 
@@ -779,6 +783,64 @@ namespace Auri
             else
                 MessageBox.Show("Настройки отсутствуют или файлы заняты программой!", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+
+
+
+
+
+
+        int _currentStream = 0;
+        private void Test()
+        {
+            var cueFile = @"H:\2001 - Дальнобойщики-2\Ария - Дальнобойщики-2.cue";
+            var cue = CueService.Parse(cueFile);
+            PlayTrack(cue, 10);
+
+        }
+
+        public void PlayTrack(CueFile cueFile, int trackNumber)
+        {
+            // Останавливаем текущее воспроизведение
+            StopPlayback();
+
+            // Определяем путь к аудиофайлу
+            string filePath = cueFile.FilePath;
+
+            // Находим нужный трек
+            var track = cueFile.Tracks.FirstOrDefault(t => t.Number == trackNumber);
+
+            // Создаем поток для аудиофайла
+            int streamHandle = Bass.BASS_StreamCreateFile(filePath, 0, 0, BASSFlag.BASS_DEFAULT);
+
+            // Устанавливаем позицию на начало трека
+            double startSeconds = track.StartTime.TotalSeconds;
+            long startBytes = Bass.BASS_ChannelSeconds2Bytes(streamHandle, startSeconds);
+            bool ok = Bass.BASS_ChannelSetPosition(streamHandle, startBytes);
+
+            // Определяем конец трека
+            double endSeconds = track.EndTime.TotalSeconds;
+            long endBytes = Bass.BASS_ChannelSeconds2Bytes(streamHandle, endSeconds);
+
+            // Устанавливаем синхронизацию для остановки в конце трека
+            int isOk = Bass.BASS_ChannelSetSync(streamHandle, BASSSync.BASS_SYNC_POS, endBytes,
+                (handle, channel, data, user) => StopPlayback(), IntPtr.Zero);
+
+            // Запускаем воспроизведение
+            bool play = Bass.BASS_ChannelPlay(streamHandle, false);
+            _currentStream = streamHandle;
+        }
+
+
+        public void StopPlayback()
+        {
+            if (_currentStream != 0)
+            {
+                Bass.BASS_ChannelStop(_currentStream);
+                Bass.BASS_StreamFree(_currentStream);
+                _currentStream = 0;
+            }
         }
     }
 }
