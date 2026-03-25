@@ -1,13 +1,13 @@
-﻿using Auri.Audio;
-using Auri.Audio.Encoder;
-using Auri.Forms;
+﻿using Auri.Forms;
 using Auri.Forms.Dialogs;
-using Auri.Managers;
-using Auri.Services;
 using Auri.Wizard;
+using Engine.Audio;
+using Engine.Audio.Encoder;
+using Engine.Managers;
+using Engine.Services;
+using Music.Parser;
 using System.Diagnostics;
 using System.Reflection;
-using Un4seen.Bass;
 
 namespace Auri
 {
@@ -65,7 +65,7 @@ namespace Auri
             _config.Settings.FormSettings.FormX = this.Location.X;
             _config.Settings.FormSettings.FormWidth = this.Width;
             _config.Settings.FormSettings.FormHeight = this.Height;
-            _config.Settings.FormSettings.WindowState = this.WindowState;
+            _config.Settings.FormSettings.WindowState = (int)this.WindowState;
 
             // конвертер
             _config.Settings.ConverterSettings.OutputFormatIndex = cmbOutputFormat.SelectedIndex;
@@ -117,7 +117,7 @@ namespace Auri
                                     _config.Settings.FormSettings.FormHeight);
 
                 // Сначала WindowState, потом остальное
-                this.WindowState = _config.Settings.FormSettings.WindowState;
+                this.WindowState = (FormWindowState)_config.Settings.FormSettings.WindowState;
 
                 // конвертер с валидацией
                 if (_config.Settings.ConverterSettings.OutputFormatIndex >= 0 &&
@@ -791,56 +791,61 @@ namespace Auri
 
 
 
-        int _currentStream = 0;
         private void Test()
         {
-            var cueFile = @"H:\2001 - Дальнобойщики-2\Ария - Дальнобойщики-2.cue";
-            var cue = CueService.Parse(cueFile);
-            PlayTrack(cue, 10);
+            //var cueFile = @"H:\2001 - Дальнобойщики-2\Ария - Дальнобойщики-2.cue";
+            //var cue = CueService.Parse(cueFile);
+            //PlayTrack(cue, 10);
+            var search = "amaranthe";
+            var parser = new HitmoParser();
+            //var result = parser.SearchTracksWithLinkCheck(search);
+            //var link = parser.GetDirectStreamUrl(result.Tracks[1].DownloadUrl);
+            _audioEngine.Play("");
+            //parser.DownloadTrack(link, Path.GetFileName(link));
 
         }
 
-        public void PlayTrack(CueFile cueFile, int trackNumber)
-        {
-            // Останавливаем текущее воспроизведение
-            StopPlayback();
+        //public void PlayTrack(CueFile cueFile, int trackNumber)
+        //{
+        //    // Останавливаем текущее воспроизведение
+        //    StopPlayback();
 
-            // Определяем путь к аудиофайлу
-            string filePath = cueFile.FilePath;
+        //    // Определяем путь к аудиофайлу
+        //    string filePath = cueFile.FilePath;
 
-            // Находим нужный трек
-            var track = cueFile.Tracks.FirstOrDefault(t => t.Number == trackNumber);
+        //    // Находим нужный трек
+        //    var track = cueFile.Tracks.FirstOrDefault(t => t.Number == trackNumber);
 
-            // Создаем поток для аудиофайла
-            int streamHandle = Bass.BASS_StreamCreateFile(filePath, 0, 0, BASSFlag.BASS_DEFAULT);
+        //    // Создаем поток для аудиофайла
+        //    int streamHandle = Bass.BASS_StreamCreateFile(filePath, 0, 0, BASSFlag.BASS_DEFAULT);
 
-            // Устанавливаем позицию на начало трека
-            double startSeconds = track.StartTime.TotalSeconds;
-            long startBytes = Bass.BASS_ChannelSeconds2Bytes(streamHandle, startSeconds);
-            bool ok = Bass.BASS_ChannelSetPosition(streamHandle, startBytes);
+        //    // Устанавливаем позицию на начало трека
+        //    double startSeconds = track.StartTime.TotalSeconds;
+        //    long startBytes = Bass.BASS_ChannelSeconds2Bytes(streamHandle, startSeconds);
+        //    bool ok = Bass.BASS_ChannelSetPosition(streamHandle, startBytes);
 
-            // Определяем конец трека
-            double endSeconds = track.EndTime.TotalSeconds;
-            long endBytes = Bass.BASS_ChannelSeconds2Bytes(streamHandle, endSeconds);
+        //    // Определяем конец трека
+        //    double endSeconds = track.EndTime.TotalSeconds;
+        //    long endBytes = Bass.BASS_ChannelSeconds2Bytes(streamHandle, endSeconds);
 
-            // Устанавливаем синхронизацию для остановки в конце трека
-            int isOk = Bass.BASS_ChannelSetSync(streamHandle, BASSSync.BASS_SYNC_POS, endBytes,
-                (handle, channel, data, user) => StopPlayback(), IntPtr.Zero);
+        //    // Устанавливаем синхронизацию для остановки в конце трека
+        //    int isOk = Bass.BASS_ChannelSetSync(streamHandle, BASSSync.BASS_SYNC_POS, endBytes,
+        //        (handle, channel, data, user) => StopPlayback(), IntPtr.Zero);
 
-            // Запускаем воспроизведение
-            bool play = Bass.BASS_ChannelPlay(streamHandle, false);
-            _currentStream = streamHandle;
-        }
+        //    // Запускаем воспроизведение
+        //    bool play = Bass.BASS_ChannelPlay(streamHandle, false);
+        //    _currentStream = streamHandle;
+        //}
 
 
-        public void StopPlayback()
-        {
-            if (_currentStream != 0)
-            {
-                Bass.BASS_ChannelStop(_currentStream);
-                Bass.BASS_StreamFree(_currentStream);
-                _currentStream = 0;
-            }
-        }
+        //public void StopPlayback()
+        //{
+        //    if (_currentStream != 0)
+        //    {
+        //        Bass.BASS_ChannelStop(_currentStream);
+        //        Bass.BASS_StreamFree(_currentStream);
+        //        _currentStream = 0;
+        //    }
+        //}
     }
 }

@@ -1,12 +1,7 @@
 ﻿// QuickStartWizard.cs
-using Auri.Audio.Encoder;
 using Auri.Forms.Wizard;
-using Auri.Managers;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
+using Engine.Audio.Encoder;
+using Engine.Managers;
 
 namespace Auri.Wizard
 {

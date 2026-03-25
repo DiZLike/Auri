@@ -3,7 +3,10 @@
     <Platform Name="Any CPU" />
     <Platform Name="x64" />
   </Configurations>
+  <Project Path="Analyzer/Analyzer.csproj" Id="e346948a-ca31-4f7b-a3dd-ba0933bc692f" />
   <Project Path="Auri/Auri.csproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
+  <Project Path="Engine/Engine.csproj" Id="7d2edc06-5c11-4fff-b7df-eb4f8a2ea5ac" />
+  <Project Path="Sourcing/Sourcing.csproj" Id="d4358ee7-5a85-49f8-9bf1-d4e37ab92072" />
 </Solution>
