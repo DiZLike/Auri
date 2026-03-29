@@ -207,7 +207,7 @@ namespace Auri
             {
                 ofd.Multiselect = true;
                 ofd.Filter =
-                    "Все поддерживаемые форматы|*.wav;*.wave;*.mp3;*.opus;*.aac;*.m4a;*.mp4;*.ac3;*.mpc;*.spx;*.tta;*.ape;*.flac;*.wma;*.wv;*.webm;*.alac|" +
+                    "Все поддерживаемые форматы|*.wav;*.wave;*.mp3;*.opus;*.aac;*.m4a;*.mp4;*.ac3;*.mpc;*.spx;*.tta;*.ape;*.flac;*.wma;*.wv;*.webm;*.alac;*.cue|" +
                     "WAV (без сжатия)|*.wav;*.wave|" +
                     "MP3|*.mp3|" +
                     "Opus|*.opus|" +
@@ -223,6 +223,7 @@ namespace Auri
                     "WavPack|*.wv|" +
                     "WebM|*.webm|" +
                     "ALAC|*.alac|" +
+                    "CUE sheets|*.cue|" +
                     "Все файлы|*.*";
                 ofd.Title = "Выберите аудиофайлы для конвертации";
 
@@ -234,6 +235,18 @@ namespace Auri
             }
         }
         private void AddFilesToGrid(string[] filePaths)
+        {
+            var cueFiles = filePaths.Where(f => Path.GetExtension(f).ToLower() == ".cue").ToArray();
+            var otherFiles = filePaths.Where(f => Path.GetExtension(f).ToLower() != ".cue").ToArray();
+
+            if (cueFiles.Length > 0)
+                AddCue(cueFiles);
+
+            if (otherFiles.Length > 0)
+                AddOtherFiles(otherFiles);
+        }
+
+        private void AddOtherFiles(string[] filePaths)
         {
             // Отключаем обновление DataGridView для ускорения
             dataGridViewFiles.SuspendLayout();
@@ -283,6 +296,11 @@ namespace Auri
                 dataGridViewFiles.ResumeLayout();
             }
         }
+        private void AddCue(string[] filePaths)
+        {
+            // Реализую позже
+        }
+
         private string FormatFileSize(long bytes)
         {
             string[] sizes = { "B", "KB", "MB", "GB" };
@@ -343,9 +361,6 @@ namespace Auri
         }
         private void BtnConvert_Click(object sender, EventArgs e)
         {
-            var ttt = dataGridViewFiles;
-
-
             if (btnConvert.Tag.ToString() == "convert")
             {
                 if (dataGridViewFiles.Rows.Count == 0)
@@ -684,7 +699,7 @@ namespace Auri
             string[] allowedExtensions = {
                 ".wav", ".wave", ".mp3", ".opus", ".aac", ".m4a", ".mp4",
                 ".ac3", ".mpc", ".spx", ".tta",
-                ".ape", ".flac", ".wma", ".wv", ".webm", ".alac"
+                ".ape", ".flac", ".wma", ".wv", ".webm", ".alac", ".cue"
 };
             string extension = Path.GetExtension(filePath).ToLower();
 
@@ -800,7 +815,7 @@ namespace Auri
             var parser = new HitmoParser();
             //var result = parser.SearchTracksWithLinkCheck(search);
             //var link = parser.GetDirectStreamUrl(result.Tracks[1].DownloadUrl);
-            _audioEngine.Play("");
+            //_audioEngine.Play("");
             //parser.DownloadTrack(link, Path.GetFileName(link));
 
         }

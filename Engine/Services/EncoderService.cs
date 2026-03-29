@@ -83,7 +83,6 @@ namespace Engine.Services
 
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             const int minUpdateIntervalMs = 100;
-
             try
             {
                 do
